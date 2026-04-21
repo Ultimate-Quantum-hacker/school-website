@@ -69,7 +69,7 @@ export function ApplicationForm() {
             label="Phone Number"
             name="phone"
             type="tel"
-            placeholder="+1 (555) 000-0000"
+            placeholder="+233 XX XXX XXXX"
           />
           <Input
             label="Date of Birth"
@@ -87,7 +87,7 @@ export function ApplicationForm() {
             label="Guardian Phone"
             name="guardian_phone"
             type="tel"
-            placeholder="+1 (555) 000-0000"
+            placeholder="+233 XX XXX XXXX"
           />
         </div>
         <div className="grid sm:grid-cols-2 gap-4">
