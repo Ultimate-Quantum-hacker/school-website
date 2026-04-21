@@ -1,26 +1,227 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
+/* ─── CSS Custom Properties (Theme Colors from school config) ───── */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Primary — Deep Blue */
+  --color-primary: #1e3a5f;
+  --color-primary-50: #eef4fb;
+  --color-primary-100: #d5e3f5;
+  --color-primary-200: #aac7eb;
+  --color-primary-300: #7faade;
+  --color-primary-400: #548ed4;
+  --color-primary-500: #3571bf;
+  --color-primary-600: #1e3a5f;
+  --color-primary-700: #1a3354;
+  --color-primary-800: #152a45;
+  --color-primary-900: #0f1f33;
+
+  /* Secondary — Gold */
+  --color-secondary: #c9a84c;
+  --color-secondary-50: #fdf9ee;
+  --color-secondary-100: #f8edd0;
+  --color-secondary-200: #f1dba1;
+  --color-secondary-300: #e9c872;
+  --color-secondary-400: #d4ae52;
+  --color-secondary-500: #c9a84c;
+  --color-secondary-600: #a88a3d;
+  --color-secondary-700: #886e31;
+  --color-secondary-800: #6b5727;
+  --color-secondary-900: #4f401d;
+
+  /* Accent — Forest Green */
+  --color-accent: #2d6a4f;
+  --color-accent-50: #edf7f2;
+  --color-accent-100: #d1ebdf;
+  --color-accent-200: #a3d7bf;
+  --color-accent-300: #75c39f;
+  --color-accent-400: #47af7f;
+  --color-accent-500: #2d6a4f;
+  --color-accent-600: #265c44;
+  --color-accent-700: #1f4d39;
+  --color-accent-800: #183e2e;
+  --color-accent-900: #112f23;
+
+  /* Soft neutral backgrounds — reduced eye strain */
+  --foreground: #111827;
+  --background: #f8f9fc;
+  --muted: #f1f3f8;
+  --muted-foreground: #6b7280;
+  --border: #e2e5ed;
+  --card: #ffffff;
+  --card-foreground: #111827;
+  --section-alt: #f0f3f9;
+  --section-warm: #faf8f4;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+/* ─── Base Styles ──────────────────────────────────────────────── */
+@layer base {
+  * {
+    @apply border-[var(--border)];
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  html {
+    @apply scroll-smooth;
+  }
+
+  body {
+    @apply bg-[var(--background)] text-[var(--foreground)] antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading font-bold tracking-tight;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ─── Utility Classes ──────────────────────────────────────────── */
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .section-padding {
+    @apply px-4 py-16 sm:px-6 lg:px-8 lg:py-24;
+  }
+
+  .container-wide {
+    @apply mx-auto max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+
+  .glass {
+    @apply bg-white/80 backdrop-blur-md border border-white/20 shadow-lg;
+  }
+
+  .gradient-primary {
+    @apply bg-gradient-to-r from-primary-700 via-primary to-primary-800;
+  }
+
+  .gradient-hero {
+    @apply bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700;
+  }
+
+  /* Soft section backgrounds to reduce eye strain */
+  .bg-soft {
+    background-color: var(--section-alt);
+  }
+
+  .bg-warm {
+    background-color: var(--section-warm);
+  }
+
+  .bg-base {
+    background-color: var(--background);
+  }
+}
+
+/* ─── Scroll-Triggered Animations ─────────────────────────────── */
+@layer utilities {
+  .animate-delay-100 { animation-delay: 100ms; }
+  .animate-delay-200 { animation-delay: 200ms; }
+  .animate-delay-300 { animation-delay: 300ms; }
+  .animate-delay-400 { animation-delay: 400ms; }
+  .animate-delay-500 { animation-delay: 500ms; }
+}
+
+/* Scroll reveal — elements start invisible and animate in */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-left {
+  opacity: 0;
+  transform: translateX(-40px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-left.revealed {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.reveal-right {
+  opacity: 0;
+  transform: translateX(40px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-right.revealed {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.reveal-scale {
+  opacity: 0;
+  transform: scale(0.92);
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-scale.revealed {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Stagger children */
+.stagger-children > .reveal:nth-child(1) { transition-delay: 0ms; }
+.stagger-children > .reveal:nth-child(2) { transition-delay: 100ms; }
+.stagger-children > .reveal:nth-child(3) { transition-delay: 200ms; }
+.stagger-children > .reveal:nth-child(4) { transition-delay: 300ms; }
+.stagger-children > .reveal:nth-child(5) { transition-delay: 400ms; }
+.stagger-children > .reveal:nth-child(6) { transition-delay: 500ms; }
+
+/* ─── Image hover effects ─────────────────────────────────────── */
+.img-zoom {
+  overflow: hidden;
+}
+
+.img-zoom img {
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.img-zoom:hover img {
+  transform: scale(1.08);
+}
+
+/* ─── Prose (for rendered HTML content) ────────────────────────── */
+.prose {
+  @apply text-gray-700 leading-relaxed;
+}
+.prose h1 { @apply text-3xl font-bold mb-4 mt-8 text-gray-900; }
+.prose h2 { @apply text-2xl font-bold mb-3 mt-6 text-gray-900; }
+.prose h3 { @apply text-xl font-semibold mb-2 mt-4 text-gray-900; }
+.prose p { @apply mb-4; }
+.prose ul { @apply list-disc pl-6 mb-4; }
+.prose ol { @apply list-decimal pl-6 mb-4; }
+.prose li { @apply mb-1; }
+.prose a { @apply text-primary underline hover:text-primary-700; }
+.prose img { @apply rounded-lg my-6; }
+.prose blockquote {
+  @apply border-l-4 border-primary-200 pl-4 italic text-gray-600 my-4;
+}
+
+/* ─── Scrollbar ────────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--muted);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--muted-foreground);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primary);
 }
