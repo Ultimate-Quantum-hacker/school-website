@@ -34,12 +34,12 @@ export default async function GalleryPage() {
   return (
     <>
       {/* ─── Page Header ───────────────────────────────────────── */}
-      <section className="gradient-hero text-white py-24">
+      <section className="border-b border-border py-14">
         <div className="container-wide text-center">
-          <h1 className="text-4xl lg:text-5xl font-heading font-bold mb-4 animate-fade-in">
+          <h1 className="text-4xl lg:text-5xl font-bold mb-4 animate-fade-in">
             Photo Gallery
           </h1>
-          <p className="text-lg text-white/80 max-w-2xl mx-auto animate-fade-in-up">
+          <p className="text-lg text-muted max-w-2xl mx-auto animate-fade-in-up">
             A glimpse into life at {schoolConfig.name}
           </p>
         </div>

@@ -13,7 +13,7 @@ export default function AdmissionsPage() {
   return (
     <>
       {/* ─── Page Header ───────────────────────────────────────── */}
-      <section className="relative gradient-hero text-white py-24 overflow-hidden">
+      <section className="border-b border-border py-14">
         <div className="absolute inset-0">
           <Image
             src={schoolConfig.images.students}
@@ -24,10 +24,10 @@ export default function AdmissionsPage() {
           />
         </div>
         <div className="relative container-wide text-center">
-          <h1 className="text-4xl lg:text-5xl font-heading font-bold mb-4 animate-fade-in">
+          <h1 className="text-4xl lg:text-5xl font-bold mb-4 animate-fade-in">
             Admissions
           </h1>
-          <p className="text-lg text-white/80 max-w-2xl mx-auto animate-fade-in-up">
+          <p className="text-lg text-muted max-w-2xl mx-auto animate-fade-in-up">
             Begin your journey with {schoolConfig.name} — Applications open for{" "}
             {schoolConfig.admissions.currentSession}
           </p>
@@ -67,14 +67,14 @@ export default function AdmissionsPage() {
               },
             ].map((item) => (
               <div key={item.step} className="relative reveal">
-                <div className="bg-white rounded-2xl p-6 border border-gray-100 h-full hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
-                  <div className="w-10 h-10 rounded-full gradient-primary flex items-center justify-center text-white text-sm font-bold mb-4">
+                <div className="bg-surface rounded-2xl p-6 border border-border h-full hover:shadow-sm hover:-translate-y-1 transition-all duration-300">
+                  <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white text-sm font-bold mb-4">
                     {item.step}
                   </div>
-                  <h3 className="font-semibold text-gray-900 mb-2">
+                  <h3 className="font-semibold text-text mb-2">
                     {item.title}
                   </h3>
-                  <p className="text-sm text-gray-600">{item.desc}</p>
+                  <p className="text-sm text-muted">{item.desc}</p>
                 </div>
               </div>
             ))}
@@ -99,7 +99,7 @@ export default function AdmissionsPage() {
             />
           </div>
           <div className="max-w-2xl mx-auto reveal">
-            <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
+            <div className="bg-surface rounded-2xl p-8 shadow-sm border border-border">
               <ul className="space-y-4">
                 {[
                   "Completed application form (below)",
@@ -124,7 +124,7 @@ export default function AdmissionsPage() {
                         d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
                       />
                     </svg>
-                    <span className="text-gray-700">{req}</span>
+                    <span className="text-text">{req}</span>
                   </li>
                 ))}
               </ul>
@@ -138,16 +138,16 @@ export default function AdmissionsPage() {
         <div className="container-wide">
           <div className="grid lg:grid-cols-2 gap-8 items-center">
             <div className="reveal-left">
-              <h2 className="font-heading text-2xl font-bold text-gray-900 mb-4">
+              <h2 className="text-2xl font-bold text-text mb-4">
                 School Fees & Financial Information
               </h2>
-              <p className="text-gray-600 leading-relaxed mb-4">
+              <p className="text-muted leading-relaxed mb-4">
                 We strive to make quality education accessible. Our fees are
                 competitive and cover tuition, textbooks, ICT access, and
                 co-curricular activities. Payment plans are available to
                 support families.
               </p>
-              <p className="text-gray-600 leading-relaxed mb-6">
+              <p className="text-muted leading-relaxed mb-6">
                 For a detailed fee schedule, please contact our admissions
                 office or visit the school in person. We are happy to discuss
                 options that work for your family.
@@ -162,7 +162,7 @@ export default function AdmissionsPage() {
               </a>
             </div>
             <div className="reveal-right">
-              <div className="rounded-2xl overflow-hidden shadow-lg img-zoom">
+              <div className="rounded-2xl overflow-hidden shadow-sm img-zoom">
                 <Image
                   src={schoolConfig.images.campus}
                   alt="School campus"
@@ -186,7 +186,7 @@ export default function AdmissionsPage() {
             />
           </div>
           <div className="max-w-3xl mx-auto reveal">
-            <div className="bg-white rounded-2xl p-6 sm:p-8 border border-gray-100 shadow-sm">
+            <div className="bg-surface rounded-2xl p-6 sm:p-8 border border-border shadow-sm">
               <ApplicationForm />
             </div>
           </div>

@@ -27,10 +27,10 @@ export default function AdminError({
             />
           </svg>
         </div>
-        <h2 className="text-xl font-bold text-gray-900 mb-2">
+        <h2 className="text-xl font-bold text-text mb-2">
           Dashboard Error
         </h2>
-        <p className="text-sm text-gray-600 mb-4">
+        <p className="text-sm text-muted mb-4">
           {error.message || "Something went wrong loading this page."}
         </p>
         <Button onClick={reset}>Retry</Button>

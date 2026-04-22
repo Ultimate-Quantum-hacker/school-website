@@ -35,12 +35,12 @@ export default async function NewsPage() {
   return (
     <>
       {/* ─── Page Header ───────────────────────────────────────── */}
-      <section className="gradient-hero text-white py-24">
+      <section className="border-b border-border py-14">
         <div className="container-wide text-center">
-          <h1 className="text-4xl lg:text-5xl font-heading font-bold mb-4 animate-fade-in">
+          <h1 className="text-4xl lg:text-5xl font-bold mb-4 animate-fade-in">
             News & Announcements
           </h1>
-          <p className="text-lg text-white/80 max-w-2xl mx-auto animate-fade-in-up">
+          <p className="text-lg text-muted max-w-2xl mx-auto animate-fade-in-up">
             Stay updated with the latest happenings at {schoolConfig.name}
           </p>
         </div>
@@ -68,9 +68,9 @@ export default async function NewsPage() {
                     href={`/news/${post.slug}`}
                     className="group"
                   >
-                    <article className="bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 h-full flex flex-col">
+                    <article className="bg-surface rounded-2xl overflow-hidden border border-border shadow-sm hover:shadow-sm transition-all duration-300 hover:-translate-y-1 h-full flex flex-col">
                       {/* Cover Image */}
-                      <div className="aspect-[16/10] bg-gradient-to-br from-primary-100 to-primary-200 flex items-center justify-center overflow-hidden">
+                      <div className="aspect-[16/10] bg-primary flex items-center justify-center overflow-hidden">
                         {post.cover_image ? (
                           <img
                             src={post.cover_image}
@@ -95,14 +95,14 @@ export default async function NewsPage() {
                               ? "Announcement"
                               : "News"}
                           </Badge>
-                          <span className="text-xs text-gray-400">
+                          <span className="text-xs text-muted">
                             {formatDate(post.created_at)}
                           </span>
                         </div>
-                        <h3 className="font-heading text-lg font-bold text-gray-900 mb-2 group-hover:text-primary transition-colors line-clamp-2">
+                        <h3 className="text-lg font-bold text-text mb-2 group-hover:text-primary transition-colors line-clamp-2">
                           {post.title}
                         </h3>
-                        <p className="text-sm text-gray-600 leading-relaxed flex-1">
+                        <p className="text-sm text-muted leading-relaxed flex-1">
                           {post.excerpt
                             ? truncate(post.excerpt, 120)
                             : truncate(post.content.replace(/<[^>]*>/g, ""), 120)}

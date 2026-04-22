@@ -44,8 +44,8 @@ export function ApplicationsManager({ applications }: ApplicationsManagerProps) 
       <Toast message={toast.message} type={toast.type} show={toast.show} onClose={() => setToast(t => ({ ...t, show: false }))} />
 
       <div className="mb-6">
-        <h1 className="text-2xl font-heading font-bold text-gray-900">Applications</h1>
-        <p className="text-sm text-gray-500 mt-1">{applications.length} total applications</p>
+        <h1 className="text-2xl font-bold text-text">Applications</h1>
+        <p className="text-sm text-muted mt-1">{applications.length} total applications</p>
       </div>
 
       {/* Filter Tabs */}
@@ -57,7 +57,7 @@ export function ApplicationsManager({ applications }: ApplicationsManagerProps) 
             className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
               filter === status
                 ? "bg-primary text-white"
-                : "bg-white text-gray-600 border border-gray-200 hover:bg-gray-50"
+                : "bg-surface text-muted border border-border hover:bg-background"
             }`}
           >
             {status.charAt(0).toUpperCase() + status.slice(1)}
@@ -67,40 +67,40 @@ export function ApplicationsManager({ applications }: ApplicationsManagerProps) 
       </div>
 
       {filtered.length === 0 ? (
-        <div className="bg-white rounded-xl border border-gray-200 p-12 text-center">
+        <div className="bg-surface rounded-xl border border-border p-12 text-center">
           <p className="text-4xl mb-3">📋</p>
-          <p className="font-semibold text-gray-900 mb-1">No applications found</p>
-          <p className="text-sm text-gray-500">
+          <p className="font-semibold text-text mb-1">No applications found</p>
+          <p className="text-sm text-muted">
             {filter === "all" ? "No applications have been submitted yet." : `No ${filter} applications.`}
           </p>
         </div>
       ) : (
-        <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
+        <div className="bg-surface rounded-xl border border-border overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-gray-100 bg-gray-50">
-                  <th className="text-left px-6 py-3 font-medium text-gray-500">Student</th>
-                  <th className="text-left px-6 py-3 font-medium text-gray-500">Grade</th>
-                  <th className="text-left px-6 py-3 font-medium text-gray-500">Status</th>
-                  <th className="text-left px-6 py-3 font-medium text-gray-500">Date</th>
-                  <th className="text-right px-6 py-3 font-medium text-gray-500">Actions</th>
+                <tr className="border-b border-border bg-background">
+                  <th className="text-left px-6 py-3 font-medium text-muted">Student</th>
+                  <th className="text-left px-6 py-3 font-medium text-muted">Grade</th>
+                  <th className="text-left px-6 py-3 font-medium text-muted">Status</th>
+                  <th className="text-left px-6 py-3 font-medium text-muted">Date</th>
+                  <th className="text-right px-6 py-3 font-medium text-muted">Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {filtered.map((app) => (
-                  <tr key={app.id} className="border-b border-gray-50 hover:bg-gray-50 transition-colors">
+                  <tr key={app.id} className="border-b border-gray-50 hover:bg-background transition-colors">
                     <td className="px-6 py-4">
-                      <p className="font-medium text-gray-900">{app.student_name}</p>
-                      <p className="text-xs text-gray-500">{app.email}</p>
+                      <p className="font-medium text-text">{app.student_name}</p>
+                      <p className="text-xs text-muted">{app.email}</p>
                     </td>
-                    <td className="px-6 py-4 text-gray-600">{app.grade_applying}</td>
+                    <td className="px-6 py-4 text-muted">{app.grade_applying}</td>
                     <td className="px-6 py-4">
                       <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusColor(app.status)}`}>
                         {app.status}
                       </span>
                     </td>
-                    <td className="px-6 py-4 text-gray-500">{formatDate(app.created_at)}</td>
+                    <td className="px-6 py-4 text-muted">{formatDate(app.created_at)}</td>
                     <td className="px-6 py-4 text-right">
                       <button onClick={() => setSelected(app)} className="text-primary hover:underline text-sm font-medium">
                         View
@@ -130,12 +130,12 @@ export function ApplicationsManager({ applications }: ApplicationsManagerProps) 
             </div>
             {selected.message && (
               <div>
-                <p className="text-xs font-medium text-gray-500 mb-1">Additional Message</p>
-                <p className="text-sm text-gray-700 bg-gray-50 rounded-lg p-3">{selected.message}</p>
+                <p className="text-xs font-medium text-muted mb-1">Additional Message</p>
+                <p className="text-sm text-text bg-background rounded-lg p-3">{selected.message}</p>
               </div>
             )}
-            <div className="pt-4 border-t border-gray-200">
-              <p className="text-xs font-medium text-gray-500 mb-2">Update Status</p>
+            <div className="pt-4 border-t border-border">
+              <p className="text-xs font-medium text-muted mb-2">Update Status</p>
               <div className="flex flex-wrap gap-2">
                 {["pending", "reviewed", "accepted", "rejected"].map((status) => (
                   <Button
@@ -162,8 +162,8 @@ export function ApplicationsManager({ applications }: ApplicationsManagerProps) 
 function DetailField({ label, value }: { label: string; value: string }) {
   return (
     <div>
-      <p className="text-xs font-medium text-gray-500 mb-0.5">{label}</p>
-      <p className="text-sm text-gray-900">{value}</p>
+      <p className="text-xs font-medium text-muted mb-0.5">{label}</p>
+      <p className="text-sm text-text">{value}</p>
     </div>
   );
 }

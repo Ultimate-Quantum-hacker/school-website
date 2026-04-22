@@ -53,11 +53,11 @@ export default async function PostPage({ params }: PageProps) {
   return (
     <>
       {/* ─── Header ────────────────────────────────────────────── */}
-      <section className="gradient-hero text-white py-16">
+      <section className="border-b border-border py-10">
         <div className="container-wide max-w-4xl">
           <Link
             href="/news"
-            className="inline-flex items-center gap-1 text-sm text-white/70 hover:text-white mb-6 transition-colors"
+            className="inline-flex items-center gap-1 text-sm text-muted hover:text-white mb-6 transition-colors"
           >
             ← Back to News
           </Link>
@@ -69,11 +69,11 @@ export default async function PostPage({ params }: PageProps) {
             >
               {post.category === "announcement" ? "Announcement" : "News"}
             </Badge>
-            <span className="text-sm text-white/60">
+            <span className="text-sm text-muted">
               {formatDate(post.created_at)}
             </span>
           </div>
-          <h1 className="text-3xl lg:text-4xl font-heading font-bold leading-tight animate-fade-in">
+          <h1 className="text-3xl lg:text-4xl font-bold leading-tight animate-fade-in">
             {post.title}
           </h1>
         </div>
@@ -82,7 +82,7 @@ export default async function PostPage({ params }: PageProps) {
       {/* ─── Cover Image ───────────────────────────────────────── */}
       {post.cover_image && (
         <div className="container-wide max-w-4xl -mt-6">
-          <div className="aspect-[21/9] rounded-2xl overflow-hidden shadow-xl">
+          <div className="aspect-[21/9] rounded-2xl overflow-hidden shadow-sm">
             <img
               src={post.cover_image}
               alt={post.title}
@@ -93,13 +93,13 @@ export default async function PostPage({ params }: PageProps) {
       )}
 
       {/* ─── Content ───────────────────────────────────────────── */}
-      <section className="section-padding bg-white">
+      <section className="section-padding bg-surface">
         <div className="container-wide max-w-4xl">
           <article
             className="prose max-w-none"
             dangerouslySetInnerHTML={{ __html: post.content }}
           />
-          <div className="mt-12 pt-8 border-t border-gray-200">
+          <div className="mt-12 pt-8 border-t border-border">
             <Link href="/news">
               <Button variant="outline">← Back to All News</Button>
             </Link>

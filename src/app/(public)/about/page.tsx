@@ -12,7 +12,7 @@ export default function AboutPage() {
   return (
     <>
       {/* ─── Page Header ───────────────────────────────────────── */}
-      <section className="relative gradient-hero text-white py-24 overflow-hidden">
+      <section className="border-b border-border py-14">
         <div className="absolute inset-0">
           <Image
             src={schoolConfig.images.campus}
@@ -23,10 +23,10 @@ export default function AboutPage() {
           />
         </div>
         <div className="relative container-wide text-center">
-          <h1 className="text-4xl lg:text-5xl font-heading font-bold mb-4 animate-fade-in">
+          <h1 className="text-4xl lg:text-5xl font-bold mb-4 animate-fade-in">
             About Us
           </h1>
-          <p className="text-lg text-white/80 max-w-2xl mx-auto animate-fade-in-up">
+          <p className="text-lg text-muted max-w-2xl mx-auto animate-fade-in-up">
             Discover the story, values, and people behind {schoolConfig.name}
           </p>
         </div>
@@ -42,7 +42,7 @@ export default function AboutPage() {
                 subtitle={`A legacy of excellence since ${schoolConfig.foundedYear}`}
                 centered={false}
               />
-              <div className="space-y-4 text-gray-600 leading-relaxed">
+              <div className="space-y-4 text-muted leading-relaxed">
                 <p>
                   Founded in {schoolConfig.foundedYear}, {schoolConfig.name} began
                   with a simple yet powerful vision: to create a school in Accra
@@ -65,7 +65,7 @@ export default function AboutPage() {
               </div>
             </div>
             <div className="relative reveal-right">
-              <div className="rounded-2xl overflow-hidden shadow-xl img-zoom">
+              <div className="rounded-2xl overflow-hidden shadow-sm img-zoom">
                 <Image
                   src={schoolConfig.images.library}
                   alt="School library"
@@ -76,9 +76,9 @@ export default function AboutPage() {
               </div>
               <div className="absolute -bottom-4 -right-4 w-24 h-24 rounded-2xl bg-secondary/20 -z-10" />
               {/* Floating stat card */}
-              <div className="absolute -bottom-6 -left-6 bg-white rounded-xl shadow-lg p-4 border border-gray-100">
+              <div className="absolute -bottom-6 -left-6 bg-surface rounded-xl shadow-sm p-4 border border-border">
                 <p className="text-3xl font-bold text-primary">{new Date().getFullYear() - schoolConfig.foundedYear}+</p>
-                <p className="text-xs text-gray-500">Years of Excellence</p>
+                <p className="text-xs text-muted">Years of Excellence</p>
               </div>
             </div>
           </div>
@@ -102,14 +102,14 @@ export default function AboutPage() {
             />
           </div>
           <div className="grid md:grid-cols-2 gap-8 stagger-children">
-            <div className="reveal bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-lg transition-shadow duration-300">
-              <div className="w-14 h-14 rounded-xl gradient-primary flex items-center justify-center text-white text-2xl mb-6">
+            <div className="reveal bg-surface rounded-2xl p-8 shadow-sm border border-border hover:shadow-sm transition-shadow duration-300">
+              <div className="w-14 h-14 rounded-xl bg-primary flex items-center justify-center text-white text-2xl mb-6">
                 🎯
               </div>
-              <h3 className="font-heading text-xl font-bold text-gray-900 mb-4">
+              <h3 className="text-xl font-bold text-text mb-4">
                 Our Mission
               </h3>
-              <p className="text-gray-600 leading-relaxed">
+              <p className="text-muted leading-relaxed">
                 To provide quality basic education that empowers students with
                 knowledge, critical thinking skills, and strong moral values. We
                 are committed to fostering an inclusive learning environment where
@@ -117,14 +117,14 @@ export default function AboutPage() {
                 being prepared for the challenges of secondary education and beyond.
               </p>
             </div>
-            <div className="reveal bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-lg transition-shadow duration-300">
+            <div className="reveal bg-surface rounded-2xl p-8 shadow-sm border border-border hover:shadow-sm transition-shadow duration-300">
               <div className="w-14 h-14 rounded-xl bg-secondary flex items-center justify-center text-white text-2xl mb-6">
                 🔭
               </div>
-              <h3 className="font-heading text-xl font-bold text-gray-900 mb-4">
+              <h3 className="text-xl font-bold text-text mb-4">
                 Our Vision
               </h3>
-              <p className="text-gray-600 leading-relaxed">
+              <p className="text-muted leading-relaxed">
                 To be a leading basic school in Ghana that produces
                 well-rounded, confident, and socially responsible young people who
                 contribute meaningfully to national development. We envision a
@@ -170,13 +170,13 @@ export default function AboutPage() {
             ].map((value) => (
               <div
                 key={value.title}
-                className="reveal text-center p-6 bg-white rounded-xl border border-gray-100 hover:border-primary-200 hover:shadow-lg transition-all duration-300 group"
+                className="reveal text-center p-6 bg-surface rounded-xl border border-border hover:border-primary-200 hover:shadow-sm transition-all duration-300 group"
               >
                 <div className="text-4xl mb-4 group-hover:scale-110 transition-transform duration-300">{value.icon}</div>
-                <h3 className="font-heading text-lg font-bold text-gray-900 mb-2">
+                <h3 className="text-lg font-bold text-text mb-2">
                   {value.title}
                 </h3>
-                <p className="text-sm text-gray-600">{value.desc}</p>
+                <p className="text-sm text-muted">{value.desc}</p>
               </div>
             ))}
           </div>
@@ -208,7 +208,7 @@ export default function AboutPage() {
             {schoolConfig.leadership.map((leader) => (
               <div
                 key={leader.name}
-                className="reveal bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-300 group"
+                className="reveal bg-surface rounded-2xl overflow-hidden shadow-sm border border-border hover:shadow-sm transition-all duration-300 group"
               >
                 <div className="aspect-[4/3] overflow-hidden img-zoom">
                   <Image
@@ -220,13 +220,13 @@ export default function AboutPage() {
                   />
                 </div>
                 <div className="p-6">
-                  <h3 className="font-heading text-lg font-bold text-gray-900">
+                  <h3 className="text-lg font-bold text-text">
                     {leader.name}
                   </h3>
                   <p className="text-sm font-medium text-primary mb-3">
                     {leader.role}
                   </p>
-                  <p className="text-sm text-gray-600 leading-relaxed">
+                  <p className="text-sm text-muted leading-relaxed">
                     {leader.bio}
                   </p>
                 </div>

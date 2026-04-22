@@ -9,6 +9,14 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        // ─── Semantic SaaS Tokens ────────────────────────────────
+        background: "var(--color-background)",
+        surface: "var(--color-surface)",
+        text: "var(--color-text)",
+        muted: "var(--color-muted)",
+        border: "var(--color-border)",
+
+        // ─── Primary palette (flat SaaS blue, #2563eb) ───────────
         primary: {
           DEFAULT: "var(--color-primary)",
           50: "var(--color-primary-50)",
@@ -22,6 +30,7 @@ const config: Config = {
           800: "var(--color-primary-800)",
           900: "var(--color-primary-900)",
         },
+        // ─── Secondary + accent remapped to neutral tokens ───────
         secondary: {
           DEFAULT: "var(--color-secondary)",
           50: "var(--color-secondary-50)",
@@ -50,15 +59,24 @@ const config: Config = {
         },
       },
       fontFamily: {
-        sans: ["var(--font-inter)", "system-ui", "sans-serif"],
-        heading: ["var(--font-playfair)", "Georgia", "serif"],
+        sans: [
+          "var(--font-inter)",
+          "Inter",
+          "system-ui",
+          "-apple-system",
+          "Segoe UI",
+          "sans-serif",
+        ],
+        heading: [
+          "var(--font-inter)",
+          "Inter",
+          "system-ui",
+          "sans-serif",
+        ],
       },
       animation: {
-        "fade-in": "fadeIn 0.6s ease-out forwards",
-        "fade-in-up": "fadeInUp 0.6s ease-out forwards",
-        "slide-in-left": "slideInLeft 0.5s ease-out forwards",
-        "slide-in-right": "slideInRight 0.5s ease-out forwards",
-        "scale-in": "scaleIn 0.3s ease-out forwards",
+        "fade-in": "fadeIn 0.4s ease-out forwards",
+        "fade-in-up": "fadeInUp 0.4s ease-out forwards",
       },
       keyframes: {
         fadeIn: {
@@ -66,20 +84,8 @@ const config: Config = {
           "100%": { opacity: "1" },
         },
         fadeInUp: {
-          "0%": { opacity: "0", transform: "translateY(20px)" },
+          "0%": { opacity: "0", transform: "translateY(8px)" },
           "100%": { opacity: "1", transform: "translateY(0)" },
-        },
-        slideInLeft: {
-          "0%": { opacity: "0", transform: "translateX(-30px)" },
-          "100%": { opacity: "1", transform: "translateX(0)" },
-        },
-        slideInRight: {
-          "0%": { opacity: "0", transform: "translateX(30px)" },
-          "100%": { opacity: "1", transform: "translateX(0)" },
-        },
-        scaleIn: {
-          "0%": { opacity: "0", transform: "scale(0.95)" },
-          "100%": { opacity: "1", transform: "scale(1)" },
         },
       },
     },

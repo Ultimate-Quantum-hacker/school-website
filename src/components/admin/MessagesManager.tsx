@@ -61,8 +61,8 @@ export function MessagesManager({ messages }: MessagesManagerProps) {
       <Toast message={toast.message} type={toast.type} show={toast.show} onClose={() => setToast(t => ({ ...t, show: false }))} />
 
       <div className="mb-6">
-        <h1 className="text-2xl font-heading font-bold text-gray-900">Messages</h1>
-        <p className="text-sm text-gray-500 mt-1">
+        <h1 className="text-2xl font-bold text-text">Messages</h1>
+        <p className="text-sm text-muted mt-1">
           {messages.length} total · {unreadCount} unread
         </p>
       </div>
@@ -76,7 +76,7 @@ export function MessagesManager({ messages }: MessagesManagerProps) {
             className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
               filter === f
                 ? "bg-primary text-white"
-                : "bg-white text-gray-600 border border-gray-200 hover:bg-gray-50"
+                : "bg-surface text-muted border border-border hover:bg-background"
             }`}
           >
             {f.charAt(0).toUpperCase() + f.slice(1)}
@@ -85,20 +85,20 @@ export function MessagesManager({ messages }: MessagesManagerProps) {
       </div>
 
       {filtered.length === 0 ? (
-        <div className="bg-white rounded-xl border border-gray-200 p-12 text-center">
+        <div className="bg-surface rounded-xl border border-border p-12 text-center">
           <p className="text-4xl mb-3">✉️</p>
-          <p className="font-semibold text-gray-900 mb-1">No messages</p>
-          <p className="text-sm text-gray-500">
+          <p className="font-semibold text-text mb-1">No messages</p>
+          <p className="text-sm text-muted">
             {filter === "all" ? "No messages received yet." : `No ${filter} messages.`}
           </p>
         </div>
       ) : (
-        <div className="bg-white rounded-xl border border-gray-200 overflow-hidden divide-y divide-gray-100">
+        <div className="bg-surface rounded-xl border border-border overflow-hidden divide-y divide-gray-100">
           {filtered.map((msg) => (
             <div
               key={msg.id}
               onClick={() => handleOpen(msg)}
-              className={`flex items-start gap-4 px-6 py-4 cursor-pointer hover:bg-gray-50 transition-colors ${
+              className={`flex items-start gap-4 px-6 py-4 cursor-pointer hover:bg-background transition-colors ${
                 !msg.read ? "bg-primary-50/30" : ""
               }`}
             >
@@ -106,33 +106,33 @@ export function MessagesManager({ messages }: MessagesManagerProps) {
               <div className="pt-1.5">
                 <div
                   className={`w-2.5 h-2.5 rounded-full flex-shrink-0 ${
-                    msg.read ? "bg-gray-200" : "bg-primary"
+                    msg.read ? "bg-background" : "bg-primary"
                   }`}
                 />
               </div>
 
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 mb-1">
-                  <p className={`text-sm truncate ${!msg.read ? "font-semibold text-gray-900" : "text-gray-700"}`}>
+                  <p className={`text-sm truncate ${!msg.read ? "font-semibold text-text" : "text-text"}`}>
                     {msg.name}
                   </p>
                   {!msg.read && <Badge variant="info">New</Badge>}
                 </div>
-                <p className="text-sm font-medium text-gray-900 truncate">
+                <p className="text-sm font-medium text-text truncate">
                   {msg.subject || "(No subject)"}
                 </p>
-                <p className="text-xs text-gray-500 truncate mt-0.5">
+                <p className="text-xs text-muted truncate mt-0.5">
                   {msg.message.substring(0, 100)}...
                 </p>
               </div>
 
               <div className="flex items-center gap-2 flex-shrink-0">
-                <span className="text-xs text-gray-400 whitespace-nowrap">
+                <span className="text-xs text-muted whitespace-nowrap">
                   {formatDateTime(msg.created_at)}
                 </span>
                 <button
                   onClick={(e) => { e.stopPropagation(); setDeleteId(msg.id); }}
-                  className="p-1.5 rounded-lg text-gray-400 hover:text-red-600 hover:bg-red-50 transition-colors"
+                  className="p-1.5 rounded-lg text-muted hover:text-red-600 hover:bg-red-50 transition-colors"
                   title="Delete"
                 >
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -151,29 +151,29 @@ export function MessagesManager({ messages }: MessagesManagerProps) {
           <div className="space-y-4">
             <div className="grid sm:grid-cols-2 gap-4">
               <div>
-                <p className="text-xs font-medium text-gray-500">From</p>
-                <p className="text-sm text-gray-900 font-medium">{selected.name}</p>
+                <p className="text-xs font-medium text-muted">From</p>
+                <p className="text-sm text-text font-medium">{selected.name}</p>
               </div>
               <div>
-                <p className="text-xs font-medium text-gray-500">Email</p>
+                <p className="text-xs font-medium text-muted">Email</p>
                 <a href={`mailto:${selected.email}`} className="text-sm text-primary hover:underline">{selected.email}</a>
               </div>
               <div>
-                <p className="text-xs font-medium text-gray-500">Subject</p>
-                <p className="text-sm text-gray-900">{selected.subject || "(No subject)"}</p>
+                <p className="text-xs font-medium text-muted">Subject</p>
+                <p className="text-sm text-text">{selected.subject || "(No subject)"}</p>
               </div>
               <div>
-                <p className="text-xs font-medium text-gray-500">Received</p>
-                <p className="text-sm text-gray-900">{formatDateTime(selected.created_at)}</p>
+                <p className="text-xs font-medium text-muted">Received</p>
+                <p className="text-sm text-text">{formatDateTime(selected.created_at)}</p>
               </div>
             </div>
             <div>
-              <p className="text-xs font-medium text-gray-500 mb-1">Message</p>
-              <div className="text-sm text-gray-700 bg-gray-50 rounded-lg p-4 whitespace-pre-wrap leading-relaxed">
+              <p className="text-xs font-medium text-muted mb-1">Message</p>
+              <div className="text-sm text-text bg-background rounded-lg p-4 whitespace-pre-wrap leading-relaxed">
                 {selected.message}
               </div>
             </div>
-            <div className="flex justify-between pt-2 border-t border-gray-200">
+            <div className="flex justify-between pt-2 border-t border-border">
               <Button
                 variant="ghost"
                 size="sm"
@@ -196,7 +196,7 @@ export function MessagesManager({ messages }: MessagesManagerProps) {
 
       {/* Delete Confirmation */}
       <Modal isOpen={!!deleteId} onClose={() => setDeleteId(null)} title="Delete Message" size="sm">
-        <p className="text-sm text-gray-600 mb-6">Are you sure you want to delete this message?</p>
+        <p className="text-sm text-muted mb-6">Are you sure you want to delete this message?</p>
         <div className="flex justify-end gap-3">
           <Button variant="ghost" onClick={() => setDeleteId(null)}>Cancel</Button>
           <Button variant="danger" onClick={handleDelete}>Delete</Button>

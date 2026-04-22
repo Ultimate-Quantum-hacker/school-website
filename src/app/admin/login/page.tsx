@@ -44,7 +44,7 @@ export default function AdminLoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-background px-4">
       <Toast
         message={toast.message}
         type={toast.type}
@@ -54,21 +54,21 @@ export default function AdminLoginPage() {
       <div className="w-full max-w-md">
         {/* Logo */}
         <div className="text-center mb-8">
-          <div className="inline-flex w-16 h-16 rounded-2xl gradient-primary items-center justify-center text-white text-2xl font-bold shadow-lg mb-4">
+          <div className="inline-flex w-16 h-16 rounded-2xl bg-primary items-center justify-center text-white text-2xl font-bold shadow-sm mb-4">
             {schoolConfig.shortName[0]}
           </div>
-          <h1 className="font-heading text-2xl font-bold text-gray-900">
+          <h1 className="text-2xl font-bold text-text">
             Admin Dashboard
           </h1>
-          <p className="text-sm text-gray-500 mt-1">{schoolConfig.name}</p>
+          <p className="text-sm text-muted mt-1">{schoolConfig.name}</p>
         </div>
 
         {/* Login Card */}
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
-          <h2 className="text-lg font-semibold text-gray-900 mb-1">
+        <div className="bg-surface rounded-2xl shadow-sm border border-border p-8">
+          <h2 className="text-lg font-semibold text-text mb-1">
             Sign In
           </h2>
-          <p className="text-sm text-gray-500 mb-6">
+          <p className="text-sm text-muted mb-6">
             Enter your admin credentials to continue
           </p>
 
@@ -100,7 +100,7 @@ export default function AdminLoginPage() {
           </form>
         </div>
 
-        <p className="text-center text-xs text-gray-400 mt-6">
+        <p className="text-center text-xs text-muted mt-6">
           Protected area. Authorized personnel only.
         </p>
       </div>

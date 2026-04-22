@@ -2,226 +2,191 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ─── CSS Custom Properties (Theme Colors from school config) ───── */
+/* ─── Design Tokens ──────────────────────────────────────────── */
 :root {
-  /* Primary — Deep Blue */
-  --color-primary: #1e3a5f;
-  --color-primary-50: #eef4fb;
-  --color-primary-100: #d5e3f5;
-  --color-primary-200: #aac7eb;
-  --color-primary-300: #7faade;
-  --color-primary-400: #548ed4;
-  --color-primary-500: #3571bf;
-  --color-primary-600: #1e3a5f;
-  --color-primary-700: #1a3354;
-  --color-primary-800: #152a45;
-  --color-primary-900: #0f1f33;
+  /* Semantic surfaces */
+  --color-background: #f8fafc;
+  --color-surface: #ffffff;
+  --color-text: #0f172a;
+  --color-muted: #64748b;
+  --color-border: #e2e8f0;
 
-  /* Secondary — Gold */
-  --color-secondary: #c9a84c;
-  --color-secondary-50: #fdf9ee;
-  --color-secondary-100: #f8edd0;
-  --color-secondary-200: #f1dba1;
-  --color-secondary-300: #e9c872;
-  --color-secondary-400: #d4ae52;
-  --color-secondary-500: #c9a84c;
-  --color-secondary-600: #a88a3d;
-  --color-secondary-700: #886e31;
-  --color-secondary-800: #6b5727;
-  --color-secondary-900: #4f401d;
+  /* Primary — clean SaaS blue (#2563eb) scale */
+  --color-primary: #2563eb;
+  --color-primary-50: #eff6ff;
+  --color-primary-100: #dbeafe;
+  --color-primary-200: #bfdbfe;
+  --color-primary-300: #93c5fd;
+  --color-primary-400: #60a5fa;
+  --color-primary-500: #3b82f6;
+  --color-primary-600: #2563eb;
+  --color-primary-700: #1d4ed8;
+  --color-primary-800: #1e40af;
+  --color-primary-900: #1e3a8a;
 
-  /* Accent — Forest Green */
-  --color-accent: #2d6a4f;
-  --color-accent-50: #edf7f2;
-  --color-accent-100: #d1ebdf;
-  --color-accent-200: #a3d7bf;
-  --color-accent-300: #75c39f;
-  --color-accent-400: #47af7f;
-  --color-accent-500: #2d6a4f;
-  --color-accent-600: #265c44;
-  --color-accent-700: #1f4d39;
-  --color-accent-800: #183e2e;
-  --color-accent-900: #112f23;
+  /* Secondary + accent — neutralized to slate so legacy classes
+     inherit the clean palette without rewriting every component */
+  --color-secondary: #475569;
+  --color-secondary-50: #f8fafc;
+  --color-secondary-100: #f1f5f9;
+  --color-secondary-200: #e2e8f0;
+  --color-secondary-300: #cbd5e1;
+  --color-secondary-400: #94a3b8;
+  --color-secondary-500: #64748b;
+  --color-secondary-600: #475569;
+  --color-secondary-700: #334155;
+  --color-secondary-800: #1e293b;
+  --color-secondary-900: #0f172a;
 
-  /* Soft neutral backgrounds — reduced eye strain */
-  --foreground: #111827;
-  --background: #f8f9fc;
-  --muted: #f1f3f8;
-  --muted-foreground: #6b7280;
-  --border: #e2e5ed;
-  --card: #ffffff;
-  --card-foreground: #111827;
-  --section-alt: #f0f3f9;
-  --section-warm: #faf8f4;
+  --color-accent: #2563eb;
+  --color-accent-50: #eff6ff;
+  --color-accent-100: #dbeafe;
+  --color-accent-200: #bfdbfe;
+  --color-accent-300: #93c5fd;
+  --color-accent-400: #60a5fa;
+  --color-accent-500: #3b82f6;
+  --color-accent-600: #2563eb;
+  --color-accent-700: #1d4ed8;
+  --color-accent-800: #1e40af;
+  --color-accent-900: #1e3a8a;
+
+  /* Legacy aliases (kept so older @apply rules keep working) */
+  --foreground: var(--color-text);
+  --background: var(--color-background);
+  --muted: var(--color-background);
+  --muted-foreground: var(--color-muted);
+  --border: var(--color-border);
+  --card: var(--color-surface);
+  --card-foreground: var(--color-text);
+  --section-alt: var(--color-background);
+  --section-warm: var(--color-background);
 }
 
-/* ─── Base Styles ──────────────────────────────────────────────── */
+/* ─── Base Styles ────────────────────────────────────────────── */
 @layer base {
-  * {
-    @apply border-[var(--border)];
-  }
-
   html {
     @apply scroll-smooth;
   }
 
   body {
-    @apply bg-[var(--background)] text-[var(--foreground)] antialiased;
+    @apply bg-background text-text antialiased font-sans;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
 
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-heading font-bold tracking-tight;
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply tracking-tight text-text;
   }
 }
 
-/* ─── Utility Classes ──────────────────────────────────────────── */
+/* ─── Utility Classes ────────────────────────────────────────── */
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
 
   .section-padding {
-    @apply px-4 py-16 sm:px-6 lg:px-8 lg:py-24;
+    @apply px-4 py-16 sm:px-6 lg:px-8 lg:py-20;
   }
 
   .container-wide {
-    @apply mx-auto max-w-7xl px-4 sm:px-6 lg:px-8;
+    @apply mx-auto max-w-6xl px-4 sm:px-6 lg:px-8;
   }
 
+  .container-narrow {
+    @apply mx-auto max-w-4xl px-4 sm:px-6;
+  }
+
+  /* Flat replacements for legacy glass / gradient utilities.
+     Kept as class names so existing markup still compiles. */
   .glass {
-    @apply bg-white/80 backdrop-blur-md border border-white/20 shadow-lg;
+    @apply bg-surface border border-border;
   }
 
   .gradient-primary {
-    @apply bg-gradient-to-r from-primary-700 via-primary to-primary-800;
+    background-color: var(--color-primary);
   }
 
   .gradient-hero {
-    @apply bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700;
+    background-color: var(--color-primary);
   }
 
-  /* Soft section backgrounds to reduce eye strain */
   .bg-soft {
-    background-color: var(--section-alt);
+    background-color: var(--color-background);
   }
 
   .bg-warm {
-    background-color: var(--section-warm);
+    background-color: var(--color-background);
   }
 
   .bg-base {
-    background-color: var(--background);
+    background-color: var(--color-background);
   }
 }
 
-/* ─── Scroll-Triggered Animations ─────────────────────────────── */
-@layer utilities {
-  .animate-delay-100 { animation-delay: 100ms; }
-  .animate-delay-200 { animation-delay: 200ms; }
-  .animate-delay-300 { animation-delay: 300ms; }
-  .animate-delay-400 { animation-delay: 400ms; }
-  .animate-delay-500 { animation-delay: 500ms; }
-}
-
-/* Scroll reveal — elements start invisible and animate in */
-.reveal {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.reveal.revealed {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.reveal-left {
-  opacity: 0;
-  transform: translateX(-40px);
-  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.reveal-left.revealed {
-  opacity: 1;
-  transform: translateX(0);
-}
-
-.reveal-right {
-  opacity: 0;
-  transform: translateX(40px);
-  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.reveal-right.revealed {
-  opacity: 1;
-  transform: translateX(0);
-}
-
+/* ─── Scroll-Triggered Animations (subtle) ──────────────────── */
+.reveal,
+.reveal-left,
+.reveal-right,
 .reveal-scale {
   opacity: 0;
-  transform: scale(0.92);
-  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateY(12px);
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
 }
 
+.reveal.revealed,
+.reveal-left.revealed,
+.reveal-right.revealed,
 .reveal-scale.revealed {
   opacity: 1;
-  transform: scale(1);
+  transform: none;
 }
 
-/* Stagger children */
-.stagger-children > .reveal:nth-child(1) { transition-delay: 0ms; }
-.stagger-children > .reveal:nth-child(2) { transition-delay: 100ms; }
-.stagger-children > .reveal:nth-child(3) { transition-delay: 200ms; }
-.stagger-children > .reveal:nth-child(4) { transition-delay: 300ms; }
-.stagger-children > .reveal:nth-child(5) { transition-delay: 400ms; }
-.stagger-children > .reveal:nth-child(6) { transition-delay: 500ms; }
-
-/* ─── Image hover effects ─────────────────────────────────────── */
+/* Image hover — minimal zoom */
 .img-zoom {
   overflow: hidden;
 }
 
 .img-zoom img {
-  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.6s ease-out;
 }
 
 .img-zoom:hover img {
-  transform: scale(1.08);
+  transform: scale(1.03);
 }
 
-/* ─── Prose (for rendered HTML content) ────────────────────────── */
+/* Prose (rendered HTML content) */
 .prose {
-  @apply text-gray-700 leading-relaxed;
-}
-.prose h1 { @apply text-3xl font-bold mb-4 mt-8 text-gray-900; }
-.prose h2 { @apply text-2xl font-bold mb-3 mt-6 text-gray-900; }
-.prose h3 { @apply text-xl font-semibold mb-2 mt-4 text-gray-900; }
-.prose p { @apply mb-4; }
-.prose ul { @apply list-disc pl-6 mb-4; }
-.prose ol { @apply list-decimal pl-6 mb-4; }
-.prose li { @apply mb-1; }
-.prose a { @apply text-primary underline hover:text-primary-700; }
-.prose img { @apply rounded-lg my-6; }
-.prose blockquote {
-  @apply border-l-4 border-primary-200 pl-4 italic text-gray-600 my-4;
+  @apply text-text leading-relaxed;
 }
 
-/* ─── Scrollbar ────────────────────────────────────────────────── */
-::-webkit-scrollbar {
-  width: 8px;
+.prose h1,
+.prose h2,
+.prose h3 {
+  @apply text-text font-semibold;
 }
-::-webkit-scrollbar-track {
-  background: var(--muted);
+
+.prose a {
+  @apply text-primary hover:opacity-80;
 }
-::-webkit-scrollbar-thumb {
-  background: var(--muted-foreground);
-  border-radius: 4px;
+
+.prose p {
+  @apply mb-4;
 }
-::-webkit-scrollbar-thumb:hover {
-  background: var(--color-primary);
+
+.prose ul,
+.prose ol {
+  @apply ml-6 mb-4;
+}
+
+.prose ul {
+  @apply list-disc;
+}
+
+.prose ol {
+  @apply list-decimal;
 }

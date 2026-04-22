@@ -42,10 +42,10 @@ export default async function AdminDashboardPage() {
     <div>
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-2xl font-heading font-bold text-gray-900">
+        <h1 className="text-2xl font-bold text-text">
           Dashboard
         </h1>
-        <p className="text-sm text-gray-500 mt-1">
+        <p className="text-sm text-muted mt-1">
           Welcome to the {schoolConfig.name} admin panel
         </p>
       </div>
@@ -54,7 +54,7 @@ export default async function AdminDashboardPage() {
       <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         {statCards.map((stat) => (
           <Link key={stat.label} href={stat.href}>
-            <div className="bg-white rounded-xl border border-gray-200 p-6 hover:shadow-md hover:border-gray-300 transition-all duration-200 group">
+            <div className="bg-surface rounded-xl border border-border p-6 hover:shadow-md hover:border-border transition-all duration-200 group">
               <div className="flex items-center justify-between mb-4">
                 <span
                   className={`inline-flex items-center justify-center w-10 h-10 rounded-lg text-lg ${stat.color}`}
@@ -62,7 +62,7 @@ export default async function AdminDashboardPage() {
                   {stat.icon}
                 </span>
                 <svg
-                  className="w-4 h-4 text-gray-300 group-hover:text-gray-500 transition-colors"
+                  className="w-4 h-4 text-muted group-hover:text-muted transition-colors"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -75,8 +75,8 @@ export default async function AdminDashboardPage() {
                   />
                 </svg>
               </div>
-              <p className="text-3xl font-bold text-gray-900">{stat.value}</p>
-              <p className="text-sm text-gray-500 mt-1">{stat.label}</p>
+              <p className="text-3xl font-bold text-text">{stat.value}</p>
+              <p className="text-sm text-muted mt-1">{stat.label}</p>
               {stat.subtitle && (
                 <p className="text-xs text-primary mt-1 font-medium">
                   {stat.subtitle}
@@ -88,57 +88,57 @@ export default async function AdminDashboardPage() {
       </div>
 
       {/* Quick Actions */}
-      <div className="bg-white rounded-xl border border-gray-200 p-6">
-        <h2 className="font-semibold text-gray-900 mb-4">Quick Actions</h2>
+      <div className="bg-surface rounded-xl border border-border p-6">
+        <h2 className="font-semibold text-text mb-4">Quick Actions</h2>
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
           <Link
             href="/admin/posts?new=true"
-            className="flex items-center gap-3 p-4 rounded-lg border border-gray-100 hover:border-primary-200 hover:bg-primary-50 transition-all duration-200 group"
+            className="flex items-center gap-3 p-4 rounded-lg border border-border hover:border-primary-200 hover:bg-primary-50 transition-all duration-200 group"
           >
             <span className="text-xl">✏️</span>
             <div>
-              <p className="text-sm font-medium text-gray-900 group-hover:text-primary">
+              <p className="text-sm font-medium text-text group-hover:text-primary">
                 New Post
               </p>
-              <p className="text-xs text-gray-500">Create news or announcement</p>
+              <p className="text-xs text-muted">Create news or announcement</p>
             </div>
           </Link>
           <Link
             href="/admin/gallery"
-            className="flex items-center gap-3 p-4 rounded-lg border border-gray-100 hover:border-primary-200 hover:bg-primary-50 transition-all duration-200 group"
+            className="flex items-center gap-3 p-4 rounded-lg border border-border hover:border-primary-200 hover:bg-primary-50 transition-all duration-200 group"
           >
             <span className="text-xl">📸</span>
             <div>
-              <p className="text-sm font-medium text-gray-900 group-hover:text-primary">
+              <p className="text-sm font-medium text-text group-hover:text-primary">
                 Upload Photo
               </p>
-              <p className="text-xs text-gray-500">Add to gallery</p>
+              <p className="text-xs text-muted">Add to gallery</p>
             </div>
           </Link>
           <Link
             href="/admin/applications"
-            className="flex items-center gap-3 p-4 rounded-lg border border-gray-100 hover:border-primary-200 hover:bg-primary-50 transition-all duration-200 group"
+            className="flex items-center gap-3 p-4 rounded-lg border border-border hover:border-primary-200 hover:bg-primary-50 transition-all duration-200 group"
           >
             <span className="text-xl">📋</span>
             <div>
-              <p className="text-sm font-medium text-gray-900 group-hover:text-primary">
+              <p className="text-sm font-medium text-text group-hover:text-primary">
                 Review Applications
               </p>
-              <p className="text-xs text-gray-500">
+              <p className="text-xs text-muted">
                 {stats.pendingApplications} pending
               </p>
             </div>
           </Link>
           <Link
             href="/admin/messages"
-            className="flex items-center gap-3 p-4 rounded-lg border border-gray-100 hover:border-primary-200 hover:bg-primary-50 transition-all duration-200 group"
+            className="flex items-center gap-3 p-4 rounded-lg border border-border hover:border-primary-200 hover:bg-primary-50 transition-all duration-200 group"
           >
             <span className="text-xl">💬</span>
             <div>
-              <p className="text-sm font-medium text-gray-900 group-hover:text-primary">
+              <p className="text-sm font-medium text-text group-hover:text-primary">
                 Read Messages
               </p>
-              <p className="text-xs text-gray-500">
+              <p className="text-xs text-muted">
                 {stats.unreadMessages} unread
               </p>
             </div>

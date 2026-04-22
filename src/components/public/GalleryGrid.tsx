@@ -18,7 +18,7 @@ export function GalleryGrid({ images }: GalleryGridProps) {
           <button
             key={image.id}
             onClick={() => setSelectedImage(image)}
-            className="group relative aspect-square rounded-xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-primary"
+            className="group relative aspect-square rounded-xl overflow-hidden border border-border shadow-sm hover:shadow-sm transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-primary"
           >
             <img
               src={image.image_url}
@@ -56,7 +56,7 @@ export function GalleryGrid({ images }: GalleryGridProps) {
               className="w-full rounded-lg"
             />
             {selectedImage.caption && (
-              <p className="mt-4 text-sm text-gray-600 text-center">
+              <p className="mt-4 text-sm text-muted text-center">
                 {selectedImage.caption}
               </p>
             )}

@@ -25,31 +25,29 @@ export function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-gray-900 text-gray-300">
-      {/* Main Footer */}
-      <div className="container-wide py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+    <footer className="bg-surface border-t border-border text-muted">
+      <div className="container-wide py-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
           {/* School Info */}
           <div className="lg:col-span-1">
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center text-white font-bold text-lg">
+              <div className="w-9 h-9 rounded-lg bg-primary flex items-center justify-center text-white font-semibold text-sm">
                 {schoolConfig.shortName[0]}
               </div>
-              <h3 className="font-heading text-lg font-bold text-white">
+              <h3 className="text-sm font-semibold text-text">
                 {schoolConfig.name}
               </h3>
             </div>
-            <p className="text-sm leading-relaxed text-gray-400 mb-6">
+            <p className="text-sm leading-relaxed text-muted mb-6">
               {schoolConfig.tagline}
             </p>
-            {/* Social Icons */}
-            <div className="flex gap-3">
+            <div className="flex gap-2">
               {schoolConfig.social.facebook && (
                 <a
                   href={schoolConfig.social.facebook}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-9 h-9 rounded-lg bg-gray-800 flex items-center justify-center text-gray-400 hover:bg-primary hover:text-white transition-all duration-200"
+                  className="w-9 h-9 rounded-lg border border-border flex items-center justify-center text-muted hover:text-primary hover:border-primary/40 transition-colors"
                   aria-label="Facebook"
                 >
                   <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
@@ -62,7 +60,7 @@ export function Footer() {
                   href={schoolConfig.social.twitter}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-9 h-9 rounded-lg bg-gray-800 flex items-center justify-center text-gray-400 hover:bg-primary hover:text-white transition-all duration-200"
+                  className="w-9 h-9 rounded-lg border border-border flex items-center justify-center text-muted hover:text-primary hover:border-primary/40 transition-colors"
                   aria-label="Twitter"
                 >
                   <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
@@ -75,7 +73,7 @@ export function Footer() {
                   href={schoolConfig.social.instagram}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-9 h-9 rounded-lg bg-gray-800 flex items-center justify-center text-gray-400 hover:bg-primary hover:text-white transition-all duration-200"
+                  className="w-9 h-9 rounded-lg border border-border flex items-center justify-center text-muted hover:text-primary hover:border-primary/40 transition-colors"
                   aria-label="Instagram"
                 >
                   <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
@@ -88,16 +86,15 @@ export function Footer() {
             </div>
           </div>
 
-          {/* Link Columns */}
           {footerLinks.map((col) => (
             <div key={col.title}>
-              <h4 className="font-semibold text-white mb-4">{col.title}</h4>
-              <ul className="space-y-3">
+              <h4 className="text-sm font-semibold text-text mb-4">{col.title}</h4>
+              <ul className="space-y-2">
                 {col.links.map((link) => (
                   <li key={link.href + link.label}>
                     <Link
                       href={link.href}
-                      className="text-sm text-gray-400 hover:text-white transition-colors duration-200"
+                      className="text-sm text-muted hover:text-primary transition-colors"
                     >
                       {link.label}
                     </Link>
@@ -107,10 +104,9 @@ export function Footer() {
             </div>
           ))}
 
-          {/* Contact Info */}
           <div>
-            <h4 className="font-semibold text-white mb-4">Contact Us</h4>
-            <ul className="space-y-3 text-sm text-gray-400">
+            <h4 className="text-sm font-semibold text-text mb-4">Contact</h4>
+            <ul className="space-y-2 text-sm text-muted">
               <li className="flex items-start gap-2">
                 <svg className="w-4 h-4 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
@@ -122,7 +118,7 @@ export function Footer() {
                 <svg className="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
-                <a href={`mailto:${schoolConfig.contact.email}`} className="hover:text-white transition-colors">
+                <a href={`mailto:${schoolConfig.contact.email}`} className="hover:text-primary transition-colors">
                   {schoolConfig.contact.email}
                 </a>
               </li>
@@ -130,7 +126,7 @@ export function Footer() {
                 <svg className="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                 </svg>
-                <a href={`tel:${schoolConfig.contact.phone}`} className="hover:text-white transition-colors">
+                <a href={`tel:${schoolConfig.contact.phone}`} className="hover:text-primary transition-colors">
                   {schoolConfig.contact.phone}
                 </a>
               </li>
@@ -139,24 +135,20 @@ export function Footer() {
         </div>
       </div>
 
-      {/* Bottom Bar — SAGE INNOVATIONS branding */}
-      <div className="border-t border-gray-800">
-        <div className="container-wide py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-xs text-gray-500">
+      <div className="border-t border-border">
+        <div className="container-wide py-6 flex flex-col sm:flex-row items-center justify-between gap-3">
+          <p className="text-xs text-muted">
             © {currentYear} {schoolConfig.name}. All rights reserved.
           </p>
-          <div className="flex items-center gap-4">
-            <p className="text-xs text-gray-600">
-              {schoolConfig.accreditation}
-            </p>
-            <span className="text-gray-700">•</span>
-            <p className="text-xs text-gray-500">
+          <div className="flex items-center gap-3 text-xs text-muted">
+            <span>{schoolConfig.accreditation}</span>
+            <span className="text-border">•</span>
+            <span>
               Built by{" "}
-              <span className="text-secondary font-semibold">
+              <span className="text-text font-medium">
                 {schoolConfig.developer}
-              </span>{" "}
-              © {currentYear}
-            </p>
+              </span>
+            </span>
           </div>
         </div>
       </div>

@@ -19,25 +19,22 @@ export function Button({
   ...props
 }: ButtonProps) {
   const baseStyles =
-    "inline-flex items-center justify-center font-medium rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed";
+    "inline-flex items-center justify-center font-medium rounded-lg transition duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:opacity-50 disabled:cursor-not-allowed active:scale-[0.98]";
 
   const variants = {
-    primary:
-      "bg-primary text-white hover:bg-primary-700 focus:ring-primary-400 shadow-sm hover:shadow-md",
+    primary: "bg-primary text-white hover:opacity-90",
     secondary:
-      "bg-secondary text-white hover:bg-secondary-600 focus:ring-secondary-400 shadow-sm hover:shadow-md",
+      "bg-surface border border-border text-text hover:bg-background",
     outline:
-      "border-2 border-primary text-primary hover:bg-primary hover:text-white focus:ring-primary-400",
-    ghost:
-      "text-gray-600 hover:bg-gray-100 hover:text-gray-900 focus:ring-gray-400",
-    danger:
-      "bg-red-600 text-white hover:bg-red-700 focus:ring-red-400 shadow-sm",
+      "border border-border text-text hover:bg-background",
+    ghost: "text-muted hover:bg-background hover:text-text",
+    danger: "bg-red-600 text-white hover:bg-red-700",
   };
 
   const sizes = {
     sm: "px-3 py-1.5 text-sm",
-    md: "px-5 py-2.5 text-sm",
-    lg: "px-8 py-3.5 text-base",
+    md: "px-4 py-2 text-sm",
+    lg: "px-6 py-3 text-base",
   };
 
   return (
@@ -87,7 +84,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
         {label && (
           <label
             htmlFor={inputId}
-            className="block text-sm font-medium text-gray-700 mb-1.5"
+            className="block text-sm font-medium text-text mb-1.5"
           >
             {label}
           </label>
@@ -96,10 +93,10 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
           ref={ref}
           id={inputId}
           className={cn(
-            "w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400",
-            "focus:border-primary focus:ring-2 focus:ring-primary-200 focus:outline-none",
-            "transition-colors duration-200",
-            "disabled:bg-gray-50 disabled:text-gray-500",
+            "w-full rounded-lg border border-border bg-surface px-3 py-2 text-sm text-text placeholder:text-muted",
+            "focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary",
+            "transition duration-150",
+            "disabled:bg-background disabled:text-muted",
             error && "border-red-500 focus:border-red-500 focus:ring-red-200",
             className
           )}
@@ -128,7 +125,7 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
         {label && (
           <label
             htmlFor={textareaId}
-            className="block text-sm font-medium text-gray-700 mb-1.5"
+            className="block text-sm font-medium text-text mb-1.5"
           >
             {label}
           </label>
@@ -137,9 +134,9 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
           ref={ref}
           id={textareaId}
           className={cn(
-            "w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400",
-            "focus:border-primary focus:ring-2 focus:ring-primary-200 focus:outline-none",
-            "transition-colors duration-200 resize-y min-h-[100px]",
+            "w-full rounded-lg border border-border bg-surface px-3 py-2 text-sm text-text placeholder:text-muted",
+            "focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary",
+            "transition duration-150 resize-y min-h-[100px]",
             error && "border-red-500 focus:border-red-500 focus:ring-red-200",
             className
           )}
@@ -169,7 +166,7 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
         {label && (
           <label
             htmlFor={selectId}
-            className="block text-sm font-medium text-gray-700 mb-1.5"
+            className="block text-sm font-medium text-text mb-1.5"
           >
             {label}
           </label>
@@ -178,9 +175,9 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
           ref={ref}
           id={selectId}
           className={cn(
-            "w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900",
-            "focus:border-primary focus:ring-2 focus:ring-primary-200 focus:outline-none",
-            "transition-colors duration-200 bg-white",
+            "w-full rounded-lg border border-border bg-surface px-3 py-2 text-sm text-text",
+            "focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary",
+            "transition duration-150",
             error && "border-red-500 focus:border-red-500 focus:ring-red-200",
             className
           )}
