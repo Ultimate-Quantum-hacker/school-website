@@ -27,10 +27,10 @@ export default function PublicError({
             />
           </svg>
         </div>
-        <h1 className="font-heading text-2xl font-bold text-gray-900 mb-2">
+        <h1 className="text-2xl font-bold text-text mb-2">
           Something went wrong
         </h1>
-        <p className="text-gray-600 mb-6">
+        <p className="text-muted mb-6">
           We encountered an unexpected error. Please try again or contact
           support if the problem persists.
         </p>
@@ -41,7 +41,7 @@ export default function PublicError({
           </a>
         </div>
         {error.digest && (
-          <p className="text-xs text-gray-400 mt-4">
+          <p className="text-xs text-muted mt-4">
             Error ID: {error.digest}
           </p>
         )}

@@ -11,3 +11,5 @@ export {
   SectionHeader,
   Toast,
 } from "./Card";
+export { Background } from "./Background";
+export { PageTransition } from "./PageTransition";

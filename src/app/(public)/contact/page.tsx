@@ -13,7 +13,7 @@ export default function ContactPage() {
   return (
     <>
       {/* ─── Page Header ───────────────────────────────────────── */}
-      <section className="relative gradient-hero text-white py-24 overflow-hidden">
+      <section className="border-b border-border py-14">
         <div className="absolute inset-0">
           <Image
             src={schoolConfig.images.campus}
@@ -24,10 +24,10 @@ export default function ContactPage() {
           />
         </div>
         <div className="relative container-wide text-center">
-          <h1 className="text-4xl lg:text-5xl font-heading font-bold mb-4 animate-fade-in">
+          <h1 className="text-4xl lg:text-5xl font-bold mb-4 animate-fade-in">
             Contact Us
           </h1>
-          <p className="text-lg text-white/80 max-w-2xl mx-auto animate-fade-in-up">
+          <p className="text-lg text-muted max-w-2xl mx-auto animate-fade-in-up">
             We&apos;d love to hear from you. Reach out with any questions or
             schedule a campus visit.
           </p>
@@ -55,8 +55,8 @@ export default function ContactPage() {
                     </svg>
                   </div>
                   <div>
-                    <h3 className="font-semibold text-gray-900 mb-1">Our Address</h3>
-                    <p className="text-sm text-gray-600">{schoolConfig.contact.address}</p>
+                    <h3 className="font-semibold text-text mb-1">Our Address</h3>
+                    <p className="text-sm text-muted">{schoolConfig.contact.address}</p>
                   </div>
                 </div>
 
@@ -68,7 +68,7 @@ export default function ContactPage() {
                     </svg>
                   </div>
                   <div>
-                    <h3 className="font-semibold text-gray-900 mb-1">Email</h3>
+                    <h3 className="font-semibold text-text mb-1">Email</h3>
                     <a href={`mailto:${schoolConfig.contact.email}`} className="text-sm text-primary hover:underline">
                       {schoolConfig.contact.email}
                     </a>
@@ -83,7 +83,7 @@ export default function ContactPage() {
                     </svg>
                   </div>
                   <div>
-                    <h3 className="font-semibold text-gray-900 mb-1">Phone</h3>
+                    <h3 className="font-semibold text-text mb-1">Phone</h3>
                     <a href={`tel:${schoolConfig.contact.phone}`} className="text-sm text-primary hover:underline block">
                       {schoolConfig.contact.phone}
                     </a>
@@ -101,9 +101,9 @@ export default function ContactPage() {
                     </svg>
                   </div>
                   <div>
-                    <h3 className="font-semibold text-gray-900 mb-1">Office Hours</h3>
-                    <p className="text-sm text-gray-600">Mon – Fri: 7:30 AM – 4:00 PM</p>
-                    <p className="text-sm text-gray-600">Sat: 9:00 AM – 12:00 PM</p>
+                    <h3 className="font-semibold text-text mb-1">Office Hours</h3>
+                    <p className="text-sm text-muted">Mon – Fri: 7:30 AM – 4:00 PM</p>
+                    <p className="text-sm text-muted">Sat: 9:00 AM – 12:00 PM</p>
                   </div>
                 </div>
               </div>
@@ -111,11 +111,11 @@ export default function ContactPage() {
 
             {/* Contact Form */}
             <div className="lg:col-span-3 reveal-right">
-              <div className="bg-white rounded-2xl p-6 sm:p-8 border border-gray-100 shadow-sm">
-                <h2 className="font-heading text-xl font-bold text-gray-900 mb-1">
+              <div className="bg-surface rounded-2xl p-6 sm:p-8 border border-border shadow-sm">
+                <h2 className="text-xl font-bold text-text mb-1">
                   Send Us a Message
                 </h2>
-                <p className="text-sm text-gray-500 mb-6">
+                <p className="text-sm text-muted mb-6">
                   Fill out the form below and we&apos;ll get back to you within 24 hours.
                 </p>
                 <ContactForm />
@@ -128,7 +128,7 @@ export default function ContactPage() {
       {/* ─── Map ───────────────────────────────────────────────── */}
       <section className="bg-soft">
         <div className="container-wide py-2">
-          <div className="rounded-2xl overflow-hidden shadow-sm border border-gray-200 reveal-scale">
+          <div className="rounded-2xl overflow-hidden shadow-sm border border-border reveal-scale">
             <iframe
               src={schoolConfig.contact.mapEmbedUrl}
               width="100%"

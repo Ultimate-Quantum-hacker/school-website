@@ -14,7 +14,7 @@ export default function AcademicsPage() {
   return (
     <>
       {/* ─── Page Header ───────────────────────────────────────── */}
-      <section className="relative gradient-hero text-white py-24 overflow-hidden">
+      <section className="border-b border-border py-14">
         <div className="absolute inset-0">
           <Image
             src={schoolConfig.images.classroom}
@@ -25,10 +25,10 @@ export default function AcademicsPage() {
           />
         </div>
         <div className="relative container-wide text-center">
-          <h1 className="text-4xl lg:text-5xl font-heading font-bold mb-4 animate-fade-in">
+          <h1 className="text-4xl lg:text-5xl font-bold mb-4 animate-fade-in">
             Academics
           </h1>
-          <p className="text-lg text-white/80 max-w-2xl mx-auto animate-fade-in-up">
+          <p className="text-lg text-muted max-w-2xl mx-auto animate-fade-in-up">
             A rigorous, well-rounded curriculum aligned with Ghana Education Service standards
           </p>
         </div>
@@ -44,7 +44,7 @@ export default function AcademicsPage() {
             />
           </div>
           <div className="max-w-3xl mx-auto reveal">
-            <div className="space-y-4 text-gray-600 leading-relaxed text-center">
+            <div className="space-y-4 text-muted leading-relaxed text-center">
               <p>
                 At {schoolConfig.name}, our curriculum follows the Ghana Education
                 Service (GES) guidelines while incorporating modern teaching
@@ -88,7 +88,7 @@ export default function AcademicsPage() {
                 }`}
               >
                 <div className="lg:w-2/5">
-                  <div className="rounded-2xl overflow-hidden shadow-lg img-zoom">
+                  <div className="rounded-2xl overflow-hidden shadow-sm img-zoom">
                     <Image
                       src={program.image}
                       alt={program.title}
@@ -99,11 +99,11 @@ export default function AcademicsPage() {
                   </div>
                 </div>
                 <div className="lg:w-3/5">
-                  <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-lg transition-shadow duration-300">
+                  <div className="bg-surface rounded-2xl p-8 shadow-sm border border-border hover:shadow-sm transition-shadow duration-300">
                     <div className="flex items-center gap-3 mb-4">
                       <span className="text-4xl">{program.icon}</span>
                       <div>
-                        <h3 className="font-heading text-2xl font-bold text-gray-900">
+                        <h3 className="text-2xl font-bold text-text">
                           {program.title}
                         </h3>
                         <p className="text-sm font-medium text-primary">
@@ -111,14 +111,14 @@ export default function AcademicsPage() {
                         </p>
                       </div>
                     </div>
-                    <p className="text-gray-600 leading-relaxed mb-6">
+                    <p className="text-muted leading-relaxed mb-6">
                       {program.description}
                     </p>
                     <div className="grid sm:grid-cols-2 gap-3">
                       {getProgramFeatures(program.title).map((feature) => (
                         <div
                           key={feature}
-                          className="flex items-center gap-2 text-sm text-gray-600"
+                          className="flex items-center gap-2 text-sm text-muted"
                         >
                           <svg
                             className="w-4 h-4 text-accent flex-shrink-0"
@@ -165,15 +165,15 @@ export default function AcademicsPage() {
             ].map((activity) => (
               <div
                 key={activity.title}
-                className="reveal p-6 bg-white rounded-xl border border-gray-100 hover:border-primary-200 hover:shadow-lg transition-all duration-300 group"
+                className="reveal p-6 bg-surface rounded-xl border border-border hover:border-primary-200 hover:shadow-sm transition-all duration-300 group"
               >
                 <div className="text-3xl mb-3 group-hover:scale-110 transition-transform duration-300">
                   {activity.icon}
                 </div>
-                <h3 className="font-semibold text-gray-900 mb-1">
+                <h3 className="font-semibold text-text mb-1">
                   {activity.title}
                 </h3>
-                <p className="text-sm text-gray-600">{activity.desc}</p>
+                <p className="text-sm text-muted">{activity.desc}</p>
               </div>
             ))}
           </div>
@@ -183,10 +183,10 @@ export default function AcademicsPage() {
       {/* ─── CTA ───────────────────────────────────────────────── */}
       <section className="section-padding bg-soft">
         <div className="container-wide text-center reveal">
-          <h2 className="font-heading text-3xl font-bold text-gray-900 mb-4">
+          <h2 className="text-3xl font-bold text-text mb-4">
             Join Our Academic Community
           </h2>
-          <p className="text-gray-600 max-w-xl mx-auto mb-8">
+          <p className="text-muted max-w-xl mx-auto mb-8">
             Experience the difference of a {schoolConfig.name} education.
             Applications are open for the {schoolConfig.admissions.currentSession} session.
           </p>

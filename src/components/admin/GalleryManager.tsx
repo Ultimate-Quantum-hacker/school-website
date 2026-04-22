@@ -83,29 +83,29 @@ export function GalleryManager({ images }: GalleryManagerProps) {
 
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-heading font-bold text-gray-900">Gallery</h1>
-          <p className="text-sm text-gray-500 mt-1">{images.length} images</p>
+          <h1 className="text-2xl font-bold text-text">Gallery</h1>
+          <p className="text-sm text-muted mt-1">{images.length} images</p>
         </div>
         <Button onClick={() => setShowAdd(true)}>+ Add Image</Button>
       </div>
 
       {images.length === 0 ? (
-        <div className="bg-white rounded-xl border border-gray-200 p-12 text-center">
+        <div className="bg-surface rounded-xl border border-border p-12 text-center">
           <p className="text-4xl mb-3">🖼️</p>
-          <p className="font-semibold text-gray-900 mb-1">No images yet</p>
-          <p className="text-sm text-gray-500 mb-4">Upload your first gallery image</p>
+          <p className="font-semibold text-text mb-1">No images yet</p>
+          <p className="text-sm text-muted mb-4">Upload your first gallery image</p>
           <Button onClick={() => setShowAdd(true)}>Upload Image</Button>
         </div>
       ) : (
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           {images.map((image) => (
-            <div key={image.id} className="group relative bg-white rounded-xl border border-gray-200 overflow-hidden hover:shadow-md transition-shadow">
+            <div key={image.id} className="group relative bg-surface rounded-xl border border-border overflow-hidden hover:shadow-md transition-shadow">
               <div className="aspect-square overflow-hidden">
                 <img src={image.image_url} alt={image.title} className="w-full h-full object-cover" loading="lazy" />
               </div>
               <div className="p-3">
-                <p className="text-sm font-medium text-gray-900 truncate">{image.title}</p>
-                {image.caption && <p className="text-xs text-gray-500 truncate mt-0.5">{image.caption}</p>}
+                <p className="text-sm font-medium text-text truncate">{image.title}</p>
+                {image.caption && <p className="text-xs text-muted truncate mt-0.5">{image.caption}</p>}
               </div>
               <button
                 onClick={() => setDeleteId(image.id)}
@@ -125,17 +125,17 @@ export function GalleryManager({ images }: GalleryManagerProps) {
       <Modal isOpen={showAdd} onClose={() => setShowAdd(false)} title="Add Gallery Image" size="md">
         <form onSubmit={handleAdd} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1.5">Upload Image</label>
+            <label className="block text-sm font-medium text-text mb-1.5">Upload Image</label>
             <input
               type="file"
               accept="image/*"
               onChange={handleFileUpload}
-              className="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-primary-50 file:text-primary hover:file:bg-primary-100 transition-colors"
+              className="w-full text-sm text-muted file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-primary-50 file:text-primary hover:file:bg-primary-100 transition-colors"
             />
             {uploading && <p className="text-xs text-primary mt-1">Uploading...</p>}
           </div>
           {imageUrl && (
-            <div className="rounded-lg overflow-hidden border border-gray-200">
+            <div className="rounded-lg overflow-hidden border border-border">
               <img src={imageUrl} alt="Preview" className="w-full h-48 object-cover" />
             </div>
           )}
@@ -151,7 +151,7 @@ export function GalleryManager({ images }: GalleryManagerProps) {
 
       {/* Delete Confirmation */}
       <Modal isOpen={!!deleteId} onClose={() => setDeleteId(null)} title="Delete Image" size="sm">
-        <p className="text-sm text-gray-600 mb-6">Are you sure you want to delete this image?</p>
+        <p className="text-sm text-muted mb-6">Are you sure you want to delete this image?</p>
         <div className="flex justify-end gap-3">
           <Button variant="ghost" onClick={() => setDeleteId(null)}>Cancel</Button>
           <Button variant="danger" onClick={handleDelete}>Delete</Button>
