@@ -11,7 +11,7 @@ export default function PublicLayout({
   return (
     <>
       <Navbar />
-      <main className="flex-1">
+      <main id="main-content" tabIndex={-1} className="flex-1">
         <PageTransition>{children}</PageTransition>
       </main>
       <Footer />

@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { Button } from "@/components/ui/FormElements";
 
 export default function PublicError({
@@ -36,9 +37,9 @@ export default function PublicError({
         </p>
         <div className="flex justify-center gap-3">
           <Button onClick={reset}>Try Again</Button>
-          <a href="/">
+          <Link href="/">
             <Button variant="outline">Go Home</Button>
-          </a>
+          </Link>
         </div>
         {error.digest && (
           <p className="text-xs text-muted mt-4">

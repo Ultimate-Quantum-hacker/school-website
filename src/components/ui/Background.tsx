@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 
 /**
  * Full-screen fixed background, placed behind all UI via `-z-10`.
@@ -10,11 +10,19 @@ import { motion } from "framer-motion";
  *   2. Subtle grid pattern (CSS lines + radial mask that fades at edges)
  *   3. Slow-rotating conic aurora, heavily blurred, low opacity
  *   4. 4 floating color orbs in blue / violet / cyan / sky
+ *   5. Thin drifting scan line
  *
- * Every animation is long (20–60s) and low-opacity so content always
- * remains comfortably readable.
+ * Every animation is long (20–80s) and low-opacity so content always
+ * remains comfortably readable. When the user prefers reduced motion,
+ * all motion is disabled but the static layers still render.
  */
 export function Background() {
+  // Framer's useReducedMotion returns null on the server and resolves to
+  // true/false after hydration. Treating only `true` as "reduce" keeps
+  // SSR + first client render identical (both animate) and flips off
+  // once we know the user prefers reduced motion.
+  const animate = useReducedMotion() !== true;
+
   return (
     <div
       aria-hidden
@@ -56,12 +64,12 @@ export function Background() {
           filter: "blur(90px)",
           opacity: 0.55,
         }}
-        animate={{ rotate: 360 }}
-        transition={{
-          duration: 80,
-          ease: "linear",
-          repeat: Infinity,
-        }}
+        animate={animate ? { rotate: 360 } : undefined}
+        transition={
+          animate
+            ? { duration: 80, ease: "linear", repeat: Infinity }
+            : undefined
+        }
       />
 
       {/* 4 — color orbs */}
@@ -76,12 +84,14 @@ export function Background() {
             "radial-gradient(circle, rgba(37,99,235,0.22) 0%, rgba(37,99,235,0) 70%)",
           filter: "blur(70px)",
         }}
-        animate={{
-          x: [0, 80, -20, 0],
-          y: [0, 40, -30, 0],
-          scale: [1, 1.06, 0.98, 1],
-        }}
-        transition={{ duration: 26, ease: "easeInOut", repeat: Infinity }}
+        animate={
+          animate
+            ? { x: [0, 80, -20, 0], y: [0, 40, -30, 0], scale: [1, 1.06, 0.98, 1] }
+            : undefined
+        }
+        transition={
+          animate ? { duration: 26, ease: "easeInOut", repeat: Infinity } : undefined
+        }
       />
 
       <motion.div
@@ -95,12 +105,14 @@ export function Background() {
             "radial-gradient(circle, rgba(139,92,246,0.20) 0%, rgba(139,92,246,0) 70%)",
           filter: "blur(90px)",
         }}
-        animate={{
-          x: [0, -60, 30, 0],
-          y: [0, -50, 20, 0],
-          scale: [1, 1.05, 0.96, 1],
-        }}
-        transition={{ duration: 34, ease: "easeInOut", repeat: Infinity }}
+        animate={
+          animate
+            ? { x: [0, -60, 30, 0], y: [0, -50, 20, 0], scale: [1, 1.05, 0.96, 1] }
+            : undefined
+        }
+        transition={
+          animate ? { duration: 34, ease: "easeInOut", repeat: Infinity } : undefined
+        }
       />
 
       <motion.div
@@ -114,11 +126,14 @@ export function Background() {
             "radial-gradient(circle, rgba(14,165,233,0.16) 0%, rgba(14,165,233,0) 70%)",
           filter: "blur(90px)",
         }}
-        animate={{
-          x: ["-50%", "-30%", "-70%", "-50%"],
-          y: ["-50%", "-60%", "-40%", "-50%"],
-        }}
-        transition={{ duration: 28, ease: "easeInOut", repeat: Infinity }}
+        animate={
+          animate
+            ? { x: ["-50%", "-30%", "-70%", "-50%"], y: ["-50%", "-60%", "-40%", "-50%"] }
+            : { x: "-50%", y: "-50%" }
+        }
+        transition={
+          animate ? { duration: 28, ease: "easeInOut", repeat: Infinity } : undefined
+        }
       />
 
       <motion.div
@@ -132,29 +147,30 @@ export function Background() {
             "radial-gradient(circle, rgba(56,189,248,0.14) 0%, rgba(56,189,248,0) 70%)",
           filter: "blur(80px)",
         }}
-        animate={{
-          x: [0, 50, -30, 0],
-          y: [0, -40, 30, 0],
-        }}
-        transition={{ duration: 22, ease: "easeInOut", repeat: Infinity }}
+        animate={animate ? { x: [0, 50, -30, 0], y: [0, -40, 30, 0] } : undefined}
+        transition={
+          animate ? { duration: 22, ease: "easeInOut", repeat: Infinity } : undefined
+        }
       />
 
-      {/* 5 — thin scan line that drifts top→bottom */}
-      <motion.div
-        className="absolute inset-x-0 h-px"
-        style={{
-          background:
-            "linear-gradient(to right, transparent, rgba(37,99,235,0.35), transparent)",
-          opacity: 0.35,
-        }}
-        animate={{ y: ["-10vh", "110vh"] }}
-        transition={{
-          duration: 18,
-          ease: "easeInOut",
-          repeat: Infinity,
-          repeatDelay: 4,
-        }}
-      />
+      {/* 5 — thin scan line */}
+      {animate && (
+        <motion.div
+          className="absolute inset-x-0 h-px"
+          style={{
+            background:
+              "linear-gradient(to right, transparent, rgba(37,99,235,0.35), transparent)",
+            opacity: 0.35,
+          }}
+          animate={{ y: ["-10vh", "110vh"] }}
+          transition={{
+            duration: 18,
+            ease: "easeInOut",
+            repeat: Infinity,
+            repeatDelay: 4,
+          }}
+        />
+      )}
     </div>
   );
 }

@@ -19,6 +19,7 @@ export default function ContactPage() {
             src={schoolConfig.images.campus}
             alt="Campus"
             fill
+            priority
             className="object-cover opacity-15"
             sizes="100vw"
           />
