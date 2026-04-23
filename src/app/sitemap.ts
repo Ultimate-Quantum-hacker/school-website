@@ -1,16 +1,49 @@
-import { MetadataRoute } from "next";
+import type { MetadataRoute } from "next";
+import { createClient } from "@/lib/supabase/server";
 import { schoolConfig } from "@/config/school";
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://example.com";
+const STATIC_ROUTES = [
+  { path: "", priority: 1.0, changeFrequency: "weekly" as const },
+  { path: "/about", priority: 0.8, changeFrequency: "monthly" as const },
+  { path: "/academics", priority: 0.8, changeFrequency: "monthly" as const },
+  { path: "/admissions", priority: 0.9, changeFrequency: "monthly" as const },
+  { path: "/news", priority: 0.7, changeFrequency: "daily" as const },
+  { path: "/events", priority: 0.7, changeFrequency: "weekly" as const },
+  { path: "/gallery", priority: 0.6, changeFrequency: "weekly" as const },
+  { path: "/contact", priority: 0.6, changeFrequency: "yearly" as const },
+];
 
-  return [
-    { url: baseUrl, lastModified: new Date(), changeFrequency: "weekly", priority: 1 },
-    { url: `${baseUrl}/about`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
-    { url: `${baseUrl}/academics`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
-    { url: `${baseUrl}/admissions`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${baseUrl}/news`, lastModified: new Date(), changeFrequency: "daily", priority: 0.7 },
-    { url: `${baseUrl}/gallery`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.6 },
-    { url: `${baseUrl}/contact`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.7 },
-  ];
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const base = process.env.NEXT_PUBLIC_SITE_URL ?? schoolConfig.siteUrl;
+
+  const staticEntries: MetadataRoute.Sitemap = STATIC_ROUTES.map(
+    ({ path, priority, changeFrequency }) => ({
+      url: `${base}${path}`,
+      lastModified: new Date(),
+      changeFrequency,
+      priority,
+    }),
+  );
+
+  let newsEntries: MetadataRoute.Sitemap = [];
+  try {
+    const supabase = await createClient();
+    const { data } = await supabase
+      .from("posts")
+      .select("slug, updated_at")
+      .eq("published", true);
+
+    if (data) {
+      newsEntries = data.map((post) => ({
+        url: `${base}/news/${post.slug}`,
+        lastModified: post.updated_at ? new Date(post.updated_at) : new Date(),
+        changeFrequency: "monthly" as const,
+        priority: 0.5,
+      }));
+    }
+  } catch {
+    // Ignore; sitemap degrades gracefully to static routes only.
+  }
+
+  return [...staticEntries, ...newsEntries];
 }

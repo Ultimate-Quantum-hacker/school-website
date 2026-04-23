@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { schoolConfig } from "@/config/school";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/FormElements";
+import { SearchDialog } from "@/components/public/SearchDialog";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -13,6 +14,7 @@ const navLinks = [
   { href: "/academics", label: "Academics" },
   { href: "/admissions", label: "Admissions" },
   { href: "/news", label: "News" },
+  { href: "/events", label: "Events" },
   { href: "/gallery", label: "Gallery" },
   { href: "/contact", label: "Contact" },
 ];
@@ -58,6 +60,7 @@ export function Navbar() {
 
           {/* CTA + Mobile Toggle */}
           <div className="flex items-center gap-3">
+            <SearchDialog />
             <Link href="/admissions" className="hidden sm:block">
               <Button size="sm">Apply Now</Button>
             </Link>

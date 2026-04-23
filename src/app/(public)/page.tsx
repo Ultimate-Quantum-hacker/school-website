@@ -3,6 +3,7 @@ import Image from "next/image";
 import { schoolConfig } from "@/config/school";
 import { Button } from "@/components/ui/FormElements";
 import { SectionHeader } from "@/components/ui/Card";
+import { TestimonialsCarousel } from "@/components/public/TestimonialsCarousel";
 
 export default function HomePage() {
   return (
@@ -172,6 +173,21 @@ export default function HomePage() {
                 </p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ─── Testimonials ──────────────────────────────────────── */}
+      <section className="section-padding bg-surface/30">
+        <div className="container-wide">
+          <div className="reveal">
+            <SectionHeader
+              title="What Families Say"
+              subtitle="Hear from the parents, alumni, and students who make Greenfield who we are."
+            />
+          </div>
+          <div className="reveal">
+            <TestimonialsCarousel />
           </div>
         </div>
       </section>

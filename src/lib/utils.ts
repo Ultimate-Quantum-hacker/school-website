@@ -64,6 +64,18 @@ export function getInitials(name: string): string {
 }
 
 /**
+ * Estimate reading time in minutes for a block of HTML/plain text,
+ * assuming 200 words per minute. Always returns at least 1.
+ */
+export function readingTime(text: string): number {
+  const words = text
+    .replace(/<[^>]*>/g, " ")
+    .split(/\s+/)
+    .filter(Boolean).length;
+  return Math.max(1, Math.round(words / 200));
+}
+
+/**
  * Get status badge color class.
  */
 export function getStatusColor(status: string): string {

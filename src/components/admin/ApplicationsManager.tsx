@@ -3,9 +3,10 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { updateApplicationStatus } from "@/actions/admin";
-import { Button, Select } from "@/components/ui/FormElements";
-import { Badge, Modal, Toast } from "@/components/ui/Card";
+import { Button } from "@/components/ui/FormElements";
+import { Modal, Toast } from "@/components/ui/Card";
 import { formatDate, getStatusColor } from "@/lib/utils";
+import { downloadCsv, toCsv } from "@/lib/csv";
 import type { Application } from "@/types";
 
 interface ApplicationsManagerProps {
@@ -43,9 +44,19 @@ export function ApplicationsManager({ applications }: ApplicationsManagerProps) 
     <div>
       <Toast message={toast.message} type={toast.type} show={toast.show} onClose={() => setToast(t => ({ ...t, show: false }))} />
 
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold text-text">Applications</h1>
-        <p className="text-sm text-muted mt-1">{applications.length} total applications</p>
+      <div className="mb-6 flex items-center justify-between gap-4">
+        <div>
+          <h1 className="text-2xl font-bold text-text">Applications</h1>
+          <p className="text-sm text-muted mt-1">{applications.length} total applications</p>
+        </div>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => exportApplicationsCsv(filtered)}
+          disabled={filtered.length === 0}
+        >
+          Export CSV
+        </Button>
       </div>
 
       {/* Filter Tabs */}
@@ -157,6 +168,22 @@ export function ApplicationsManager({ applications }: ApplicationsManagerProps) 
       </Modal>
     </div>
   );
+}
+
+function exportApplicationsCsv(rows: Application[]) {
+  const csv = toCsv(rows as unknown as Record<string, unknown>[], [
+    { key: "student_name", header: "Student Name" },
+    { key: "email", header: "Email" },
+    { key: "phone", header: "Phone" },
+    { key: "grade_applying", header: "Grade" },
+    { key: "guardian_name", header: "Guardian" },
+    { key: "guardian_phone", header: "Guardian Phone" },
+    { key: "previous_school", header: "Previous School" },
+    { key: "status", header: "Status" },
+    { key: "created_at", header: "Submitted At" },
+  ]);
+  const stamp = new Date().toISOString().slice(0, 10);
+  downloadCsv(`applications-${stamp}.csv`, csv);
 }
 
 function DetailField({ label, value }: { label: string; value: string }) {
