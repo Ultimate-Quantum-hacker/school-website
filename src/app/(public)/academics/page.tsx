@@ -20,6 +20,7 @@ export default function AcademicsPage() {
             src={schoolConfig.images.classroom}
             alt="Classroom"
             fill
+            priority
             className="object-cover opacity-15"
             sizes="100vw"
           />

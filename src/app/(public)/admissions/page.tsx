@@ -19,6 +19,7 @@ export default function AdmissionsPage() {
             src={schoolConfig.images.students}
             alt="Students"
             fill
+            priority
             className="object-cover opacity-15"
             sizes="100vw"
           />

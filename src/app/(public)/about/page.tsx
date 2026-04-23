@@ -18,6 +18,7 @@ export default function AboutPage() {
             src={schoolConfig.images.campus}
             alt="School campus"
             fill
+            priority
             className="object-cover opacity-15"
             sizes="100vw"
           />

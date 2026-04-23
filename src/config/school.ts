@@ -170,6 +170,11 @@ export const schoolConfig = {
   becePasses: "95%",
   accreditation: "Approved by the Ghana Education Service (GES)",
   developer: "SAGE INNOVATIONS",
+
+  // ─── Site ──────────────────────────────────────────────────
+  // Used for absolute metadata/OG URLs + sitemap. Override via
+  // NEXT_PUBLIC_SITE_URL in production.
+  siteUrl: "https://greenfieldacademy.edu.gh",
 } as const;
 
 export type SchoolConfig = typeof schoolConfig;
