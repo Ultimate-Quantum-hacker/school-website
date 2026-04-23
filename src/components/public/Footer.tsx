@@ -9,6 +9,7 @@ const footerLinks = [
       { href: "/academics", label: "Academics" },
       { href: "/admissions", label: "Admissions" },
       { href: "/news", label: "News" },
+      { href: "/events", label: "Events" },
     ],
   },
   {
@@ -17,6 +18,14 @@ const footerLinks = [
       { href: "/gallery", label: "Gallery" },
       { href: "/contact", label: "Contact Us" },
       { href: "/admissions", label: "Apply Now" },
+      { href: "/news/rss.xml", label: "RSS Feed" },
+    ],
+  },
+  {
+    title: "Legal",
+    links: [
+      { href: "/privacy", label: "Privacy Policy" },
+      { href: "/cookies", label: "Cookie Policy" },
     ],
   },
 ];
@@ -27,7 +36,7 @@ export function Footer() {
   return (
     <footer className="bg-surface border-t border-border text-muted">
       <div className="container-wide py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
           {/* School Info */}
           <div className="lg:col-span-1">
             <div className="flex items-center gap-3 mb-4">

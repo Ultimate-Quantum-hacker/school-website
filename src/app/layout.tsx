@@ -28,6 +28,16 @@ export const metadata: Metadata = {
     description: schoolConfig.description,
     type: "website",
   },
+  alternates: {
+    types: {
+      "application/rss+xml": [
+        {
+          url: "/news/rss.xml",
+          title: `${schoolConfig.name} — News`,
+        },
+      ],
+    },
+  },
 };
 
 export default function RootLayout({
@@ -35,8 +45,16 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  // Pre-hydration theme resolver. Must run synchronously before any
+  // styled content paints to avoid flash of wrong theme. Reads
+  // localStorage("theme") first, falls back to the OS preference.
+  const themeInit = `(function(){try{var s=localStorage.getItem('theme');var m=window.matchMedia('(prefers-color-scheme: dark)').matches;if(s==='dark'||(!s&&m)){document.documentElement.classList.add('dark');}}catch(e){}})();`;
+
   return (
     <html lang="en" className={inter.variable} suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInit }} />
+      </head>
       <body
         className="font-sans min-h-screen flex flex-col bg-background text-text"
         suppressHydrationWarning

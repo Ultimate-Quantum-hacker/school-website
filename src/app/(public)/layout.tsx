@@ -2,6 +2,7 @@ import { Navbar } from "@/components/public/Navbar";
 import { Footer } from "@/components/public/Footer";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { PageTransition } from "@/components/ui/PageTransition";
+import { WhatsAppChat } from "@/components/public/WhatsAppChat";
 
 export default function PublicLayout({
   children,
@@ -16,6 +17,7 @@ export default function PublicLayout({
       </main>
       <Footer />
       <ScrollReveal />
+      <WhatsAppChat />
     </>
   );
 }

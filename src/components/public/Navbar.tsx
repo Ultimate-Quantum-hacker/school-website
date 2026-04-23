@@ -7,6 +7,7 @@ import { schoolConfig } from "@/config/school";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/FormElements";
 import { SearchDialog } from "@/components/public/SearchDialog";
+import { ThemeToggle } from "@/components/public/ThemeToggle";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -61,6 +62,7 @@ export function Navbar() {
           {/* CTA + Mobile Toggle */}
           <div className="flex items-center gap-3">
             <SearchDialog />
+            <ThemeToggle />
             <Link href="/admissions" className="hidden sm:block">
               <Button size="sm">Apply Now</Button>
             </Link>
