@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { createClient } from "@/lib/supabase/server";
 import { schoolConfig } from "@/config/school";
 import { SectionHeader, Badge, EmptyState } from "@/components/ui/Card";
@@ -70,15 +71,19 @@ export default async function NewsPage() {
                   >
                     <article className="bg-surface rounded-2xl overflow-hidden border border-border shadow-sm hover:shadow-sm transition-all duration-300 hover:-translate-y-1 h-full flex flex-col">
                       {/* Cover Image */}
-                      <div className="aspect-[16/10] bg-primary flex items-center justify-center overflow-hidden">
+                      <div className="relative aspect-[16/10] bg-primary overflow-hidden">
                         {post.cover_image ? (
-                          <img
+                          <Image
                             src={post.cover_image}
                             alt={post.title}
-                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                            fill
+                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                            className="object-cover group-hover:scale-105 transition-transform duration-500"
                           />
                         ) : (
-                          <span className="text-4xl">📰</span>
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <span className="text-4xl">📰</span>
+                          </div>
                         )}
                       </div>
                       {/* Content */}

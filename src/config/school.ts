@@ -151,6 +151,34 @@ export const schoolConfig = {
     },
   ],
 
+  // ─── Testimonials ─────────────────────────────────────────
+  testimonials: [
+    {
+      quote:
+        "Greenfield Academy has given my daughter not just excellent academic results but real confidence. The teachers know her as a person, not just a student.",
+      author: "Akosua Boateng",
+      role: "Parent, Basic 5",
+    },
+    {
+      quote:
+        "The discipline and values instilled here prepared me for senior high school in ways I didn't appreciate until I left. I came back to visit the teachers as soon as I could.",
+      author: "Kojo Mensah",
+      role: "Alumnus, JHS Class of 2022",
+    },
+    {
+      quote:
+        "From the warm admissions process to the regular parent-teacher meetings, the communication has been world-class. We feel like partners in our son's education.",
+      author: "Ama & Yaw Asare",
+      role: "Parents, KG2",
+    },
+    {
+      quote:
+        "My children's ICT and French teachers have sparked interests I didn't even know they had. The BECE results speak for themselves, but the personal growth is what stays with you.",
+      author: "Mrs. Efua Owusu",
+      role: "Parent, JHS 2 & Basic 4",
+    },
+  ],
+
   // ─── Hero Images ──────────────────────────────────────────
   images: {
     heroStudents: "https://images.unsplash.com/photo-1577896851231-70ef18881754?w=1400&q=80",
@@ -170,6 +198,11 @@ export const schoolConfig = {
   becePasses: "95%",
   accreditation: "Approved by the Ghana Education Service (GES)",
   developer: "SAGE INNOVATIONS",
+
+  // ─── Site ──────────────────────────────────────────────────
+  // Used for absolute metadata/OG URLs + sitemap. Override via
+  // NEXT_PUBLIC_SITE_URL in production.
+  siteUrl: "https://greenfieldacademy.edu.gh",
 } as const;
 
 export type SchoolConfig = typeof schoolConfig;

@@ -55,6 +55,18 @@ export interface Message {
   created_at: string;
 }
 
+export interface Event {
+  id: string;
+  title: string;
+  description: string | null;
+  starts_at: string;
+  ends_at: string | null;
+  location: string | null;
+  category: "event" | "holiday" | "exam" | "meeting";
+  published: boolean;
+  created_at: string;
+}
+
 // ─── Form / UI Types ────────────────────────────────────────
 
 export interface ContactFormData {

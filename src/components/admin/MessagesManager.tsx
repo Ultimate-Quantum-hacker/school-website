@@ -6,6 +6,7 @@ import { markMessageRead, deleteMessage } from "@/actions/admin";
 import { Button } from "@/components/ui/FormElements";
 import { Badge, Modal, Toast } from "@/components/ui/Card";
 import { formatDateTime } from "@/lib/utils";
+import { downloadCsv, toCsv } from "@/lib/csv";
 import type { Message } from "@/types";
 
 interface MessagesManagerProps {
@@ -60,11 +61,21 @@ export function MessagesManager({ messages }: MessagesManagerProps) {
     <div>
       <Toast message={toast.message} type={toast.type} show={toast.show} onClose={() => setToast(t => ({ ...t, show: false }))} />
 
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold text-text">Messages</h1>
-        <p className="text-sm text-muted mt-1">
-          {messages.length} total · {unreadCount} unread
-        </p>
+      <div className="mb-6 flex items-center justify-between gap-4">
+        <div>
+          <h1 className="text-2xl font-bold text-text">Messages</h1>
+          <p className="text-sm text-muted mt-1">
+            {messages.length} total · {unreadCount} unread
+          </p>
+        </div>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => exportMessagesCsv(filtered)}
+          disabled={filtered.length === 0}
+        >
+          Export CSV
+        </Button>
       </div>
 
       {/* Filter */}
@@ -204,4 +215,17 @@ export function MessagesManager({ messages }: MessagesManagerProps) {
       </Modal>
     </div>
   );
+}
+
+function exportMessagesCsv(rows: Message[]) {
+  const csv = toCsv(rows as unknown as Record<string, unknown>[], [
+    { key: "name", header: "Name" },
+    { key: "email", header: "Email" },
+    { key: "subject", header: "Subject" },
+    { key: "message", header: "Message" },
+    { key: "read", header: "Read" },
+    { key: "created_at", header: "Received At" },
+  ]);
+  const stamp = new Date().toISOString().slice(0, 10);
+  downloadCsv(`messages-${stamp}.csv`, csv);
 }
