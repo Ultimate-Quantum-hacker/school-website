@@ -33,7 +33,9 @@ const MAX_PER_TYPE = 5;
 export async function search(query: string): Promise<SearchResult[]> {
   const q = query.trim();
   if (q.length < 2) return [];
-  const pattern = `%${q.replace(/[%_]/g, "")}%`;
+  // Strip PostgREST/LIKE metacharacters so user input cannot break the .or()
+  // filter string (commas/parens split the expression) or inject wildcards.
+  const pattern = `%${q.replace(/[%_,()]/g, "")}%`;
 
   try {
     const supabase = await createClient();
