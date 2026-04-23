@@ -35,7 +35,11 @@ export async function search(query: string): Promise<SearchResult[]> {
   if (q.length < 2) return [];
   // Strip PostgREST/LIKE metacharacters so user input cannot break the .or()
   // filter string (commas/parens split the expression) or inject wildcards.
-  const pattern = `%${q.replace(/[%_,()]/g, "")}%`;
+  const sanitized = q.replace(/[%_,()]/g, "");
+  // Re-check after stripping so inputs like `%%` or `((` don't collapse to an
+  // empty pattern (`%%`) that would match every row.
+  if (sanitized.length < 2) return [];
+  const pattern = `%${sanitized}%`;
 
   try {
     const supabase = await createClient();
