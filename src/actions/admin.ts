@@ -203,6 +203,7 @@ export async function getActivityTimeSeries(
   const formatter = new Intl.DateTimeFormat("en-GB", {
     weekday: "short",
     day: "numeric",
+    timeZone: "UTC",
   });
 
   return Array.from(buckets.entries()).map(([date, counts]) => ({
