@@ -9,6 +9,7 @@ import { TurnstileWidget } from "@/components/public/TurnstileWidget";
 
 export function ApplicationForm() {
   const [loading, setLoading] = useState(false);
+  const [turnstileResetSignal, setTurnstileResetSignal] = useState(0);
   const [toast, setToast] = useState<{
     show: boolean;
     message: string;
@@ -35,6 +36,7 @@ export function ApplicationForm() {
 
     if (result.success) {
       (e.target as HTMLFormElement).reset();
+      setTurnstileResetSignal((n) => n + 1);
     }
 
     setLoading(false);
@@ -111,7 +113,7 @@ export function ApplicationForm() {
           placeholder="Any additional information you'd like to share..."
           rows={4}
         />
-        <TurnstileWidget />
+        <TurnstileWidget resetSignal={turnstileResetSignal} />
         <Button type="submit" size="lg" loading={loading} className="w-full sm:w-auto">
           Submit Application
         </Button>

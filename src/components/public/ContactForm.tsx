@@ -8,6 +8,7 @@ import { TurnstileWidget } from "@/components/public/TurnstileWidget";
 
 export function ContactForm() {
   const [loading, setLoading] = useState(false);
+  const [turnstileResetSignal, setTurnstileResetSignal] = useState(0);
   const [toast, setToast] = useState<{
     show: boolean;
     message: string;
@@ -29,6 +30,7 @@ export function ContactForm() {
 
     if (result.success) {
       (e.target as HTMLFormElement).reset();
+      setTurnstileResetSignal((n) => n + 1);
     }
 
     setLoading(false);
@@ -71,7 +73,7 @@ export function ContactForm() {
           rows={5}
           required
         />
-        <TurnstileWidget />
+        <TurnstileWidget resetSignal={turnstileResetSignal} />
         <Button type="submit" size="lg" loading={loading}>
           Send Message
         </Button>

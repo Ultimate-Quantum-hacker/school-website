@@ -28,13 +28,21 @@ declare global {
  *
  * The explicit-render pattern is used so React's concurrent renders
  * never leave duplicate widgets behind on fast navigation.
+ *
+ * `resetSignal` triggers a fresh challenge — increment it after a
+ * successful form submission so the next submission gets a new token.
+ * Without this, calling `form.reset()` clears the hidden input but
+ * leaves Turnstile in its "passed" state, and subsequent submits fail
+ * with an empty token.
  */
 export function TurnstileWidget({
   className = "",
   theme = "auto",
+  resetSignal = 0,
 }: {
   className?: string;
   theme?: "light" | "dark" | "auto";
+  resetSignal?: number;
 }) {
   const hostRef = useRef<HTMLDivElement | null>(null);
   const widgetIdRef = useRef<string | null>(null);
@@ -80,6 +88,19 @@ export function TurnstileWidget({
       }
     };
   }, [theme]);
+
+  // Reset the widget after a successful form submission so the user
+  // can submit again without a stale (now-empty) token.
+  useEffect(() => {
+    if (resetSignal === 0) return;
+    if (widgetIdRef.current && window.turnstile) {
+      try {
+        window.turnstile.reset(widgetIdRef.current);
+      } catch {
+        /* widget already gone */
+      }
+    }
+  }, [resetSignal]);
 
   return (
     <>
