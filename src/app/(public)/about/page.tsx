@@ -13,7 +13,7 @@ export default function AboutPage() {
   return (
     <>
       {/* ─── Page Header ───────────────────────────────────────── */}
-      <section className="border-b border-border py-14">
+      <section className="relative overflow-hidden border-b border-border py-14">
         <div className="absolute inset-0">
           <Image
             src={schoolConfig.images.campus}
