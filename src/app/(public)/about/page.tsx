@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import { schoolConfig } from "@/config/school";
 import { SectionHeader } from "@/components/ui/Card";
 
@@ -232,6 +233,17 @@ export default function AboutPage() {
                 </div>
               </div>
             ))}
+          </div>
+          <div className="text-center mt-10 reveal">
+            <Link
+              href="/staff"
+              className="inline-flex items-center gap-2 text-primary hover:underline font-medium"
+            >
+              See the full staff directory
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </Link>
           </div>
         </div>
       </section>

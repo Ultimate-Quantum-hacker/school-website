@@ -5,6 +5,7 @@ import { schoolConfig } from "@/config/school";
 const STATIC_ROUTES = [
   { path: "", priority: 1.0, changeFrequency: "weekly" as const },
   { path: "/about", priority: 0.8, changeFrequency: "monthly" as const },
+  { path: "/staff", priority: 0.6, changeFrequency: "monthly" as const },
   { path: "/academics", priority: 0.8, changeFrequency: "monthly" as const },
   { path: "/admissions", priority: 0.9, changeFrequency: "monthly" as const },
   { path: "/news", priority: 0.7, changeFrequency: "daily" as const },

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { submitContactMessage } from "@/actions/messages";
 import { Button, Input, Textarea } from "@/components/ui/FormElements";
 import { Toast } from "@/components/ui/Card";
+import { TurnstileWidget } from "@/components/public/TurnstileWidget";
 
 export function ContactForm() {
   const [loading, setLoading] = useState(false);
@@ -70,6 +71,7 @@ export function ContactForm() {
           rows={5}
           required
         />
+        <TurnstileWidget />
         <Button type="submit" size="lg" loading={loading}>
           Send Message
         </Button>

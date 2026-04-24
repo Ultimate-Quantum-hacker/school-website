@@ -5,6 +5,7 @@ import { submitApplication } from "@/actions/applications";
 import { schoolConfig } from "@/config/school";
 import { Button, Input, Textarea, Select } from "@/components/ui/FormElements";
 import { Toast } from "@/components/ui/Card";
+import { TurnstileWidget } from "@/components/public/TurnstileWidget";
 
 export function ApplicationForm() {
   const [loading, setLoading] = useState(false);
@@ -110,6 +111,7 @@ export function ApplicationForm() {
           placeholder="Any additional information you'd like to share..."
           rows={4}
         />
+        <TurnstileWidget />
         <Button type="submit" size="lg" loading={loading} className="w-full sm:w-auto">
           Submit Application
         </Button>

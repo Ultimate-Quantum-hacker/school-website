@@ -6,6 +6,7 @@ const footerLinks = [
     title: "Quick Links",
     links: [
       { href: "/about", label: "About Us" },
+      { href: "/staff", label: "Staff Directory" },
       { href: "/academics", label: "Academics" },
       { href: "/admissions", label: "Admissions" },
       { href: "/news", label: "News" },
