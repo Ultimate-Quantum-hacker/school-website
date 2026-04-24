@@ -16,10 +16,17 @@ export default function HomePage() {
               <span className="w-1.5 h-1.5 rounded-full bg-primary" />
               Admissions Open for {schoolConfig.admissions.currentSession}
             </div>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight text-text text-balance">
-              {schoolConfig.tagline}
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight text-text text-balance animate-fade-in-up">
+              Nurturing{" "}
+              <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                Excellence,
+              </span>
+              <br className="hidden sm:block" /> Inspiring{" "}
+              <span className="bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent">
+                Futures
+              </span>
             </h1>
-            <p className="text-lg text-muted max-w-2xl mx-auto leading-relaxed">
+            <p className="text-lg text-muted max-w-2xl mx-auto leading-relaxed animate-fade-in-up">
               {schoolConfig.description}
             </p>
             <div className="flex items-center justify-center gap-3 pt-2">
@@ -44,7 +51,7 @@ export default function HomePage() {
             ].map((stat) => (
               <div
                 key={stat.label}
-                className="text-center p-5 rounded-xl bg-surface border border-border"
+                className="text-center p-5 rounded-2xl bg-surface/80 backdrop-blur-sm border border-border transition-all duration-200 hover:scale-[1.02] hover:border-primary/30"
               >
                 <p className="text-xl lg:text-2xl font-semibold text-text mb-1">
                   {stat.value}

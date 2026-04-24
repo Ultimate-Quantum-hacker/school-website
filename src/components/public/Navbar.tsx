@@ -48,10 +48,12 @@ export function Navbar() {
                 key={link.href}
                 href={link.href}
                 className={cn(
-                  "px-3 py-2 rounded-lg text-sm font-medium transition-colors",
+                  "relative px-3 py-2 rounded-lg text-sm font-medium transition-colors",
+                  "after:absolute after:left-3 after:right-3 after:bottom-1 after:h-px",
+                  "after:bg-primary after:scale-x-0 after:origin-left after:transition-transform after:duration-200",
                   pathname === link.href
-                    ? "text-primary bg-primary/10"
-                    : "text-muted hover:text-text hover:bg-background"
+                    ? "text-primary bg-primary/10 after:scale-x-0"
+                    : "text-muted hover:text-text hover:after:scale-x-100"
                 )}
               >
                 {link.label}

@@ -1,17 +1,17 @@
 /**
  * Full-screen fixed background, placed behind all UI via `-z-10`.
  *
- * Implementation notes (performance):
- *   - Pure CSS, no framer-motion. Keyframes live in globals.css under
- *     `@keyframes orb-*`. Only `transform: translate3d` is animated, so each
- *     layer stays on its own compositor layer and never repaints during the
- *     animation — critical because these layers are blurred, and re-blurring
- *     a `blur(80px)` surface on every frame is what used to jank scrolling.
- *   - The earlier conic-gradient rotating aurora was removed: rotating a
- *     160vmax blurred layer forces a full GPU re-composite per frame on
- *     low-end hardware.
- *   - Users who prefer reduced motion get the gradient + grid + static orbs
- *     (no motion at all).
+ * Theme-aware via CSS custom properties declared in globals.css
+ * (`--bg-gradient`, `--bg-orb-*`, `--bg-grid`). The same markup renders
+ * a soft white→blue→cyan gradient in light mode and a deep navy with
+ * blue/cyan glow in dark mode; no JS involved in the swap.
+ *
+ * Performance notes:
+ *   - Pure CSS. Only `transform: translate3d` is animated, so every
+ *     blurred orb stays on its own compositor layer and never repaints
+ *     during the loop — critical because re-blurring a `blur(80px)`
+ *     surface per frame was what caused the earlier scroll jank.
+ *   - Animations honour `prefers-reduced-motion`.
  */
 export function Background() {
   return (
@@ -19,26 +19,23 @@ export function Background() {
       aria-hidden
       className="pointer-events-none fixed inset-0 -z-10 overflow-hidden"
     >
-      {/* 1 — soft gradient base */}
+      {/* 1 — theme-aware gradient base */}
       <div
         className="absolute inset-0"
-        style={{
-          background:
-            "linear-gradient(180deg, #f8fafc 0%, #eef2f8 55%, #eaf0fb 100%)",
-        }}
+        style={{ background: "var(--bg-gradient)" }}
       />
 
-      {/* 2 — grid pattern, masked to a central spotlight */}
+      {/* 2 — grid, masked to a central spotlight; stronger in dark mode */}
       <div
         className="absolute inset-0"
         style={{
-          backgroundImage:
-            "linear-gradient(to right, rgba(15,23,42,0.05) 1px, transparent 1px), linear-gradient(to bottom, rgba(15,23,42,0.05) 1px, transparent 1px)",
+          backgroundImage: "var(--bg-grid)",
           backgroundSize: "44px 44px",
+          opacity: "var(--bg-grid-opacity)",
           WebkitMaskImage:
-            "radial-gradient(ellipse at center, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.15) 45%, transparent 75%)",
+            "radial-gradient(ellipse at center, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.15) 45%, transparent 75%)",
           maskImage:
-            "radial-gradient(ellipse at center, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.15) 45%, transparent 75%)",
+            "radial-gradient(ellipse at center, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.15) 45%, transparent 75%)",
         }}
       />
 
@@ -50,8 +47,7 @@ export function Background() {
           left: "-8%",
           width: "540px",
           height: "540px",
-          background:
-            "radial-gradient(circle, rgba(37,99,235,0.22) 0%, rgba(37,99,235,0) 70%)",
+          background: "var(--bg-orb-1)",
           filter: "blur(70px)",
         }}
       />
@@ -62,8 +58,7 @@ export function Background() {
           right: "-10%",
           width: "640px",
           height: "640px",
-          background:
-            "radial-gradient(circle, rgba(139,92,246,0.20) 0%, rgba(139,92,246,0) 70%)",
+          background: "var(--bg-orb-2)",
           filter: "blur(80px)",
         }}
       />
@@ -74,8 +69,7 @@ export function Background() {
           left: "10%",
           width: "420px",
           height: "420px",
-          background:
-            "radial-gradient(circle, rgba(14,165,233,0.16) 0%, rgba(14,165,233,0) 70%)",
+          background: "var(--bg-orb-3)",
           filter: "blur(70px)",
         }}
       />

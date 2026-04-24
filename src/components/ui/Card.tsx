@@ -15,13 +15,17 @@ interface CardProps {
 
 export function Card({ children, className, hover = false }: CardProps) {
   const base =
-    "bg-surface border border-border rounded-xl p-6 transition-colors";
+    "bg-surface/80 backdrop-blur-sm border border-border rounded-2xl p-6 transition-all duration-200";
   if (hover) {
     return (
       <motion.div
-        whileHover={{ scale: 1.01 }}
+        whileHover={{ scale: 1.02 }}
         transition={{ duration: 0.2, ease: "easeOut" }}
-        className={cn(base, "hover:border-primary/30", className)}
+        className={cn(
+          base,
+          "hover:border-primary/30 hover:shadow-xl hover:shadow-primary/5",
+          className,
+        )}
       >
         {children}
       </motion.div>
