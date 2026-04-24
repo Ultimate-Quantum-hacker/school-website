@@ -2,19 +2,24 @@
  * Cloudflare Turnstile — lightweight, privacy-friendly bot protection.
  *
  * Usage:
- * 1. Client renders <TurnstileWidget /> which injects a hidden
- *    `cf-turnstile-response` token into the form.
+ * 1. Client renders <TurnstileWidget /> in invisible mode — it runs the
+ *    challenge silently on page load and injects a hidden
+ *    `cf-turnstile-response` token into the surrounding form.
  * 2. Server reads that token via `getTurnstileToken(formData)` and calls
  *    `verifyTurnstileToken(token)` before trusting the submission.
  *
  * Defaults to Cloudflare's publicly documented test keys (always pass,
- * never prompt). Override via env in production:
+ * never prompt). For production, create a sitekey at
+ * https://dash.cloudflare.com/?to=/:account/turnstile and set:
  *   NEXT_PUBLIC_TURNSTILE_SITE_KEY=0x4AAA...
  *   TURNSTILE_SECRET_KEY=0x4AAA...
+ * When creating the sitekey, choose widget mode "Invisible" so the
+ * challenge stays silent. "Managed" widgets also work but may show an
+ * interactive challenge on suspicious traffic.
  * https://developers.cloudflare.com/turnstile/troubleshooting/testing/
  */
 
-/** Test site key — always passes, visible widget. Safe to ship. */
+/** Test site key — always passes, works in any widget size. Safe to ship. */
 const TEST_SITE_KEY = "1x00000000000000000000AA";
 
 /** Test secret key — always verifies. Safe on server. */
