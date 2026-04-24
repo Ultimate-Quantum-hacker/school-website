@@ -1,6 +1,10 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
+import {
+  getTurnstileToken,
+  verifyTurnstileToken,
+} from "@/lib/turnstile";
 import type { ActionResult } from "@/types";
 
 export async function submitContactMessage(
@@ -19,6 +23,15 @@ export async function submitContactMessage(
       return {
         success: false,
         message: "Please fill in all required fields.",
+      };
+    }
+
+    const turnstileOk = await verifyTurnstileToken(getTurnstileToken(formData));
+    if (!turnstileOk) {
+      return {
+        success: false,
+        message:
+          "Spam check failed. Please refresh the page and try again.",
       };
     }
 

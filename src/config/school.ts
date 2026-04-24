@@ -151,6 +151,131 @@ export const schoolConfig = {
     },
   ],
 
+  // ─── Staff Directory ───────────────────────────────────────
+  // Full teaching & administrative staff, grouped by department.
+  // Images can be replaced with real school portraits later; Unsplash
+  // placeholders are fine for launch.
+  staff: [
+    {
+      department: "Administration",
+      members: [
+        {
+          name: "Mrs. Abena Mensah",
+          role: "Head of School",
+          image:
+            "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&q=80",
+          bio: "M.Ed, University of Cape Coast. 20+ years in Ghanaian education leadership.",
+        },
+        {
+          name: "Mr. Kwame Asante",
+          role: "Assistant Headmaster, Academics",
+          image:
+            "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&q=80",
+          bio: "Oversees curriculum innovation, teacher training, and academic quality across all programmes.",
+        },
+        {
+          name: "Mrs. Efua Boateng",
+          role: "Head of Admissions",
+          image:
+            "https://images.unsplash.com/photo-1580894732444-8ecded7900cd?w=400&q=80",
+          bio: "Guides prospective families through the enrollment process with warmth and professionalism.",
+        },
+      ],
+    },
+    {
+      department: "Junior High School Faculty",
+      members: [
+        {
+          name: "Mr. Ebo Koomson",
+          role: "Mathematics, JHS 1–3",
+          image:
+            "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&q=80",
+          bio: "B.Ed Mathematics, UCC. Leads the BECE prep cohort and after-school problem-solving club.",
+        },
+        {
+          name: "Miss Akosua Darko",
+          role: "English Language & Literature",
+          image:
+            "https://images.unsplash.com/photo-1607746882042-944635dfe10e?w=400&q=80",
+          bio: "Coordinates the reading programme and annual spelling bee. Published author of two children's books.",
+        },
+        {
+          name: "Mr. Yaw Frimpong",
+          role: "Integrated Science",
+          image:
+            "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=400&q=80",
+          bio: "Runs the JHS science lab; mentors students for the national science & math quiz.",
+        },
+        {
+          name: "Mrs. Nana Ama Owusu",
+          role: "Social Studies & RME",
+          image:
+            "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&q=80",
+          bio: "Focuses on civic literacy and values-based education grounded in Ghanaian culture.",
+        },
+      ],
+    },
+    {
+      department: "Primary Faculty",
+      members: [
+        {
+          name: "Madam Adwoa Sarpong",
+          role: "Upper Primary Coordinator",
+          image:
+            "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&q=80",
+          bio: "Oversees Basic 4–6 teaching teams and the cross-grade reading initiative.",
+        },
+        {
+          name: "Mr. Kofi Agyeman",
+          role: "Lower Primary Teacher",
+          image:
+            "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80",
+          bio: "Specialist in early-years numeracy and phonics; builds confident young readers.",
+        },
+        {
+          name: "Miss Akua Nyarko",
+          role: "KG Homeroom Teacher",
+          image:
+            "https://images.unsplash.com/photo-1592621385612-4d7129426394?w=400&q=80",
+          bio: "Creates a warm, play-based classroom where 4–5 year-olds thrive and discover learning.",
+        },
+      ],
+    },
+    {
+      department: "Specialist Teachers",
+      members: [
+        {
+          name: "Mr. Jean-Claude Tetteh",
+          role: "French",
+          image:
+            "https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?w=400&q=80",
+          bio: "Native French speaker from the Volta Region; runs the annual Francophonie week.",
+        },
+        {
+          name: "Miss Esi Tawiah",
+          role: "ICT & Coding Club",
+          image:
+            "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&q=80",
+          bio: "B.Sc Computer Science. Leads coding club and manages the JHS computer lab.",
+        },
+        {
+          name: "Coach Kwabena Osei",
+          role: "Physical Education & Sports",
+          image:
+            "https://images.unsplash.com/photo-1600486913747-55e5470d6f40?w=400&q=80",
+          bio: "Former Black Stars youth-team coach; builds discipline through football, athletics, and team sports.",
+        },
+        {
+          name: "Mrs. Serwaa Ofori",
+          role: "Creative Arts & Music",
+          image:
+            "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&q=80",
+          bio: "Choreographs the annual Speech & Prize-Giving Day performance; leads the school choir.",
+        },
+      ],
+    },
+  ],
+
   // ─── Testimonials ─────────────────────────────────────────
   testimonials: [
     {
