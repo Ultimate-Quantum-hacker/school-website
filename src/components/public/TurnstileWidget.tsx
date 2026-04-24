@@ -23,8 +23,11 @@ declare global {
 }
 
 /**
- * Renders the Cloudflare Turnstile challenge widget. Injects a hidden
- * `cf-turnstile-response` input into the surrounding form on success.
+ * Renders the Cloudflare Turnstile challenge widget in invisible mode.
+ * The challenge runs silently in the background on render and injects a
+ * hidden `cf-turnstile-response` input into the surrounding form. No
+ * visible UI — the Cloudflare "Success!" box and the test-key warning
+ * banner do not render.
  *
  * The explicit-render pattern is used so React's concurrent renders
  * never leave duplicate widgets behind on fast navigation.
@@ -54,7 +57,7 @@ export function TurnstileWidget({
       widgetIdRef.current = window.turnstile.render(hostRef.current, {
         sitekey: turnstileSiteKey,
         theme,
-        size: "normal",
+        size: "invisible",
       });
       return true;
     }
