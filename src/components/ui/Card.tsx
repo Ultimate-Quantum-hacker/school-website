@@ -68,7 +68,7 @@ export function CardFooter({
   return (
     <div
       className={cn(
-        "px-6 py-4 border-t border-border bg-background rounded-b-xl",
+        "px-6 py-4 border-t border-border bg-background rounded-b-2xl",
         className
       )}
     >
@@ -147,7 +147,7 @@ export function Modal({
       {/* Modal content */}
       <div
         className={cn(
-          "relative w-full bg-surface border border-border rounded-xl animate-fade-in-up",
+          "relative w-full bg-surface border border-border rounded-2xl animate-fade-in-up",
           sizes[size]
         )}
       >
