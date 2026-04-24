@@ -4,6 +4,7 @@ import Image from "next/image";
 import type { Metadata } from "next";
 import { createClient } from "@/lib/supabase/server";
 import { formatDate, readingTime } from "@/lib/utils";
+import { schoolConfig } from "@/config/school";
 import { Badge } from "@/components/ui/Card";
 import { Button } from "@/components/ui/FormElements";
 import { SharePostButtons } from "@/components/public/SharePostButtons";
@@ -95,8 +96,52 @@ export default async function PostPage({ params }: PageProps) {
   const { prev, next } = await getAdjacentPosts(post.created_at);
   const minutes = readingTime(post.content);
 
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? schoolConfig.siteUrl;
+  const postUrl = `${siteUrl}/news/${post.slug}`;
+  const description = post.excerpt || post.content.replace(/<[^>]*>/g, " ").slice(0, 160);
+
+  const articleJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: post.title,
+    description,
+    datePublished: post.created_at,
+    dateModified: post.updated_at ?? post.created_at,
+    mainEntityOfPage: { "@type": "WebPage", "@id": postUrl },
+    author: { "@type": "Organization", name: schoolConfig.name },
+    publisher: {
+      "@type": "Organization",
+      name: schoolConfig.name,
+      logo: { "@type": "ImageObject", url: `${siteUrl}${schoolConfig.logo}` },
+    },
+    ...(post.cover_image ? { image: [post.cover_image] } : {}),
+  };
+
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: siteUrl },
+      { "@type": "ListItem", position: 2, name: "News", item: `${siteUrl}/news` },
+      { "@type": "ListItem", position: 3, name: post.title, item: postUrl },
+    ],
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(articleJsonLd).replace(/</g, "\\u003c"),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbJsonLd).replace(/</g, "\\u003c"),
+        }}
+      />
+
       {/* ─── Header ────────────────────────────────────────────── */}
       <section className="border-b border-border py-10">
         <div className="container-wide max-w-4xl">

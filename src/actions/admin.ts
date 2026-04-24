@@ -149,3 +149,67 @@ export async function getDashboardStats() {
     unreadMessages,
   };
 }
+
+export interface DailyActivityPoint {
+  date: string;          // ISO yyyy-mm-dd
+  label: string;         // short "Mon 12" label for the axis
+  applications: number;
+  messages: number;
+}
+
+/**
+ * Returns the last N days of applications + messages activity.
+ * Fills missing days with zeros so the chart has one bar per day.
+ */
+export async function getActivityTimeSeries(
+  days = 30,
+): Promise<DailyActivityPoint[]> {
+  const adminClient = createAdminClient();
+
+  const now = new Date();
+  const start = new Date(now);
+  start.setUTCHours(0, 0, 0, 0);
+  start.setUTCDate(start.getUTCDate() - (days - 1));
+
+  const [{ data: apps }, { data: msgs }] = await Promise.all([
+    adminClient
+      .from("applications")
+      .select("created_at")
+      .gte("created_at", start.toISOString()),
+    adminClient
+      .from("messages")
+      .select("created_at")
+      .gte("created_at", start.toISOString()),
+  ]);
+
+  const buckets = new Map<string, { applications: number; messages: number }>();
+  for (let i = 0; i < days; i += 1) {
+    const d = new Date(start);
+    d.setUTCDate(start.getUTCDate() + i);
+    buckets.set(d.toISOString().slice(0, 10), { applications: 0, messages: 0 });
+  }
+
+  for (const row of apps ?? []) {
+    const key = row.created_at?.slice(0, 10);
+    const b = key ? buckets.get(key) : undefined;
+    if (b) b.applications += 1;
+  }
+  for (const row of msgs ?? []) {
+    const key = row.created_at?.slice(0, 10);
+    const b = key ? buckets.get(key) : undefined;
+    if (b) b.messages += 1;
+  }
+
+  const formatter = new Intl.DateTimeFormat("en-GB", {
+    weekday: "short",
+    day: "numeric",
+    timeZone: "UTC",
+  });
+
+  return Array.from(buckets.entries()).map(([date, counts]) => ({
+    date,
+    label: formatter.format(new Date(`${date}T00:00:00Z`)),
+    applications: counts.applications,
+    messages: counts.messages,
+  }));
+}

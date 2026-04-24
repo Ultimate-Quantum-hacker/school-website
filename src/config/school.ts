@@ -199,6 +199,16 @@ export const schoolConfig = {
   accreditation: "Approved by the Ghana Education Service (GES)",
   developer: "SAGE INNOVATIONS",
 
+  // ─── WhatsApp ──────────────────────────────────────────────
+  // International format without plus or spaces. Used by the floating
+  // WhatsApp chat widget to open a `wa.me` link.
+  whatsapp: {
+    number: "233537786242",
+    display: "+233 537 786 242",
+    defaultMessage:
+      "Hello Greenfield Academy, I'd like more information about admissions.",
+  },
+
   // ─── Site ──────────────────────────────────────────────────
   // Used for absolute metadata/OG URLs + sitemap. Override via
   // NEXT_PUBLIC_SITE_URL in production.

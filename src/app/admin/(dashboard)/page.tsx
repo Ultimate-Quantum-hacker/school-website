@@ -1,9 +1,14 @@
 import Link from "next/link";
-import { getDashboardStats } from "@/actions/admin";
+import { getDashboardStats, getActivityTimeSeries } from "@/actions/admin";
 import { schoolConfig } from "@/config/school";
+import { ActivityChart } from "@/components/admin/ActivityChart";
 
 export default async function AdminDashboardPage() {
-  const stats = await getDashboardStats();
+  const ACTIVITY_DAYS = 30;
+  const [stats, activity] = await Promise.all([
+    getDashboardStats(),
+    getActivityTimeSeries(ACTIVITY_DAYS),
+  ]);
 
   const statCards = [
     {
@@ -51,7 +56,7 @@ export default async function AdminDashboardPage() {
       </div>
 
       {/* Stats Grid */}
-      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
         {statCards.map((stat) => (
           <Link key={stat.label} href={stat.href}>
             <div className="bg-surface rounded-xl border border-border p-6 hover:shadow-md hover:border-border transition-all duration-200 group">
@@ -85,6 +90,11 @@ export default async function AdminDashboardPage() {
             </div>
           </Link>
         ))}
+      </div>
+
+      {/* Activity Chart */}
+      <div className="mb-8">
+        <ActivityChart data={activity} days={ACTIVITY_DAYS} />
       </div>
 
       {/* Quick Actions */}

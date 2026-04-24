@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { addGalleryImage, deleteGalleryImage, uploadFile } from "@/actions/gallery";
 import { Button, Input } from "@/components/ui/FormElements";
@@ -100,8 +101,18 @@ export function GalleryManager({ images }: GalleryManagerProps) {
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           {images.map((image) => (
             <div key={image.id} className="group relative bg-surface rounded-xl border border-border overflow-hidden hover:shadow-md transition-shadow">
-              <div className="aspect-square overflow-hidden">
-                <img src={image.image_url} alt={image.title} className="w-full h-full object-cover" loading="lazy" />
+              <div className="relative aspect-square overflow-hidden">
+                {/* unoptimized: image URLs may come from arbitrary pasted hosts,
+                    so we skip Next's optimizer rather than add every host to
+                    next.config. Admin-only, not LCP-critical. */}
+                <Image
+                  src={image.image_url}
+                  alt={image.title}
+                  fill
+                  sizes="(min-width: 1280px) 25vw, (min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                  unoptimized
+                  className="object-cover"
+                />
               </div>
               <div className="p-3">
                 <p className="text-sm font-medium text-text truncate">{image.title}</p>
@@ -135,8 +146,15 @@ export function GalleryManager({ images }: GalleryManagerProps) {
             {uploading && <p className="text-xs text-primary mt-1">Uploading...</p>}
           </div>
           {imageUrl && (
-            <div className="rounded-lg overflow-hidden border border-border">
-              <img src={imageUrl} alt="Preview" className="w-full h-48 object-cover" />
+            <div className="relative rounded-lg overflow-hidden border border-border h-48">
+              <Image
+                src={imageUrl}
+                alt="Preview"
+                fill
+                sizes="100vw"
+                unoptimized
+                className="object-cover"
+              />
             </div>
           )}
           <Input label="Or paste image URL" value={imageUrl} onChange={(e) => setImageUrl(e.target.value)} placeholder="https://..." />
