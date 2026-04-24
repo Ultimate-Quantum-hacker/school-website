@@ -29,22 +29,22 @@ export function Navbar() {
       <nav className="container-wide">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-3 min-w-0">
+          <Link href="/" className="flex items-center gap-3 shrink-0">
             <div className="shrink-0 w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-primary flex items-center justify-center text-white font-bold text-lg sm:text-xl shadow-sm">
               {schoolConfig.shortName[0]}
             </div>
-            <div className="hidden md:block min-w-0">
-              <p className="text-base lg:text-lg font-bold tracking-tight text-text leading-tight whitespace-nowrap">
+            <div className="hidden md:block">
+              <p className="text-base xl:text-lg font-bold tracking-tight text-text leading-tight whitespace-nowrap">
                 {schoolConfig.name}
               </p>
-              <p className="text-xs lg:text-sm text-muted leading-tight whitespace-nowrap">
+              <p className="text-xs xl:text-sm text-muted leading-tight whitespace-nowrap">
                 {schoolConfig.tagline}
               </p>
             </div>
           </Link>
 
           {/* Desktop Nav */}
-          <div className="hidden lg:flex items-center gap-1">
+          <div className="hidden xl:flex items-center gap-1">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
@@ -72,7 +72,7 @@ export function Navbar() {
             </Link>
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
-              className="lg:hidden p-2 rounded-lg text-muted hover:bg-background transition-colors"
+              className="xl:hidden p-2 rounded-lg text-muted hover:bg-background transition-colors"
               aria-label="Toggle menu"
             >
               <svg
@@ -103,7 +103,7 @@ export function Navbar() {
 
         {/* Mobile Nav */}
         {mobileOpen && (
-          <div className="lg:hidden border-t border-border py-4 animate-fade-in">
+          <div className="xl:hidden border-t border-border py-4 animate-fade-in">
             <div className="flex flex-col gap-1">
               {navLinks.map((link) => (
                 <Link
