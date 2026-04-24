@@ -38,17 +38,18 @@
   --color-secondary-800: #1e293b;
   --color-secondary-900: #0f172a;
 
-  --color-accent: #2563eb;
-  --color-accent-50: #eff6ff;
-  --color-accent-100: #dbeafe;
-  --color-accent-200: #bfdbfe;
-  --color-accent-300: #93c5fd;
-  --color-accent-400: #60a5fa;
-  --color-accent-500: #3b82f6;
-  --color-accent-600: #2563eb;
-  --color-accent-700: #1d4ed8;
-  --color-accent-800: #1e40af;
-  --color-accent-900: #1e3a8a;
+  /* Accent — cyan #06b6d4 (light) / #22d3ee (dark) for subtle pops */
+  --color-accent: #06b6d4;
+  --color-accent-50: #ecfeff;
+  --color-accent-100: #cffafe;
+  --color-accent-200: #a5f3fc;
+  --color-accent-300: #67e8f9;
+  --color-accent-400: #22d3ee;
+  --color-accent-500: #06b6d4;
+  --color-accent-600: #0891b2;
+  --color-accent-700: #0e7490;
+  --color-accent-800: #155e75;
+  --color-accent-900: #164e63;
 
   /* Legacy aliases (kept so older @apply rules keep working) */
   --foreground: var(--color-text);
@@ -69,11 +70,11 @@
    pre-hydration init script in RootLayout). Tailwind's
    `dark:` variants also trigger off this class. */
 .dark {
-  --color-background: #0b1020;
-  --color-surface: #11172b;
-  --color-text: #e2e8f0;
+  --color-background: #0b1220;
+  --color-surface: #0f172a;
+  --color-text: #e5e7eb;
   --color-muted: #94a3b8;
-  --color-border: #1f2a44;
+  --color-border: #1f2937;
 
   --color-primary: #3b82f6;
   --color-primary-50: #0a1b3a;
@@ -99,17 +100,17 @@
   --color-secondary-800: #f1f5f9;
   --color-secondary-900: #f8fafc;
 
-  --color-accent: #3b82f6;
-  --color-accent-50: #0a1b3a;
-  --color-accent-100: #0f264d;
-  --color-accent-200: #143267;
-  --color-accent-300: #1e40af;
-  --color-accent-400: #2563eb;
-  --color-accent-500: #3b82f6;
-  --color-accent-600: #60a5fa;
-  --color-accent-700: #93c5fd;
-  --color-accent-800: #bfdbfe;
-  --color-accent-900: #dbeafe;
+  --color-accent: #22d3ee;
+  --color-accent-50: #052935;
+  --color-accent-100: #06363f;
+  --color-accent-200: #0b4856;
+  --color-accent-300: #0e7490;
+  --color-accent-400: #0891b2;
+  --color-accent-500: #06b6d4;
+  --color-accent-600: #22d3ee;
+  --color-accent-700: #67e8f9;
+  --color-accent-800: #a5f3fc;
+  --color-accent-900: #cffafe;
 
   color-scheme: dark;
 }
@@ -123,6 +124,9 @@
   body {
     @apply bg-background text-text antialiased font-sans;
     font-feature-settings: "rlig" 1, "calt" 1;
+    /* Smooth theme transition — only on background/text/border so we don't
+       animate every layout property. */
+    transition: background-color 200ms ease-out, color 200ms ease-out;
   }
 
   h1,
@@ -178,6 +182,39 @@
   .bg-base {
     background-color: var(--color-background);
   }
+}
+
+/* ─── Theme-aware background layers ───────────────────────────
+   Consumed by <Background /> via CSS custom properties so the same
+   JSX renders both palettes without re-hydration. */
+:root {
+  --bg-gradient:
+    linear-gradient(180deg, #ffffff 0%, #eff6ff 55%, #ecfeff 100%);
+  --bg-grid:
+    linear-gradient(to right, rgba(15, 23, 42, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(15, 23, 42, 0.05) 1px, transparent 1px);
+  --bg-grid-opacity: 0.6;
+  --bg-orb-1:
+    radial-gradient(circle, rgba(37, 99, 235, 0.18) 0%, rgba(37, 99, 235, 0) 70%);
+  --bg-orb-2:
+    radial-gradient(circle, rgba(6, 182, 212, 0.16) 0%, rgba(6, 182, 212, 0) 70%);
+  --bg-orb-3:
+    radial-gradient(circle, rgba(139, 92, 246, 0.12) 0%, rgba(139, 92, 246, 0) 70%);
+}
+
+.dark {
+  --bg-gradient:
+    linear-gradient(180deg, #0b1220 0%, #0a1630 55%, #0b1f3a 100%);
+  --bg-grid:
+    linear-gradient(to right, rgba(148, 163, 184, 0.07) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(148, 163, 184, 0.07) 1px, transparent 1px);
+  --bg-grid-opacity: 0.85;
+  --bg-orb-1:
+    radial-gradient(circle, rgba(59, 130, 246, 0.25) 0%, rgba(59, 130, 246, 0) 70%);
+  --bg-orb-2:
+    radial-gradient(circle, rgba(34, 211, 238, 0.22) 0%, rgba(34, 211, 238, 0) 70%);
+  --bg-orb-3:
+    radial-gradient(circle, rgba(99, 102, 241, 0.18) 0%, rgba(99, 102, 241, 0) 70%);
 }
 
 /* ─── Background orbs (GPU-only transform animations) ───────── */

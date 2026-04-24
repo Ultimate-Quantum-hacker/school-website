@@ -15,13 +15,17 @@ interface CardProps {
 
 export function Card({ children, className, hover = false }: CardProps) {
   const base =
-    "bg-surface border border-border rounded-xl p-6 transition-colors";
+    "bg-surface/80 backdrop-blur-sm border border-border rounded-2xl p-6 transition-all duration-200";
   if (hover) {
     return (
       <motion.div
-        whileHover={{ scale: 1.01 }}
+        whileHover={{ scale: 1.02 }}
         transition={{ duration: 0.2, ease: "easeOut" }}
-        className={cn(base, "hover:border-primary/30", className)}
+        className={cn(
+          base,
+          "hover:border-primary/30 hover:shadow-xl hover:shadow-primary/5",
+          className,
+        )}
       >
         {children}
       </motion.div>
@@ -64,7 +68,7 @@ export function CardFooter({
   return (
     <div
       className={cn(
-        "px-6 py-4 border-t border-border bg-background rounded-b-xl",
+        "px-6 py-4 border-t border-border bg-background rounded-b-2xl",
         className
       )}
     >
@@ -143,7 +147,7 @@ export function Modal({
       {/* Modal content */}
       <div
         className={cn(
-          "relative w-full bg-surface border border-border rounded-xl animate-fade-in-up",
+          "relative w-full bg-surface border border-border rounded-2xl animate-fade-in-up",
           sizes[size]
         )}
       >

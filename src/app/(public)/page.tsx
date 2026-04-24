@@ -1,9 +1,60 @@
 import Link from "next/link";
 import Image from "next/image";
+import { Fragment } from "react";
 import { schoolConfig } from "@/config/school";
 import { Button } from "@/components/ui/FormElements";
 import { SectionHeader } from "@/components/ui/Card";
 import { TestimonialsCarousel } from "@/components/public/TestimonialsCarousel";
+
+/**
+ * Render `schoolConfig.tagline` with the substrings listed in
+ * `schoolConfig.taglineHighlights` wrapped in a primary→accent gradient.
+ *
+ * Alternates the gradient direction (primary→accent, accent→primary, …)
+ * for visual variety. Highlights are applied in the order they first
+ * appear in the tagline, not in config order, so the result reads
+ * left-to-right regardless of how the config is authored.
+ *
+ * If a highlight string isn't found in the tagline (e.g. after a config
+ * edit) it is skipped silently; the tagline still renders in full as
+ * plain text.
+ */
+function renderTaglineWithHighlights(
+  tagline: string,
+  highlights: readonly string[],
+): React.ReactNode[] {
+  const matches = highlights
+    .map((h) => ({ text: h, index: tagline.indexOf(h) }))
+    .filter((m) => m.index !== -1)
+    .sort((a, b) => a.index - b.index);
+
+  if (matches.length === 0) return [tagline];
+
+  const gradients = [
+    "bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent",
+    "bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent",
+  ] as const;
+
+  const nodes: React.ReactNode[] = [];
+  let cursor = 0;
+  matches.forEach((m, i) => {
+    if (m.index > cursor) {
+      nodes.push(
+        <Fragment key={`t-${i}`}>{tagline.slice(cursor, m.index)}</Fragment>,
+      );
+    }
+    nodes.push(
+      <span key={`h-${i}`} className={gradients[i % gradients.length]}>
+        {m.text}
+      </span>,
+    );
+    cursor = m.index + m.text.length;
+  });
+  if (cursor < tagline.length) {
+    nodes.push(<Fragment key="t-end">{tagline.slice(cursor)}</Fragment>);
+  }
+  return nodes;
+}
 
 export default function HomePage() {
   return (
@@ -16,10 +67,13 @@ export default function HomePage() {
               <span className="w-1.5 h-1.5 rounded-full bg-primary" />
               Admissions Open for {schoolConfig.admissions.currentSession}
             </div>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight text-text text-balance">
-              {schoolConfig.tagline}
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight text-text text-balance animate-fade-in-up">
+              {renderTaglineWithHighlights(
+                schoolConfig.tagline,
+                schoolConfig.taglineHighlights,
+              )}
             </h1>
-            <p className="text-lg text-muted max-w-2xl mx-auto leading-relaxed">
+            <p className="text-lg text-muted max-w-2xl mx-auto leading-relaxed animate-fade-in-up">
               {schoolConfig.description}
             </p>
             <div className="flex items-center justify-center gap-3 pt-2">
@@ -44,7 +98,7 @@ export default function HomePage() {
             ].map((stat) => (
               <div
                 key={stat.label}
-                className="text-center p-5 rounded-xl bg-surface border border-border"
+                className="text-center p-5 rounded-2xl bg-surface/80 backdrop-blur-sm border border-border transition-all duration-200 hover:scale-[1.02] hover:border-primary/30"
               >
                 <p className="text-xl lg:text-2xl font-semibold text-text mb-1">
                   {stat.value}

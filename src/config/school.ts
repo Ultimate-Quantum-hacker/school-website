@@ -7,6 +7,14 @@ export const schoolConfig = {
   name: "Greenfield Academy",
   shortName: "GFA",
   tagline: "Nurturing Excellence, Inspiring Futures",
+  /**
+   * Substrings of `tagline` that should be rendered with a gradient
+   * highlight on the homepage hero. Each entry must appear in `tagline`
+   * exactly (case-sensitive). If a highlight is missing from the tagline,
+   * it is silently skipped — the hero falls back to plain text for that
+   * segment rather than breaking.
+   */
+  taglineHighlights: ["Excellence,", "Futures"],
   description:
     "Greenfield Academy is a premier educational institution in Ghana committed to academic excellence, character development, and holistic education. We prepare students to thrive in a rapidly changing world.",
   logo: "/images/logo.png",
