@@ -27,17 +27,19 @@ export function Navbar() {
   return (
     <header className="sticky top-0 z-40 bg-surface/80 backdrop-blur-sm border-b border-border">
       <nav className="container-wide">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-lg bg-primary flex items-center justify-center text-white font-semibold text-sm">
+          <Link href="/" className="flex items-center gap-3 min-w-0">
+            <div className="shrink-0 w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-primary flex items-center justify-center text-white font-bold text-lg sm:text-xl shadow-sm">
               {schoolConfig.shortName[0]}
             </div>
-            <div className="hidden sm:block">
-              <p className="text-sm font-semibold text-text leading-tight">
+            <div className="hidden md:block min-w-0">
+              <p className="text-base lg:text-lg font-bold tracking-tight text-text leading-tight whitespace-nowrap">
                 {schoolConfig.name}
               </p>
-              <p className="text-xs text-muted">{schoolConfig.tagline}</p>
+              <p className="text-xs lg:text-sm text-muted leading-tight whitespace-nowrap">
+                {schoolConfig.tagline}
+              </p>
             </div>
           </Link>
 
