@@ -7,6 +7,8 @@ import { SectionHeader } from "@/components/ui/Card";
 import { TestimonialsCarousel } from "@/components/public/TestimonialsCarousel";
 import { getPublishedStaff } from "@/actions/staff";
 import { leadershipFromRows } from "@/lib/staff";
+import { getApprovedTestimonials } from "@/actions/testimonials";
+import { testimonialsForCarousel } from "@/lib/testimonials";
 
 /**
  * Render `schoolConfig.tagline` with the substrings listed in
@@ -61,7 +63,12 @@ function renderTaglineWithHighlights(
 export const revalidate = 60;
 
 export default async function HomePage() {
-  const headOfSchool = leadershipFromRows(await getPublishedStaff())[0];
+  const [staffRows, testimonialRows] = await Promise.all([
+    getPublishedStaff(),
+    getApprovedTestimonials(),
+  ]);
+  const headOfSchool = leadershipFromRows(staffRows)[0];
+  const testimonials = testimonialsForCarousel(testimonialRows);
   return (
     <>
       {/* ─── Hero Section ──────────────────────────────────────── */}
@@ -246,7 +253,28 @@ export default async function HomePage() {
             />
           </div>
           <div className="reveal">
-            <TestimonialsCarousel />
+            <TestimonialsCarousel testimonials={testimonials} />
+          </div>
+          <div className="mt-8 text-center reveal">
+            <Link
+              href="/share-your-story"
+              className="inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline"
+            >
+              Share your own story
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
+            </Link>
           </div>
         </div>
       </section>

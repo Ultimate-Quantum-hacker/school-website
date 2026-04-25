@@ -92,6 +92,18 @@ export interface AcademicCalendar {
   updated_at: string;
 }
 
+export interface Testimonial {
+  id: string;
+  quote: string;
+  author: string;
+  role: string | null;
+  email: string | null;
+  status: "pending" | "approved" | "rejected";
+  display_order: number;
+  created_at: string;
+  updated_at: string;
+}
+
 // ─── Form / UI Types ────────────────────────────────────────
 
 export interface ContactFormData {
