@@ -3,13 +3,19 @@ import Image from "next/image";
 import Link from "next/link";
 import { schoolConfig } from "@/config/school";
 import { SectionHeader } from "@/components/ui/Card";
+import { getPublishedStaff } from "@/actions/staff";
+import { leadershipFromRows } from "@/lib/staff";
 
 export const metadata: Metadata = {
   title: "About Us",
   description: `Learn about ${schoolConfig.name} — our history, mission, vision, and leadership team.`,
 };
 
-export default function AboutPage() {
+export const revalidate = 60;
+
+export default async function AboutPage() {
+  const rows = await getPublishedStaff();
+  const leaders = leadershipFromRows(rows);
   return (
     <>
       {/* ─── Page Header ───────────────────────────────────────── */}
@@ -206,7 +212,7 @@ export default function AboutPage() {
             />
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 stagger-children">
-            {schoolConfig.leadership.map((leader) => (
+            {leaders.map((leader) => (
               <div
                 key={leader.name}
                 className="reveal bg-surface rounded-2xl overflow-hidden shadow-sm border border-border hover:shadow-sm transition-all duration-300 group"
