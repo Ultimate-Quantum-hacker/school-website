@@ -62,14 +62,14 @@ export default async function NewsPage() {
                 title="Latest Updates"
                 subtitle={`${posts.length} post${posts.length !== 1 ? "s" : ""}`}
               />
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 stagger-children">
                 {posts.map((post) => (
                   <Link
                     key={post.id}
                     href={`/news/${post.slug}`}
-                    className="group"
+                    className="reveal group"
                   >
-                    <article className="bg-surface rounded-2xl overflow-hidden border border-border shadow-sm hover:shadow-sm transition-all duration-300 hover:-translate-y-1 h-full flex flex-col">
+                    <article className="bg-surface rounded-2xl overflow-hidden border border-border shadow-sm hover-lift hover:shadow-md hover:border-primary/30 h-full flex flex-col">
                       {/* Cover Image */}
                       <div className="relative aspect-[16/10] bg-primary overflow-hidden">
                         {post.cover_image ? (

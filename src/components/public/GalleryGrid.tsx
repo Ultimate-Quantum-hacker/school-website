@@ -47,13 +47,13 @@ export function GalleryGrid({ images }: GalleryGridProps) {
 
   return (
     <>
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 stagger-children">
         {images.map((image, i) => (
           <button
             key={image.id}
             onClick={() => setActiveIndex(i)}
             aria-label={`Open ${image.title}`}
-            className="group relative aspect-square rounded-xl overflow-hidden border border-border shadow-sm hover:shadow-sm transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-primary"
+            className="reveal-scale hover-lift group relative aspect-square rounded-xl overflow-hidden border border-border shadow-sm hover:shadow-md focus:outline-none focus:ring-2 focus:ring-primary"
           >
             <Image
               src={image.image_url}
