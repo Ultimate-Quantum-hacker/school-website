@@ -28,16 +28,6 @@ export const metadata: Metadata = {
     description: schoolConfig.description,
     type: "website",
   },
-  alternates: {
-    types: {
-      "application/rss+xml": [
-        {
-          url: "/news/rss.xml",
-          title: `${schoolConfig.name} — News`,
-        },
-      ],
-    },
-  },
 };
 
 export default function RootLayout({

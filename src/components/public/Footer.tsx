@@ -20,7 +20,6 @@ const footerLinks = [
       { href: "/contact", label: "Contact Us" },
       { href: "/admissions", label: "Apply Now" },
       { href: "/share-your-story", label: "Share Your Story" },
-      { href: "/news/rss.xml", label: "RSS Feed" },
     ],
   },
   {
