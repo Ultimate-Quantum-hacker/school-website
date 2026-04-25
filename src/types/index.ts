@@ -67,6 +67,17 @@ export interface Event {
   created_at: string;
 }
 
+export interface AcademicCalendar {
+  id: string;
+  academic_year: string;
+  term: 1 | 2 | 3;
+  title: string | null;
+  pdf_url: string;
+  published: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
 // ─── Form / UI Types ────────────────────────────────────────
 
 export interface ContactFormData {
