@@ -73,7 +73,7 @@ export default async function HomePage() {
     <>
       {/* ─── Hero Section ──────────────────────────────────────── */}
       <section className="relative">
-        <div className="container-wide py-20 lg:py-28">
+        <div className="container-wide py-12 sm:py-20 lg:py-28">
           <div className="max-w-3xl mx-auto text-center space-y-6">
             <div className="inline-flex items-center gap-2 rounded-full border border-border bg-surface px-3 py-1 text-xs font-medium text-muted">
               <span className="w-1.5 h-1.5 rounded-full bg-primary" />

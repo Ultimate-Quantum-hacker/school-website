@@ -9,12 +9,19 @@ export async function getApplications() {
   const adminClient = createAdminClient();
   const { data, error } = await adminClient
     .from("applications")
-    .select("*")
+    .select("*, documents:application_documents(*)")
     .order("created_at", { ascending: false });
 
   if (error) {
     console.error("Fetch applications error:", error);
-    return [];
+    // Fall back to base columns if the application_documents table
+    // hasn't been created yet — keeps the admin page usable until
+    // the migration is run.
+    const fallback = await adminClient
+      .from("applications")
+      .select("*")
+      .order("created_at", { ascending: false });
+    return fallback.data || [];
   }
   return data || [];
 }

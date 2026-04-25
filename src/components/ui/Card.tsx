@@ -152,8 +152,8 @@ export function Modal({
         )}
       >
         {title && (
-          <div className="flex items-center justify-between px-6 py-4 border-b border-border">
-            <h3 className="text-lg font-semibold text-text">{title}</h3>
+          <div className="flex items-center justify-between px-4 sm:px-6 py-4 border-b border-border">
+            <h3 className="text-base sm:text-lg font-semibold text-text">{title}</h3>
             <button
               onClick={onClose}
               className="p-1 rounded-lg text-muted hover:text-text hover:bg-background transition-colors"
@@ -174,7 +174,7 @@ export function Modal({
             </button>
           </div>
         )}
-        <div className="px-6 py-4 max-h-[70vh] overflow-y-auto">{children}</div>
+        <div className="px-4 sm:px-6 py-4 max-h-[75vh] overflow-y-auto">{children}</div>
       </div>
     </div>
   );
@@ -234,12 +234,14 @@ export function SectionHeader({
   className,
 }: SectionHeaderProps) {
   return (
-    <div className={cn(centered && "text-center", "mb-10", className)}>
-      <h2 className="text-3xl font-semibold tracking-tight text-text mb-3">
+    <div className={cn(centered && "text-center", "mb-8 sm:mb-10", className)}>
+      <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight text-text mb-3">
         {title}
       </h2>
       {subtitle && (
-        <p className="text-base text-muted max-w-2xl mx-auto">{subtitle}</p>
+        <p className="text-sm sm:text-base text-muted max-w-2xl mx-auto">
+          {subtitle}
+        </p>
       )}
     </div>
   );
@@ -270,18 +272,18 @@ export function Toast({ message, type = "info", show, onClose }: ToastProps) {
   };
 
   return (
-    <div className="fixed top-4 right-4 z-[100] animate-fade-in-up">
+    <div className="fixed inset-x-4 top-4 sm:left-auto sm:right-4 sm:max-w-sm z-[100] animate-fade-in-up">
       <div
         className={cn(
-          "flex items-center gap-3 px-4 py-3 rounded-lg border",
+          "flex items-start gap-3 px-4 py-3 rounded-lg border shadow-sm",
           types[type]
         )}
       >
-        <span className="text-base font-semibold">{icons[type]}</span>
-        <p className="text-sm font-medium">{message}</p>
+        <span className="text-base font-semibold leading-6">{icons[type]}</span>
+        <p className="text-sm font-medium flex-1 break-words">{message}</p>
         <button
           onClick={onClose}
-          className="ml-4 text-current opacity-60 hover:opacity-100"
+          className="text-current opacity-60 hover:opacity-100"
           aria-label="Close"
         >
           ✕

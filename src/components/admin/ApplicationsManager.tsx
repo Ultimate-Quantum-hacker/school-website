@@ -3,11 +3,13 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { updateApplicationStatus } from "@/actions/admin";
+import { getApplicationDocumentUrl } from "@/actions/applications";
+import { applicationDocumentLabel } from "@/lib/applications";
 import { Button } from "@/components/ui/FormElements";
 import { Modal, Toast } from "@/components/ui/Card";
 import { formatDate, getStatusColor } from "@/lib/utils";
 import { downloadCsv, toCsv } from "@/lib/csv";
-import type { Application } from "@/types";
+import type { Application, ApplicationDocument } from "@/types";
 
 interface ApplicationsManagerProps {
   applications: Application[];
@@ -30,6 +32,15 @@ export function ApplicationsManager({ applications }: ApplicationsManagerProps) 
     if (result.success) router.refresh();
   }
 
+  async function handleOpenDocument(doc: ApplicationDocument) {
+    const url = await getApplicationDocumentUrl(doc.storage_path);
+    if (!url) {
+      showToast("Could not generate a download link.", "error");
+      return;
+    }
+    window.open(url, "_blank", "noopener,noreferrer");
+  }
+
   const filtered = filter === "all" ? applications : applications.filter(a => a.status === filter);
 
   const statusCounts = {
@@ -44,7 +55,7 @@ export function ApplicationsManager({ applications }: ApplicationsManagerProps) 
     <div>
       <Toast message={toast.message} type={toast.type} show={toast.show} onClose={() => setToast(t => ({ ...t, show: false }))} />
 
-      <div className="mb-6 flex items-center justify-between gap-4">
+      <div className="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <div>
           <h1 className="text-2xl font-bold text-text">Applications</h1>
           <p className="text-sm text-muted mt-1">{applications.length} total applications</p>
@@ -54,6 +65,7 @@ export function ApplicationsManager({ applications }: ApplicationsManagerProps) 
           size="sm"
           onClick={() => exportApplicationsCsv(filtered)}
           disabled={filtered.length === 0}
+          className="self-start sm:self-auto"
         >
           Export CSV
         </Button>
@@ -65,7 +77,7 @@ export function ApplicationsManager({ applications }: ApplicationsManagerProps) 
           <button
             key={status}
             onClick={() => setFilter(status)}
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+            className={`px-3 sm:px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
               filter === status
                 ? "bg-primary text-white"
                 : "bg-surface text-muted border border-border hover:bg-background"
@@ -86,43 +98,78 @@ export function ApplicationsManager({ applications }: ApplicationsManagerProps) 
           </p>
         </div>
       ) : (
-        <div className="bg-surface rounded-xl border border-border overflow-hidden">
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="border-b border-border bg-background">
-                  <th className="text-left px-6 py-3 font-medium text-muted">Student</th>
-                  <th className="text-left px-6 py-3 font-medium text-muted">Grade</th>
-                  <th className="text-left px-6 py-3 font-medium text-muted">Status</th>
-                  <th className="text-left px-6 py-3 font-medium text-muted">Date</th>
-                  <th className="text-right px-6 py-3 font-medium text-muted">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filtered.map((app) => (
-                  <tr key={app.id} className="border-b border-gray-50 hover:bg-background transition-colors">
-                    <td className="px-6 py-4">
-                      <p className="font-medium text-text">{app.student_name}</p>
-                      <p className="text-xs text-muted">{app.email}</p>
-                    </td>
-                    <td className="px-6 py-4 text-muted">{app.grade_applying}</td>
-                    <td className="px-6 py-4">
-                      <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusColor(app.status)}`}>
-                        {app.status}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 text-muted">{formatDate(app.created_at)}</td>
-                    <td className="px-6 py-4 text-right">
-                      <button onClick={() => setSelected(app)} className="text-primary hover:underline text-sm font-medium">
-                        View
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+        <>
+          {/* Mobile cards */}
+          <div className="sm:hidden space-y-3">
+            {filtered.map((app) => (
+              <button
+                key={app.id}
+                onClick={() => setSelected(app)}
+                className="w-full text-left bg-surface rounded-xl border border-border p-4 hover:border-primary/40 transition-colors"
+              >
+                <div className="flex items-start justify-between gap-3">
+                  <div className="min-w-0">
+                    <p className="font-medium text-text truncate">{app.student_name}</p>
+                    <p className="text-xs text-muted truncate">{app.email}</p>
+                  </div>
+                  <span className={`shrink-0 inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${getStatusColor(app.status)}`}>
+                    {app.status}
+                  </span>
+                </div>
+                <div className="mt-3 flex items-center justify-between text-xs text-muted">
+                  <span>{app.grade_applying}</span>
+                  <span>{formatDate(app.created_at)}</span>
+                </div>
+                {app.documents && app.documents.length > 0 && (
+                  <p className="mt-2 text-xs text-primary">
+                    {app.documents.length} document{app.documents.length === 1 ? "" : "s"} attached
+                  </p>
+                )}
+              </button>
+            ))}
           </div>
-        </div>
+
+          {/* Desktop table */}
+          <div className="hidden sm:block bg-surface rounded-xl border border-border overflow-hidden">
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b border-border bg-background">
+                    <th className="text-left px-6 py-3 font-medium text-muted">Student</th>
+                    <th className="text-left px-6 py-3 font-medium text-muted">Grade</th>
+                    <th className="text-left px-6 py-3 font-medium text-muted">Docs</th>
+                    <th className="text-left px-6 py-3 font-medium text-muted">Status</th>
+                    <th className="text-left px-6 py-3 font-medium text-muted">Date</th>
+                    <th className="text-right px-6 py-3 font-medium text-muted">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filtered.map((app) => (
+                    <tr key={app.id} className="border-b border-gray-50 hover:bg-background transition-colors">
+                      <td className="px-6 py-4">
+                        <p className="font-medium text-text">{app.student_name}</p>
+                        <p className="text-xs text-muted">{app.email}</p>
+                      </td>
+                      <td className="px-6 py-4 text-muted">{app.grade_applying}</td>
+                      <td className="px-6 py-4 text-muted">{app.documents?.length ?? 0}</td>
+                      <td className="px-6 py-4">
+                        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusColor(app.status)}`}>
+                          {app.status}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 text-muted">{formatDate(app.created_at)}</td>
+                      <td className="px-6 py-4 text-right">
+                        <button onClick={() => setSelected(app)} className="text-primary hover:underline text-sm font-medium">
+                          View
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </>
       )}
 
       {/* Detail Modal */}
@@ -145,6 +192,43 @@ export function ApplicationsManager({ applications }: ApplicationsManagerProps) 
                 <p className="text-sm text-text bg-background rounded-lg p-3">{selected.message}</p>
               </div>
             )}
+
+            <div className="pt-4 border-t border-border">
+              <p className="text-xs font-medium text-muted mb-2">Uploaded Documents</p>
+              {selected.documents && selected.documents.length > 0 ? (
+                <ul className="space-y-2">
+                  {selected.documents.map((doc) => (
+                    <li
+                      key={doc.id}
+                      className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 rounded-lg border border-border bg-background/40 p-3"
+                    >
+                      <div className="min-w-0">
+                        <p className="text-sm font-medium text-text">
+                          {applicationDocumentLabel(doc.document_type)}
+                        </p>
+                        <p className="text-xs text-muted truncate">
+                          {doc.file_name}
+                          {typeof doc.size_bytes === "number" && (
+                            <span className="ml-2">({formatBytes(doc.size_bytes)})</span>
+                          )}
+                        </p>
+                      </div>
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => handleOpenDocument(doc)}
+                        className="self-start sm:self-auto"
+                      >
+                        Download
+                      </Button>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="text-sm text-muted">No documents uploaded.</p>
+              )}
+            </div>
+
             <div className="pt-4 border-t border-border">
               <p className="text-xs font-medium text-muted mb-2">Update Status</p>
               <div className="flex flex-wrap gap-2">
@@ -190,7 +274,13 @@ function DetailField({ label, value }: { label: string; value: string }) {
   return (
     <div>
       <p className="text-xs font-medium text-muted mb-0.5">{label}</p>
-      <p className="text-sm text-text">{value}</p>
+      <p className="text-sm text-text break-words">{value}</p>
     </div>
   );
+}
+
+function formatBytes(bytes: number): string {
+  if (bytes < 1024) return `${bytes} B`;
+  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
+  return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
 }
