@@ -2,12 +2,22 @@
 
 import { useEffect, useState } from "react";
 import { useReducedMotion } from "framer-motion";
-import { schoolConfig } from "@/config/school";
 
 const AUTOPLAY_MS = 7000;
 
-export function TestimonialsCarousel() {
-  const testimonials = schoolConfig.testimonials;
+export interface CarouselTestimonial {
+  quote: string;
+  author: string;
+  role: string;
+}
+
+interface TestimonialsCarouselProps {
+  testimonials: CarouselTestimonial[];
+}
+
+export function TestimonialsCarousel({
+  testimonials,
+}: TestimonialsCarouselProps) {
   const [index, setIndex] = useState(0);
   const reduced = useReducedMotion();
 
@@ -20,7 +30,10 @@ export function TestimonialsCarousel() {
     return () => clearInterval(id);
   }, [reduced, testimonials.length]);
 
-  const current = testimonials[index];
+  // Clamp the index in render rather than via setState in an effect: if the
+  // testimonials list shrinks below the current index, just show the first.
+  const safeIndex = index >= testimonials.length ? 0 : index;
+  const current = testimonials[safeIndex];
   if (!current) return null;
 
   return (
@@ -44,7 +57,9 @@ export function TestimonialsCarousel() {
           </p>
           <footer className="mt-6">
             <p className="font-semibold text-text">{current.author}</p>
-            <p className="text-sm text-muted">{current.role}</p>
+            {current.role && (
+              <p className="text-sm text-muted">{current.role}</p>
+            )}
           </footer>
         </blockquote>
       </div>
@@ -53,12 +68,12 @@ export function TestimonialsCarousel() {
         <div className="mt-5 flex items-center justify-center gap-2">
           {testimonials.map((t, i) => (
             <button
-              key={t.author}
+              key={`${t.author}-${i}`}
               onClick={() => setIndex(i)}
               aria-label={`Show testimonial ${i + 1}`}
-              aria-current={i === index}
+              aria-current={i === safeIndex}
               className={`h-2 rounded-full transition-all ${
-                i === index
+                i === safeIndex
                   ? "bg-primary w-6"
                   : "bg-border w-2 hover:bg-muted"
               }`}
