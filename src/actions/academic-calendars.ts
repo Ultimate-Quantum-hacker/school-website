@@ -11,7 +11,7 @@ function parseForm(formData: FormData) {
   const term = Number.parseInt(termRaw, 10) as 1 | 2 | 3;
   const title = ((formData.get("title") as string) || "").trim() || null;
   const pdf_url = (formData.get("pdf_url") as string)?.trim();
-  const published = formData.get("published") !== "false";
+  const published = formData.get("published") === "true";
   return { academic_year, term, title, pdf_url, published };
 }
 
