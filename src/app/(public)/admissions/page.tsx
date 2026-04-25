@@ -3,13 +3,15 @@ import Image from "next/image";
 import { schoolConfig } from "@/config/school";
 import { SectionHeader } from "@/components/ui/Card";
 import { ApplicationForm } from "@/components/public/ApplicationForm";
+import { getSiteSettings } from "@/actions/site-settings";
 
 export const metadata: Metadata = {
   title: "Admissions",
   description: `Apply to ${schoolConfig.name}. Learn about our admission process, requirements, and submit your application online.`,
 };
 
-export default function AdmissionsPage() {
+export default async function AdmissionsPage() {
+  const settings = await getSiteSettings();
   return (
     <>
       {/* ─── Page Header ───────────────────────────────────────── */}
@@ -152,12 +154,12 @@ export default function AdmissionsPage() {
                 office or visit the school in person. We are happy to discuss
                 options that work for your family.
               </p>
-              <a href={`tel:${schoolConfig.contact.phone}`}>
+              <a href={`tel:${settings.contact.phone}`}>
                 <span className="inline-flex items-center gap-2 text-primary font-medium hover:underline">
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                   </svg>
-                  Call Admissions: {schoolConfig.contact.phone}
+                  Call Admissions: {settings.contact.phone}
                 </span>
               </a>
             </div>

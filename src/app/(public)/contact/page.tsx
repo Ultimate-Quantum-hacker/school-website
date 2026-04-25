@@ -3,13 +3,15 @@ import Image from "next/image";
 import { schoolConfig } from "@/config/school";
 import { SectionHeader } from "@/components/ui/Card";
 import { ContactForm } from "@/components/public/ContactForm";
+import { getSiteSettings } from "@/actions/site-settings";
 
 export const metadata: Metadata = {
   title: "Contact Us",
   description: `Get in touch with ${schoolConfig.name}. Contact us for enquiries, visits, or admissions information.`,
 };
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const settings = await getSiteSettings();
   return (
     <>
       {/* ─── Page Header ───────────────────────────────────────── */}
@@ -56,7 +58,7 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h3 className="font-semibold text-text mb-1">Our Address</h3>
-                    <p className="text-sm text-muted">{schoolConfig.contact.address}</p>
+                    <p className="text-sm text-muted">{settings.contact.address}</p>
                   </div>
                 </div>
 
@@ -69,8 +71,8 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h3 className="font-semibold text-text mb-1">Email</h3>
-                    <a href={`mailto:${schoolConfig.contact.email}`} className="text-sm text-primary hover:underline">
-                      {schoolConfig.contact.email}
+                    <a href={`mailto:${settings.contact.email}`} className="text-sm text-primary hover:underline">
+                      {settings.contact.email}
                     </a>
                   </div>
                 </div>
@@ -84,12 +86,14 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h3 className="font-semibold text-text mb-1">Phone</h3>
-                    <a href={`tel:${schoolConfig.contact.phone}`} className="text-sm text-primary hover:underline block">
-                      {schoolConfig.contact.phone}
+                    <a href={`tel:${settings.contact.phone}`} className="text-sm text-primary hover:underline block">
+                      {settings.contact.phone}
                     </a>
-                    <a href={`tel:${schoolConfig.contact.phone2}`} className="text-sm text-primary hover:underline block">
-                      {schoolConfig.contact.phone2}
-                    </a>
+                    {settings.contact.phone2 && (
+                      <a href={`tel:${settings.contact.phone2}`} className="text-sm text-primary hover:underline block">
+                        {settings.contact.phone2}
+                      </a>
+                    )}
                   </div>
                 </div>
 
@@ -130,7 +134,7 @@ export default function ContactPage() {
         <div className="container-wide py-2">
           <div className="rounded-2xl overflow-hidden shadow-sm border border-border reveal-scale">
             <iframe
-              src={schoolConfig.contact.mapEmbedUrl}
+              src={settings.contact.mapEmbedUrl}
               width="100%"
               height="400"
               style={{ border: 0 }}

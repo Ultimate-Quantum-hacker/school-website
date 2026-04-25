@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
 import { schoolConfig } from "@/config/school";
+import { getSiteSettings } from "@/actions/site-settings";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
   description: `How ${schoolConfig.name} collects, uses, and protects personal information under the Ghana Data Protection Act (Act 843).`,
 };
 
-export default function PrivacyPage() {
+export default async function PrivacyPage() {
   const year = new Date().getFullYear();
+  const settings = await getSiteSettings();
 
   return (
     <>
@@ -27,10 +29,10 @@ export default function PrivacyPage() {
           <h2>1. Who we are</h2>
           <p>
             {schoolConfig.name} is an educational institution located at{" "}
-            {schoolConfig.contact.address}. You can reach our data protection
+            {settings.contact.address}. You can reach our data protection
             contact at{" "}
-            <a href={`mailto:${schoolConfig.contact.email}`}>
-              {schoolConfig.contact.email}
+            <a href={`mailto:${settings.contact.email}`}>
+              {settings.contact.email}
             </a>
             .
           </p>
@@ -118,8 +120,8 @@ export default function PrivacyPage() {
           </ul>
           <p>
             To exercise any of these rights, email{" "}
-            <a href={`mailto:${schoolConfig.contact.email}`}>
-              {schoolConfig.contact.email}
+            <a href={`mailto:${settings.contact.email}`}>
+              {settings.contact.email}
             </a>
             .
           </p>

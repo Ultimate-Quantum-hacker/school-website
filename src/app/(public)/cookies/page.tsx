@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
 import { schoolConfig } from "@/config/school";
+import { getSiteSettings } from "@/actions/site-settings";
 
 export const metadata: Metadata = {
   title: "Cookie Policy",
   description: `How ${schoolConfig.name} uses cookies and similar technologies on this website.`,
 };
 
-export default function CookiesPage() {
+export default async function CookiesPage() {
   const year = new Date().getFullYear();
+  const settings = await getSiteSettings();
 
   return (
     <>
@@ -79,8 +81,8 @@ export default function CookiesPage() {
           <h2>6. Contact</h2>
           <p>
             Questions about this cookie policy? Email{" "}
-            <a href={`mailto:${schoolConfig.contact.email}`}>
-              {schoolConfig.contact.email}
+            <a href={`mailto:${settings.contact.email}`}>
+              {settings.contact.email}
             </a>
             .
           </p>
