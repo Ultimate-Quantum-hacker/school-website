@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { schoolConfig } from "@/config/school";
 import { SectionHeader } from "@/components/ui/Card";
+import { CountUp } from "@/components/ui/CountUp";
 import { getPublishedStaff } from "@/actions/staff";
 import { leadershipFromRows } from "@/lib/staff";
 import { getSiteSettings } from "@/actions/site-settings";
@@ -79,8 +80,13 @@ export default async function AboutPage() {
               </div>
               <div className="absolute -bottom-4 -right-4 w-24 h-24 rounded-2xl bg-secondary/20 -z-10" />
               {/* Floating stat card */}
-              <div className="absolute -bottom-6 -left-6 bg-surface rounded-xl shadow-sm p-4 border border-border">
-                <p className="text-3xl font-bold text-primary">{new Date().getFullYear() - schoolConfig.foundedYear}+</p>
+              <div className="absolute -bottom-6 -left-6 bg-surface rounded-xl shadow-sm p-4 border border-border hover-lift">
+                <p className="text-3xl font-bold text-primary">
+                  <CountUp
+                    to={new Date().getFullYear() - schoolConfig.foundedYear}
+                    suffix="+"
+                  />
+                </p>
                 <p className="text-xs text-muted">Years of Excellence</p>
               </div>
             </div>

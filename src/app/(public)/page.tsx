@@ -4,6 +4,8 @@ import { Fragment } from "react";
 import { schoolConfig } from "@/config/school";
 import { Button } from "@/components/ui/FormElements";
 import { SectionHeader } from "@/components/ui/Card";
+import { CountUp } from "@/components/ui/CountUp";
+import { parseStatString } from "@/lib/stats";
 import { TestimonialsCarousel } from "@/components/public/TestimonialsCarousel";
 import { getPublishedStaff } from "@/actions/staff";
 import { leadershipFromRows } from "@/lib/staff";
@@ -75,20 +77,32 @@ export default async function HomePage() {
       <section className="relative">
         <div className="container-wide py-12 sm:py-20 lg:py-28">
           <div className="max-w-3xl mx-auto text-center space-y-6">
-            <div className="inline-flex items-center gap-2 rounded-full border border-border bg-surface px-3 py-1 text-xs font-medium text-muted">
+            <div
+              className="inline-flex items-center gap-2 rounded-full border border-border bg-surface px-3 py-1 text-xs font-medium text-muted animate-fade-in-up opacity-0"
+              style={{ animationDelay: "0ms" }}
+            >
               <span className="w-1.5 h-1.5 rounded-full bg-primary" />
               Admissions Open for {schoolConfig.admissions.currentSession}
             </div>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight text-text text-balance animate-fade-in-up">
+            <h1
+              className="text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight text-text text-balance animate-fade-in-up opacity-0"
+              style={{ animationDelay: "120ms" }}
+            >
               {renderTaglineWithHighlights(
                 schoolConfig.tagline,
                 schoolConfig.taglineHighlights,
               )}
             </h1>
-            <p className="text-lg text-muted max-w-2xl mx-auto leading-relaxed animate-fade-in-up">
+            <p
+              className="text-lg text-muted max-w-2xl mx-auto leading-relaxed animate-fade-in-up opacity-0"
+              style={{ animationDelay: "240ms" }}
+            >
               {schoolConfig.description}
             </p>
-            <div className="flex items-center justify-center gap-3 pt-2">
+            <div
+              className="flex items-center justify-center gap-3 pt-2 animate-fade-in-up opacity-0"
+              style={{ animationDelay: "360ms" }}
+            >
               <Link href="/admissions">
                 <Button size="lg">Apply Now</Button>
               </Link>
@@ -101,23 +115,34 @@ export default async function HomePage() {
           </div>
 
           {/* Stats Row */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-16 max-w-4xl mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-16 max-w-4xl mx-auto stagger-children">
             {[
               { value: `Est. ${schoolConfig.foundedYear}`, label: "Founded" },
               { value: schoolConfig.studentCount, label: "Students" },
               { value: schoolConfig.staffCount, label: "Staff Members" },
               { value: schoolConfig.becePasses, label: "BECE Pass Rate" },
-            ].map((stat) => (
-              <div
-                key={stat.label}
-                className="text-center p-5 rounded-2xl bg-surface/80 backdrop-blur-sm border border-border transition-all duration-200 hover:scale-[1.02] hover:border-primary/30"
-              >
-                <p className="text-xl lg:text-2xl font-semibold text-text mb-1">
-                  {stat.value}
-                </p>
-                <p className="text-xs text-muted">{stat.label}</p>
-              </div>
-            ))}
+            ].map((stat) => {
+              const parsed = parseStatString(stat.value);
+              return (
+                <div
+                  key={stat.label}
+                  className="reveal-scale text-center p-5 rounded-2xl bg-surface/80 backdrop-blur-sm border border-border hover-lift hover:border-primary/30"
+                >
+                  <p className="text-xl lg:text-2xl font-semibold text-text mb-1">
+                    {parsed ? (
+                      <CountUp
+                        to={parsed.number}
+                        prefix={parsed.prefix}
+                        suffix={parsed.suffix}
+                      />
+                    ) : (
+                      stat.value
+                    )}
+                  </p>
+                  <p className="text-xs text-muted">{stat.label}</p>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -176,7 +201,7 @@ export default async function HomePage() {
             {schoolConfig.programs.map((program) => (
               <div
                 key={program.title}
-                className="reveal group bg-surface rounded-xl overflow-hidden border border-border transition-colors hover:border-primary/30"
+                className="reveal hover-lift group bg-surface rounded-xl overflow-hidden border border-border hover:border-primary/30"
               >
                 <div className="aspect-[16/10] overflow-hidden img-zoom">
                   <Image
@@ -230,7 +255,7 @@ export default async function HomePage() {
             ].map((item) => (
               <div
                 key={item.title}
-                className="reveal bg-surface rounded-xl p-6 border border-border transition-colors hover:border-primary/30"
+                className="reveal hover-lift bg-surface rounded-xl p-6 border border-border hover:border-primary/30"
               >
                 <div className="text-2xl mb-3">{item.icon}</div>
                 <h3 className="font-medium text-text mb-2">{item.title}</h3>

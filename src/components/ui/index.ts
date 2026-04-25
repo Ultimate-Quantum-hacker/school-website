@@ -13,3 +13,4 @@ export {
 } from "./Card";
 export { Background } from "./Background";
 export { PageTransition } from "./PageTransition";
+export { CountUp } from "./CountUp";

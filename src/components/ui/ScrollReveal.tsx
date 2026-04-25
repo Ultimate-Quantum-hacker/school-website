@@ -18,6 +18,27 @@ export function ScrollReveal() {
   useEffect(() => {
     const selector = ".reveal, .reveal-left, .reveal-right, .reveal-scale";
 
+    // If the user prefers reduced motion, skip the observer and
+    // mark every reveal element as already revealed so they render
+    // statically. The CSS rules also force `opacity: 1` for safety.
+    const reduceMotion =
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduceMotion) {
+      const markAll = () => {
+        document.querySelectorAll(selector).forEach((el) => {
+          el.classList.add("revealed");
+        });
+      };
+      markAll();
+      const reduceObserver = new MutationObserver(markAll);
+      reduceObserver.observe(document.body, {
+        childList: true,
+        subtree: true,
+      });
+      return () => reduceObserver.disconnect();
+    }
+
     const intersectionObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
