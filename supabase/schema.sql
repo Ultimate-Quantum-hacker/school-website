@@ -94,6 +94,10 @@ CREATE INDEX IF NOT EXISTS idx_messages_date ON messages(created_at DESC);
 -- table-level permissions.
 
 -- Anon (public visitors): read posts & gallery, submit applications & messages
+-- SELECT on admins is needed because RLS policies on other tables reference
+-- the admins table in subqueries; the admins RLS policy itself prevents
+-- anon from reading any actual admin rows.
+GRANT SELECT ON admins TO anon;
 GRANT SELECT ON posts TO anon;
 GRANT SELECT ON gallery TO anon;
 GRANT INSERT ON applications TO anon;
