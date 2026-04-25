@@ -86,6 +86,32 @@ CREATE INDEX IF NOT EXISTS idx_messages_date ON messages(created_at DESC);
 
 
 -- ============================================================
+-- TABLE GRANTS FOR SUPABASE ROLES
+-- ============================================================
+-- Supabase uses `anon` for unauthenticated requests and
+-- `authenticated` for logged-in users. RLS policies (below)
+-- control row-level access, but the roles still need base
+-- table-level permissions.
+
+-- Anon (public visitors): read posts & gallery, submit applications & messages
+-- SELECT on admins is needed because RLS policies on other tables reference
+-- the admins table in subqueries; the admins RLS policy itself prevents
+-- anon from reading any actual admin rows.
+GRANT SELECT ON admins TO anon;
+GRANT SELECT ON posts TO anon;
+GRANT SELECT ON gallery TO anon;
+GRANT INSERT ON applications TO anon;
+GRANT INSERT ON messages TO anon;
+
+-- Authenticated (admin users): full CRUD on all tables
+GRANT SELECT ON admins TO authenticated;
+GRANT SELECT, INSERT, UPDATE, DELETE ON posts TO authenticated;
+GRANT SELECT, INSERT, UPDATE, DELETE ON gallery TO authenticated;
+GRANT SELECT, INSERT, UPDATE, DELETE ON applications TO authenticated;
+GRANT SELECT, INSERT, UPDATE, DELETE ON messages TO authenticated;
+
+
+-- ============================================================
 -- ROW LEVEL SECURITY (RLS) POLICIES
 -- ============================================================
 
