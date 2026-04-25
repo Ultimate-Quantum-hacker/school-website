@@ -152,6 +152,53 @@ export function SettingsManager({ settings }: SettingsManagerProps) {
           </div>
         </section>
 
+        <section className="bg-surface border border-border rounded-2xl p-6">
+          <h2 className="text-lg font-semibold text-text mb-1">
+            Page Content
+          </h2>
+          <p className="text-sm text-muted mb-6">
+            Long-form copy shown on the About page and contact details.
+            Blank lines start a new paragraph.
+          </p>
+          <div className="space-y-4">
+            <Textarea
+              label="Our Story (About page)"
+              name="about_story"
+              defaultValue={settings.content.aboutStory}
+              rows={8}
+              placeholder="Tell visitors about the school's history, milestones, and what makes it unique."
+            />
+            <div className="grid sm:grid-cols-2 gap-4">
+              <Textarea
+                label="Mission"
+                name="mission"
+                defaultValue={settings.content.mission}
+                rows={5}
+                placeholder="Our mission is to..."
+              />
+              <Textarea
+                label="Vision"
+                name="vision"
+                defaultValue={settings.content.vision}
+                rows={5}
+                placeholder="Our vision is to..."
+              />
+            </div>
+            <div>
+              <Textarea
+                label="Office Hours"
+                name="office_hours"
+                defaultValue={settings.content.officeHours}
+                rows={3}
+                placeholder={"Mon \u2013 Fri: 7:30 AM \u2013 4:00 PM\nSat: 9:00 AM \u2013 12:00 PM"}
+              />
+              <p className="mt-1 text-xs text-muted">
+                One entry per line. Shown on the Contact page.
+              </p>
+            </div>
+          </div>
+        </section>
+
         <div className="flex justify-end gap-3">
           <Button type="submit" loading={submitting} disabled={submitting}>
             Save changes

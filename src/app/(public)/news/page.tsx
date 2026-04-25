@@ -36,9 +36,9 @@ export default async function NewsPage() {
   return (
     <>
       {/* ─── Page Header ───────────────────────────────────────── */}
-      <section className="border-b border-border py-14">
+      <section className="border-b border-border py-10 sm:py-14">
         <div className="container-wide text-center">
-          <h1 className="text-4xl lg:text-5xl font-bold mb-4 animate-fade-in">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 animate-fade-in">
             News & Announcements
           </h1>
           <p className="text-lg text-muted max-w-2xl mx-auto animate-fade-in-up">

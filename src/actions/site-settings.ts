@@ -12,6 +12,21 @@ import type {
 
 const SETTINGS_ID = 1;
 
+const DEFAULT_ABOUT_STORY = `Founded in ${schoolConfig.foundedYear}, ${schoolConfig.name} began with a simple yet powerful vision: to create a school in Accra where every child could reach their full potential regardless of background. What started as a small nursery has grown into one of the most respected basic schools in the Greater Accra Region.
+
+Over the years, we have evolved our teaching methods, expanded our facilities, and embraced modern educational practices — all while staying true to our founding principles of academic rigour, discipline, and inclusive community.
+
+Today, with over ${schoolConfig.studentCount} students and ${schoolConfig.staffCount} dedicated staff members, we continue to produce outstanding BECE results and well-rounded graduates who go on to excel in the best senior high schools across Ghana.`;
+
+const DEFAULT_MISSION =
+  "To provide quality basic education that empowers students with knowledge, critical thinking skills, and strong moral values. We are committed to fostering an inclusive learning environment where every child is encouraged to explore, innovate, and excel, while being prepared for the challenges of secondary education and beyond.";
+
+const DEFAULT_VISION =
+  "To be a leading basic school in Ghana that produces well-rounded, confident, and socially responsible young people who contribute meaningfully to national development. We envision a community where education transforms lives and empowers the next generation of Ghanaian leaders.";
+
+const DEFAULT_OFFICE_HOURS =
+  "Mon \u2013 Fri: 7:30 AM \u2013 4:00 PM\nSat: 9:00 AM \u2013 12:00 PM";
+
 function defaults(): SiteSettings {
   return {
     contact: {
@@ -29,13 +44,19 @@ function defaults(): SiteSettings {
       linkedin: schoolConfig.social.linkedin ?? "",
       tiktok: "",
     },
+    content: {
+      aboutStory: DEFAULT_ABOUT_STORY,
+      mission: DEFAULT_MISSION,
+      vision: DEFAULT_VISION,
+      officeHours: DEFAULT_OFFICE_HOURS,
+    },
   };
 }
 
 function mergeRow(row: SiteSettingsRow | null): SiteSettings {
   const d = defaults();
   if (!row) return d;
-  const pick = (value: string | null, fallback: string) =>
+  const pick = (value: string | null | undefined, fallback: string) =>
     value != null && value.trim().length > 0 ? value : fallback;
   return {
     contact: {
@@ -52,6 +73,12 @@ function mergeRow(row: SiteSettingsRow | null): SiteSettings {
       youtube: pick(row.social_youtube, d.social.youtube),
       linkedin: pick(row.social_linkedin, d.social.linkedin),
       tiktok: pick(row.social_tiktok, d.social.tiktok),
+    },
+    content: {
+      aboutStory: pick(row.about_story, d.content.aboutStory),
+      mission: pick(row.mission, d.content.mission),
+      vision: pick(row.vision, d.content.vision),
+      officeHours: pick(row.office_hours, d.content.officeHours),
     },
   };
 }
@@ -128,6 +155,10 @@ export async function updateSiteSettings(
       social_youtube: str(formData, "social_youtube") || null,
       social_linkedin: str(formData, "social_linkedin") || null,
       social_tiktok: str(formData, "social_tiktok") || null,
+      about_story: str(formData, "about_story") || null,
+      mission: str(formData, "mission") || null,
+      vision: str(formData, "vision") || null,
+      office_hours: str(formData, "office_hours") || null,
     };
 
     if (payload.contact_email) {
@@ -154,6 +185,7 @@ export async function updateSiteSettings(
 
     // Bust the cache on every page that renders contact or social data.
     revalidatePath("/", "layout");
+    revalidatePath("/about");
     revalidatePath("/contact");
     revalidatePath("/privacy");
     revalidatePath("/cookies");

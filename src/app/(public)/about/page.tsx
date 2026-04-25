@@ -5,6 +5,7 @@ import { schoolConfig } from "@/config/school";
 import { SectionHeader } from "@/components/ui/Card";
 import { getPublishedStaff } from "@/actions/staff";
 import { leadershipFromRows } from "@/lib/staff";
+import { getSiteSettings } from "@/actions/site-settings";
 
 export const metadata: Metadata = {
   title: "About Us",
@@ -13,13 +14,24 @@ export const metadata: Metadata = {
 
 export const revalidate = 60;
 
+function paragraphs(text: string): string[] {
+  return text
+    .split(/\n\s*\n/)
+    .map((p) => p.trim())
+    .filter(Boolean);
+}
+
 export default async function AboutPage() {
-  const rows = await getPublishedStaff();
+  const [rows, settings] = await Promise.all([
+    getPublishedStaff(),
+    getSiteSettings(),
+  ]);
   const leaders = leadershipFromRows(rows);
+  const storyParagraphs = paragraphs(settings.content.aboutStory);
   return (
     <>
       {/* ─── Page Header ───────────────────────────────────────── */}
-      <section className="relative overflow-hidden border-b border-border py-14">
+      <section className="relative overflow-hidden border-b border-border py-10 sm:py-14">
         <div className="absolute inset-0">
           <Image
             src={schoolConfig.images.campus}
@@ -30,7 +42,7 @@ export default async function AboutPage() {
           />
         </div>
         <div className="relative container-wide text-center">
-          <h1 className="text-4xl lg:text-5xl font-bold mb-4 animate-fade-in">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 animate-fade-in">
             About Us
           </h1>
           <p className="text-lg text-muted max-w-2xl mx-auto animate-fade-in-up">
@@ -50,25 +62,9 @@ export default async function AboutPage() {
                 centered={false}
               />
               <div className="space-y-4 text-muted leading-relaxed">
-                <p>
-                  Founded in {schoolConfig.foundedYear}, {schoolConfig.name} began
-                  with a simple yet powerful vision: to create a school in Accra
-                  where every child could reach their full potential regardless of background.
-                  What started as a small nursery has grown into one of the most respected
-                  basic schools in the Greater Accra Region.
-                </p>
-                <p>
-                  Over the years, we have evolved our teaching methods,
-                  expanded our facilities, and embraced modern educational
-                  practices — all while staying true to our founding principles
-                  of academic rigour, discipline, and inclusive community.
-                </p>
-                <p>
-                  Today, with over {schoolConfig.studentCount} students and{" "}
-                  {schoolConfig.staffCount} dedicated staff members, we continue
-                  to produce outstanding BECE results and well-rounded graduates
-                  who go on to excel in the best senior high schools across Ghana.
-                </p>
+                {storyParagraphs.map((p, i) => (
+                  <p key={i}>{p}</p>
+                ))}
               </div>
             </div>
             <div className="relative reveal-right">
@@ -116,12 +112,8 @@ export default async function AboutPage() {
               <h3 className="text-xl font-bold text-text mb-4">
                 Our Mission
               </h3>
-              <p className="text-muted leading-relaxed">
-                To provide quality basic education that empowers students with
-                knowledge, critical thinking skills, and strong moral values. We
-                are committed to fostering an inclusive learning environment where
-                every child is encouraged to explore, innovate, and excel, while
-                being prepared for the challenges of secondary education and beyond.
+              <p className="text-muted leading-relaxed whitespace-pre-line">
+                {settings.content.mission}
               </p>
             </div>
             <div className="reveal bg-surface rounded-2xl p-8 shadow-sm border border-border hover:shadow-sm transition-shadow duration-300">
@@ -131,12 +123,8 @@ export default async function AboutPage() {
               <h3 className="text-xl font-bold text-text mb-4">
                 Our Vision
               </h3>
-              <p className="text-muted leading-relaxed">
-                To be a leading basic school in Ghana that produces
-                well-rounded, confident, and socially responsible young people who
-                contribute meaningfully to national development. We envision a
-                community where education transforms lives and empowers the next
-                generation of Ghanaian leaders.
+              <p className="text-muted leading-relaxed whitespace-pre-line">
+                {settings.content.vision}
               </p>
             </div>
           </div>

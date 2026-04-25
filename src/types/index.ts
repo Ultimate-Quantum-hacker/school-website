@@ -43,6 +43,18 @@ export interface Application {
   message: string | null;
   status: "pending" | "reviewed" | "accepted" | "rejected";
   created_at: string;
+  documents?: ApplicationDocument[];
+}
+
+export interface ApplicationDocument {
+  id: string;
+  application_id: string;
+  document_type: string;
+  file_name: string;
+  storage_path: string;
+  mime_type: string | null;
+  size_bytes: number | null;
+  created_at: string;
 }
 
 export interface Message {
@@ -117,6 +129,10 @@ export interface SiteSettingsRow {
   social_youtube: string | null;
   social_linkedin: string | null;
   social_tiktok: string | null;
+  about_story: string | null;
+  mission: string | null;
+  vision: string | null;
+  office_hours: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -138,9 +154,17 @@ export interface SiteSocial {
   tiktok: string;
 }
 
+export interface SiteContent {
+  aboutStory: string;
+  mission: string;
+  vision: string;
+  officeHours: string;
+}
+
 export interface SiteSettings {
   contact: SiteContact;
   social: SiteSocial;
+  content: SiteContent;
 }
 
 // ─── Form / UI Types ────────────────────────────────────────

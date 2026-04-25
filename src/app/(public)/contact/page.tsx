@@ -15,7 +15,7 @@ export default async function ContactPage() {
   return (
     <>
       {/* ─── Page Header ───────────────────────────────────────── */}
-      <section className="relative overflow-hidden border-b border-border py-14">
+      <section className="relative overflow-hidden border-b border-border py-10 sm:py-14">
         <div className="absolute inset-0">
           <Image
             src={schoolConfig.images.campus}
@@ -26,7 +26,7 @@ export default async function ContactPage() {
           />
         </div>
         <div className="relative container-wide text-center">
-          <h1 className="text-4xl lg:text-5xl font-bold mb-4 animate-fade-in">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 animate-fade-in">
             Contact Us
           </h1>
           <p className="text-lg text-muted max-w-2xl mx-auto animate-fade-in-up">
@@ -106,8 +106,15 @@ export default async function ContactPage() {
                   </div>
                   <div>
                     <h3 className="font-semibold text-text mb-1">Office Hours</h3>
-                    <p className="text-sm text-muted">Mon – Fri: 7:30 AM – 4:00 PM</p>
-                    <p className="text-sm text-muted">Sat: 9:00 AM – 12:00 PM</p>
+                    {settings.content.officeHours
+                      .split("\n")
+                      .map((line) => line.trim())
+                      .filter(Boolean)
+                      .map((line, i) => (
+                        <p key={i} className="text-sm text-muted">
+                          {line}
+                        </p>
+                      ))}
                   </div>
                 </div>
               </div>

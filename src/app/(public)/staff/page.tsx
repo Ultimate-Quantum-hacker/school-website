@@ -23,7 +23,7 @@ export default async function StaffPage() {
   return (
     <>
       {/* ─── Page Header ───────────────────────────────────────── */}
-      <section className="border-b border-border py-14 relative overflow-hidden">
+      <section className="border-b border-border py-10 sm:py-14 relative overflow-hidden">
         <div className="absolute inset-0">
           <Image
             src={schoolConfig.images.classroom}
@@ -35,7 +35,7 @@ export default async function StaffPage() {
           />
         </div>
         <div className="relative container-wide text-center">
-          <h1 className="text-4xl lg:text-5xl font-bold mb-4 animate-fade-in">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 animate-fade-in">
             Our Staff
           </h1>
           <p className="text-lg text-muted max-w-2xl mx-auto animate-fade-in-up">
