@@ -2,13 +2,20 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { schoolConfig } from "@/config/school";
 import { SectionHeader } from "@/components/ui/Card";
+import { getPublishedStaff } from "@/actions/staff";
+import { staffDirectoryFromRows } from "@/lib/staff";
 
 export const metadata: Metadata = {
   title: "Staff Directory",
   description: `Meet the teaching and administrative staff of ${schoolConfig.name} — grouped by department.`,
 };
 
-export default function StaffPage() {
+export const revalidate = 60;
+
+export default async function StaffPage() {
+  const rows = await getPublishedStaff();
+  const directory = staffDirectoryFromRows(rows);
+
   return (
     <>
       {/* ─── Page Header ───────────────────────────────────────── */}
@@ -35,7 +42,7 @@ export default function StaffPage() {
       </section>
 
       {/* ─── Departments ───────────────────────────────────────── */}
-      {schoolConfig.staff.map((dept, idx) => (
+      {directory.map((dept, idx) => (
         <section
           key={dept.department}
           className={
@@ -48,13 +55,13 @@ export default function StaffPage() {
             <div className="reveal">
               <SectionHeader
                 title={dept.department}
-                subtitle={`${dept.members.length} ${(dept.members.length as number) === 1 ? "member" : "members"}`}
+                subtitle={`${dept.members.length} ${dept.members.length === 1 ? "member" : "members"}`}
               />
             </div>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 stagger-children">
               {dept.members.map((member) => (
                 <article
-                  key={member.name}
+                  key={`${dept.department}-${member.name}`}
                   className="reveal bg-surface rounded-2xl overflow-hidden shadow-sm border border-border hover:shadow-sm transition-all duration-300 group"
                 >
                   <div className="aspect-[4/3] overflow-hidden img-zoom relative">

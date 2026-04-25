@@ -67,6 +67,20 @@ export interface Event {
   created_at: string;
 }
 
+export interface StaffMember {
+  id: string;
+  name: string;
+  role: string;
+  bio: string | null;
+  image_url: string | null;
+  department: string;
+  is_leadership: boolean;
+  display_order: number;
+  published: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
 export interface AcademicCalendar {
   id: string;
   academic_year: string;

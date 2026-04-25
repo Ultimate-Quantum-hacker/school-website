@@ -5,6 +5,8 @@ import { schoolConfig } from "@/config/school";
 import { Button } from "@/components/ui/FormElements";
 import { SectionHeader } from "@/components/ui/Card";
 import { TestimonialsCarousel } from "@/components/public/TestimonialsCarousel";
+import { getPublishedStaff } from "@/actions/staff";
+import { leadershipFromRows } from "@/lib/staff";
 
 /**
  * Render `schoolConfig.tagline` with the substrings listed in
@@ -56,7 +58,10 @@ function renderTaglineWithHighlights(
   return nodes;
 }
 
-export default function HomePage() {
+export const revalidate = 60;
+
+export default async function HomePage() {
+  const headOfSchool = leadershipFromRows(await getPublishedStaff())[0];
   return (
     <>
       {/* ─── Hero Section ──────────────────────────────────────── */}
@@ -257,7 +262,7 @@ export default function HomePage() {
             environment for it.&rdquo;
           </blockquote>
           <p className="text-sm text-muted mt-4">
-            — {schoolConfig.leadership[0].name}, Head of School
+            — {headOfSchool?.name ?? schoolConfig.leadership[0].name}, Head of School
           </p>
         </div>
       </section>
