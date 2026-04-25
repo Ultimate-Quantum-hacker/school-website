@@ -1,53 +1,58 @@
 "use client";
 
 import { useEffect } from "react";
-import { usePathname } from "next/navigation";
 
 /**
- * Observes `.reveal*` elements on the current page and adds the
- * `.revealed` class when they intersect the viewport.
+ * Observes `.reveal*` elements as they enter the viewport and adds the
+ * `.revealed` class so CSS can fade them in.
  *
- * Rescans on every pathname change so newly mounted pages (via
- * client-side navigation) get picked up — without this, navigated-to
- * pages would stay at opacity 0 until a full refresh.
+ * Uses a long-lived IntersectionObserver plus a MutationObserver so that
+ * elements which mount AFTER the initial commit still get picked up.
+ * This matters during client-side navigation: the public layout has a
+ * `loading.tsx` fallback, so navigating between sections (e.g. /news →
+ * /) commits the loading shell first and then streams in the real page.
+ * Without the MutationObserver, newly-mounted `.reveal*` elements would
+ * never be observed and would stay at `opacity: 0` until a hard refresh.
  */
 export function ScrollReveal() {
-  const pathname = usePathname();
-
   useEffect(() => {
     const selector = ".reveal, .reveal-left, .reveal-right, .reveal-scale";
 
-    const run = () => {
-      const elements = document.querySelectorAll(selector);
-      if (elements.length === 0) return () => {};
+    const intersectionObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("revealed");
+            intersectionObserver.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: "0px 0px -40px 0px" },
+    );
 
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add("revealed");
-              observer.unobserve(entry.target);
-            }
-          });
-        },
-        { threshold: 0.12, rootMargin: "0px 0px -40px 0px" },
-      );
-
-      elements.forEach((el) => observer.observe(el));
-      return () => observer.disconnect();
+    const observed = new WeakSet<Element>();
+    const observeAll = () => {
+      document.querySelectorAll(selector).forEach((el) => {
+        if (!observed.has(el)) {
+          observed.add(el);
+          intersectionObserver.observe(el);
+        }
+      });
     };
 
-    // Run after paint so newly mounted page content is in the DOM.
-    let cleanup: () => void = () => {};
-    const raf = requestAnimationFrame(() => {
-      cleanup = run();
+    observeAll();
+
+    const mutationObserver = new MutationObserver(observeAll);
+    mutationObserver.observe(document.body, {
+      childList: true,
+      subtree: true,
     });
 
     return () => {
-      cancelAnimationFrame(raf);
-      cleanup();
+      intersectionObserver.disconnect();
+      mutationObserver.disconnect();
     };
-  }, [pathname]);
+  }, []);
 
   return null;
 }
