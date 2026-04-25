@@ -1,8 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { createPost, updatePost, deletePost } from "@/actions/posts";
+import { uploadFile } from "@/actions/gallery";
 import { RichTextEditor } from "@/components/admin/RichTextEditor";
 import { Button, Input, Select } from "@/components/ui/FormElements";
 import { Badge, Toast, Modal } from "@/components/ui/Card";
@@ -151,8 +153,29 @@ function PostEditor({ post, onBack, onSaved }: PostEditorProps) {
   const [category, setCategory] = useState<"news" | "announcement">(post?.category || "news");
   const [published, setPublished] = useState(post?.published ?? false);
   const [coverImage, setCoverImage] = useState(post?.cover_image || "");
+  const [uploadingCover, setUploadingCover] = useState(false);
   const [loading, setLoading] = useState(false);
   const [toast, setToast] = useState({ show: false, message: "", type: "success" as "success" | "error" });
+
+  async function handleCoverUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploadingCover(true);
+
+    const formData = new FormData();
+    formData.set("file", file);
+    formData.set("bucket", "images");
+
+    const result = await uploadFile(formData);
+    if (result.success && result.url) {
+      setCoverImage(result.url);
+    } else {
+      setToast({ show: true, message: result.message || "Upload failed", type: "error" });
+      setTimeout(() => setToast(t => ({ ...t, show: false })), 4000);
+    }
+    setUploadingCover(false);
+    e.target.value = "";
+  }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -223,7 +246,40 @@ function PostEditor({ post, onBack, onSaved }: PostEditorProps) {
                   { value: "announcement", label: "Announcement" },
                 ]}
               />
-              <Input label="Cover Image URL" value={coverImage} onChange={(e) => setCoverImage(e.target.value)} placeholder="https://..." />
+              <div>
+                <label className="block text-sm font-medium text-text mb-1.5">Cover Image</label>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleCoverUpload}
+                  disabled={uploadingCover}
+                  className="w-full text-sm text-muted file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-primary-50 file:text-primary hover:file:bg-primary-100 transition-colors disabled:opacity-50"
+                />
+                {uploadingCover && <p className="text-xs text-primary mt-1">Uploading...</p>}
+                {coverImage && !uploadingCover && (
+                  <div className="relative mt-2 rounded-lg overflow-hidden border border-border h-32">
+                    <Image
+                      src={coverImage}
+                      alt="Cover preview"
+                      fill
+                      sizes="(min-width: 1024px) 33vw, 100vw"
+                      unoptimized
+                      className="object-cover"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setCoverImage("")}
+                      className="absolute top-1.5 right-1.5 w-7 h-7 rounded-lg bg-red-600 text-white flex items-center justify-center shadow-md hover:bg-red-700 transition-colors"
+                      title="Remove cover image"
+                    >
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                    </button>
+                  </div>
+                )}
+              </div>
+              <Input label="Or paste image URL" value={coverImage} onChange={(e) => setCoverImage(e.target.value)} placeholder="https://..." />
               <div className="flex items-center gap-3">
                 <button
                   type="button"
