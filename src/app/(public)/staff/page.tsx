@@ -4,6 +4,7 @@ import { schoolConfig } from "@/config/school";
 import { SectionHeader } from "@/components/ui/Card";
 import { getPublishedStaff } from "@/actions/staff";
 import { staffDirectoryFromRows } from "@/lib/staff";
+import { getSiteSettings } from "@/actions/site-settings";
 
 export const metadata: Metadata = {
   title: "Staff Directory",
@@ -13,7 +14,10 @@ export const metadata: Metadata = {
 export const revalidate = 60;
 
 export default async function StaffPage() {
-  const rows = await getPublishedStaff();
+  const [rows, settings] = await Promise.all([
+    getPublishedStaff(),
+    getSiteSettings(),
+  ]);
   const directory = staffDirectoryFromRows(rows);
 
   return (
@@ -100,10 +104,10 @@ export default async function StaffPage() {
             We&apos;re always looking for passionate educators. Send your CV and
             a short note to{" "}
             <a
-              href={`mailto:${schoolConfig.contact.email}`}
+              href={`mailto:${settings.contact.email}`}
               className="text-primary hover:underline font-medium"
             >
-              {schoolConfig.contact.email}
+              {settings.contact.email}
             </a>
             .
           </p>

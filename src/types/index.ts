@@ -104,6 +104,45 @@ export interface Testimonial {
   updated_at: string;
 }
 
+export interface SiteSettingsRow {
+  id: number;
+  contact_email: string | null;
+  contact_phone: string | null;
+  contact_phone2: string | null;
+  contact_address: string | null;
+  contact_map_embed_url: string | null;
+  social_facebook: string | null;
+  social_twitter: string | null;
+  social_instagram: string | null;
+  social_youtube: string | null;
+  social_linkedin: string | null;
+  social_tiktok: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface SiteContact {
+  email: string;
+  phone: string;
+  phone2: string;
+  address: string;
+  mapEmbedUrl: string;
+}
+
+export interface SiteSocial {
+  facebook: string;
+  twitter: string;
+  instagram: string;
+  youtube: string;
+  linkedin: string;
+  tiktok: string;
+}
+
+export interface SiteSettings {
+  contact: SiteContact;
+  social: SiteSocial;
+}
+
 // ─── Form / UI Types ────────────────────────────────────────
 
 export interface ContactFormData {
